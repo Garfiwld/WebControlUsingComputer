@@ -1,12 +1,16 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <%@include file="/includes/head.jsp" %>
-        <link rel="stylesheet" type="text/css" href="addons/jQDataTables/datatables.min.css"/>
-        <title>JSP Page</title>
+        <link rel="stylesheet" type="text/css" href="addons/jQDataTables/datatables.css"/>
+        <title>Edit Teacher</title>
         <style>
             table.dataTable tbody>tr.selected, table.dataTable tbody>tr>.selected {
+                background-color: #aa66cc;
+            }
+            .pagination .page-item.active .page-link {
+                color: #fff;
                 background-color: #aa66cc;
             }
         </style>
@@ -24,6 +28,19 @@
                         <div class="form-header purple-gradient accent-1">
                             <h3>Edit Teacher</h3>
                         </div>
+
+                        <form action="upload_teacher_servlet" method="POST" enctype="multipart/form-data">
+                            <div class="col-md-6 mx-auto">
+                                <div class="form-group">
+                                    <label for="uploadFile">Upload File</label>
+                                    <input type="file" accept=".csv" class="form-control-file" id="uploadFile" name="uploadFile" required>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-secondary btn-block">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+
                         <table cellpadding="0" cellspacing="0" border="0" class="dataTable table table-striped" id="example"></table>
                     </div>
                 </div>
@@ -33,7 +50,7 @@
 
 
         <%@include file="/includes/body.jsp" %>
-        <script type="text/javascript" src="addons/jQDataTables/datatables.min.js"></script>
+        <script type="text/javascript" src="addons/jQDataTables/datatables.js"></script>
         <script src="addons/jQDataTables/dataTables.altEditor.free.js" ></script>
         <script type="text/javascript">
             $(document).ready(function () {
@@ -47,23 +64,24 @@
                         required: true
                     },
                     {
+                        data: "tPassword",
+                        title: "tPassword",
+                        required: true,
+                        type: "readonly"
+                    },
+                    {
                         data: "tFirstname",
-                        title: "Firstname",
+                        title: "tFirstname",
                         required: true
                     },
                     {
                         data: "tLastname",
-                        title: "Lastname",
-                        required: true
-                    },
-                    {
-                        data: "tPassword",
-                        title: "Password",
+                        title: "tLastname",
                         required: true
                     },
                     {
                         data: "tRole",
-                        title: "Role",
+                        title: "tRole",
                         type: "select",
                         "options": [
                             "Teacher",
@@ -101,6 +119,10 @@
                         {
                             text: 'Refresh',
                             name: 'refresh'      // do not change name
+                        },
+                        {
+                            text: 'Export csv',
+                            extend: 'csvHtml5'
                         }],
                     onAddRow: function (datatable, rowdata, success, error) {
                         $.ajax({

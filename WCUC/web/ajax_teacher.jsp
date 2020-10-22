@@ -1,3 +1,8 @@
+<%@page import="org.apache.commons.csv.CSVRecord"%>
+<%@page import="org.apache.commons.csv.CSVFormat"%>
+<%@page import="java.io.Reader"%>
+<%@page import="java.io.InputStreamReader"%>
+<%@page import="java.io.InputStream"%>
 <%@page import="connect.SqlConnect"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.util.Arrays"%>
@@ -5,9 +10,10 @@
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="dao.TeacherDAO"%>
 <%@page import="com.google.gson.Gson"%>
 <%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <%!
     public class TeacherModel {
 
@@ -74,6 +80,7 @@
     String INSERT_TEACHER = "INSERT INTO teacher (TeacherID, tPassword, tFirstname, tLastname, tRole) VALUES (?, ?, ?, ?, ?);";
     String UPDATE_TEACHER = "UPDATE teacher SET TeacherID = ?,tPassword= ?, tFirstname = ?, tLastname = ?, tRole = ? WHERE TeacherID = ?;";
     String DELETE_TEACHER = "DELETE FROM teacher WHERE TeacherID = ?;";
+
     String TeacherID, tPassword, tFirstname, tLastname, tRole;
     TeacherID = request.getParameter("TeacherID");
     tPassword = request.getParameter("tPassword");
@@ -123,7 +130,6 @@
             }
             break;
         case "ajedit":
-            boolean rowUpdated;
             try (Connection connection = sqlConnect.getConnect();
                     PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_TEACHER);) {
                 preparedStatement.setString(1, TeacherID);
@@ -156,5 +162,3 @@
             break;
     }
 %>
-
-

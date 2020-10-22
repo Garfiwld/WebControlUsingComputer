@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <servlet>
+        <servlet-name>upload_teacher_servlet</servlet-name>
+        <servlet-class>servlet.upload_teacher_servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>upload_student_servlet</servlet-name>
+        <servlet-class>servlet.upload_student_servlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UTF8Filter</servlet-name>
+        <servlet-class>servlet.UTF8Filter</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>upload_teacher_servlet</servlet-name>
+        <url-pattern>/upload_teacher_servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>upload_student_servlet</servlet-name>
+        <url-pattern>/upload_student_servlet</url-pattern>
+    </servlet-mapping>    
+    <jsp-config>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <page-encoding>UTF-8</page-encoding>
+        </jsp-property-group>
+    </jsp-config>
+</web-app>

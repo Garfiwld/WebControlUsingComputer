@@ -6,21 +6,18 @@
         </button>
         <div class="navbar-collapse collapse show" id="navbarSupportedContent-5" style="">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link waves-effect waves-light" href="#"><i class="fas fa-grip-horizontal"></i> Dashboard
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link waves-effect waves-light" href="/RoomEdit/list"><i class="fas fa-border-none"></i> Edit Room And Seat</a>
+                    <a class="nav-link waves-effect waves-light" href="room_618_1.jsp"><i class="fas fa-border-none"></i> Edit Room And Seat</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link waves-effect waves-light" href="edit_teacher.jsp"><i class="fas fa-user-cog"></i> Edit Teacher</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/SelectControl/list">Select Control</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/RoomControl/list">Room Control</a>
+                    <a class="nav-link waves-effect waves-light" href="edit_student.jsp"><i class="fas fa-users-cog"></i> Edit Student</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle waves-effect waves-light" id="navbarDropdownMenuLink-5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="fas fa-cogs"></i> Edit Banlist</a>
@@ -32,7 +29,6 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle waves-effect waves-light" id="navbarDropdownMenuLink-5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="fas fa-cogs"></i> Edit Other</a>
                     <div class="dropdown-menu dropdown-secondary" aria-labelledby="navbarDropdownMenuLink-5">
-                        <a class="dropdown-item waves-effect waves-light" href="/EditStudent/list"><i class="fas fa-users-cog"></i> Edit Student</a>
                         <a class="dropdown-item waves-effect waves-light" href="/EditCourse/list"><i class="fas fa-tasks"></i> Edit Course</a>
                     </div>
                 </li>
