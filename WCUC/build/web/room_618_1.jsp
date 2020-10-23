@@ -3,7 +3,7 @@
 <html>
     <head>
         <%@include file="/includes/head.jsp" %>
-        <title>JSP Page</title>
+        <title>Room Control</title>
         <style>
             iframe {
                 margin-top: 5px;
@@ -25,27 +25,27 @@
                             <h3>ROOM 618/1</h3>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-7">
                                 <div class="form-row">
 
                                     <div class="form-group col-sm-4">                
-                                        <a name="shutdownbtn" id="shutdownbtn" class="btn btn-danger btn-block" href="#" role="button">Shutdown</a>
+                                        <a name="shutdownbtn" id="shutdownbtn" class="btn btn-danger btn-block" href="#" role="button"><i class="fas fa-power-off"></i> Shutdown</a>
                                     </div>
                                     <div class="form-group col-sm-4">
-                                        <a name="restartbtn" id="restartbtn" class="btn btn-warning btn-block" href="#" role="button">Restart</a>
+                                        <a name="restartbtn" id="restartbtn" class="btn btn-warning btn-block" href="#" role="button"><i class="fas fa-sync"></i> Restart</a>
                                     </div>
                                     <div class="form-group col-sm-4">
-                                        <a name="lockbtn" id="lockbtn" class="btn btn-primary btn-block" href="#" role="button">Lock Screen</a>
+                                        <a name="lockbtn" id="lockbtn" class="btn btn-primary btn-block" href="#" role="button"><i class="fas fa-user-lock"></i> Lock Screen</a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-5">
                                 <div class="form-row">
                                     <div class="form-group col-sm-6">
-                                        <a name="internetonbtn" id="internetbtn" class="btn btn-primary btn-block" href="#" role="button">Internet : ON</a>
+                                        <a name="internetonbtn" id="internetbtn" class="btn btn-primary btn-block" href="#" role="button"><i class="fas fa-signal-alt"></i> Internet : ON</a>
                                     </div>
                                     <div class="form-group col-sm-6">
-                                        <a name="internetoffbtn" id="internetbtn" class="btn btn-primary btn-block" href="#" role="button">Internet : OFF</a>
+                                        <a name="internetoffbtn" id="internetbtn" class="btn btn-primary btn-block" href="#" role="button"><i class="fas fa-signal-alt-slash"></i> Internet : OFF</a>
                                     </div>
                                 </div>
                             </div>

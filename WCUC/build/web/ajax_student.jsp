@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="org.apache.commons.csv.CSVRecord"%>
 <%@page import="org.apache.commons.csv.CSVFormat"%>
 <%@page import="java.io.Reader"%>
@@ -12,8 +13,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.google.gson.Gson"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
 
 <%!
     public class StudentModel {
@@ -85,15 +84,6 @@
     ArrayList<StudentModel> listTeacher = new ArrayList<>();
 
     String SELECT_ALL_STUDENT = "SELECT * FROM student";
-    String INSERT_STUDENT = "INSERT INTO student (StudentID, sPassword, sFirstname, sLastname) VALUES (?, ?, ?, ?);";
-    String UPDATE_STUDENT = "UPDATE student SET StudentID = ?,sPassword= ?, sFirstname = ?, sLastname = ? WHERE StudentID = ?;";
-    String DELETE_STUDENT = "DELETE FROM student WHERE StudentID = ?;";
-
-    String StudentID, sPassword, sFirstname, sLastname;
-    StudentID = request.getParameter("StudentID");
-    sPassword = request.getParameter("sPassword");
-    sFirstname = request.getParameter("sFirstname");
-    sLastname = request.getParameter("sLastname");
 
     String action = request.getParameter("action");
     switch (action) {
@@ -117,53 +107,6 @@
             }
             String json = gson.toJson(listTeacher);
             out.print(json);
-            break;
-        case "ajadd":
-            try (Connection connection = sqlConnect.getConnect();
-                    PreparedStatement preparedStatement = connection.prepareStatement(INSERT_STUDENT)) {
-                preparedStatement.setString(1, StudentID);
-                preparedStatement.setString(2, sPassword);
-                preparedStatement.setString(3, sFirstname);
-                preparedStatement.setString(4, sLastname);
-                System.out.println(preparedStatement);
-                preparedStatement.executeUpdate();
-                preparedStatement.close();
-                connection.close();
-                StudentModel teacherAdded = new StudentModel(StudentID, sPassword, sFirstname, sLastname);
-                out.print(gson.toJson(teacherAdded));
-            } catch (SQLException e) {
-                sqlConnect.printSQLException(e);
-            }
-            break;
-        case "ajedit":
-            try (Connection connection = sqlConnect.getConnect();
-                    PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_STUDENT);) {
-                preparedStatement.setString(1, StudentID);
-                preparedStatement.setString(2, sPassword);
-                preparedStatement.setString(3, sFirstname);
-                preparedStatement.setString(4, sLastname);
-                preparedStatement.setString(5, StudentID);
-                preparedStatement.executeUpdate();
-                preparedStatement.close();
-                connection.close();
-                StudentModel studenEdit = new StudentModel(StudentID, sPassword, sFirstname, sLastname);
-                out.print(gson.toJson(studenEdit));
-            } catch (SQLException e) {
-                sqlConnect.printSQLException(e);
-            }
-            break;
-        case "ajdelete":
-            boolean rowDeleted;
-            try (Connection connection = sqlConnect.getConnect();
-                    PreparedStatement preparedStatement = connection.prepareStatement(DELETE_STUDENT);) {
-                preparedStatement.setString(1, StudentID);
-                rowDeleted = preparedStatement.executeUpdate() > 0;
-                preparedStatement.close();
-                connection.close();
-                out.print(rowDeleted);
-            } catch (SQLException e) {
-                sqlConnect.printSQLException(e);
-            }
             break;
     }
 %>

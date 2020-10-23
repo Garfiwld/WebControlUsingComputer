@@ -1,13 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%--<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>--%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <%@include file="/includes/head.jsp" %>
         <link rel="stylesheet" type="text/css" href="addons/jQDataTables/datatables.css"/>
-        <title>Edit Teacher</title>
+        <title>Edit Student</title>
         <style>
             table.dataTable tbody>tr.selected, table.dataTable tbody>tr>.selected {
-                background-color: #aa66cc;
+                background-color: #d86fd2;
             }
             .pagination .page-item.active .page-link {
                 color: #fff;

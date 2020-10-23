@@ -12,7 +12,7 @@
 <%@page import="java.io.DataInputStream"%>
 <%
     SqlConnect sqlConnect = new SqlConnect();
-    String INSERT_STUDENT_BY_FILE = "INSERT INTO student (StudentID, sPassword, sFirstname, sLastname) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE StudentID=?, sFirstname=?, sLastname=?";
+    String INSERT_TEACHER_BY_FILE = "INSERT INTO teacher (TeacherID, tPassword, tFirstname, tLastname, tRole) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE TeacherID=?, tFirstname=?, tLastname=?, tRole=?;";
 
     //to get the content type information from JSP Request Header
     String contentType = request.getContentType();
@@ -50,7 +50,8 @@
         int startPos = ((file.substring(0, pos)).getBytes()).length;
         int endPos = ((file.substring(0, boundaryLocation)).getBytes()).length;
 
-        //String savePath = application.getRealPath("\\upload\\" + saveFile);
+//        String saveRealPath = application.getRealPath("\\upload\\" + saveFile);
+//        System.out.println("saveRealPath : " + saveRealPath);
         String savePath = "E:\\0_Workspace\\WebControlUsingComputer\\WCUC\\web\\upload\\" + saveFile;
         FileOutputStream fileOut = new FileOutputStream(savePath);
         fileOut.write(dataBytes, startPos, (endPos - startPos));
@@ -61,18 +62,16 @@
                 CSVParser csvParser = new CSVParser(reader, CSVFormat.RFC4180.withFirstRecordAsHeader())) {
             for (CSVRecord record : csvParser) {
                 try (Connection connection = sqlConnect.getConnect();
-                        PreparedStatement preparedStatement = connection.prepareStatement(INSERT_STUDENT_BY_FILE)) {
-                    preparedStatement.setString(1, record.get("StudentID"));
-                    preparedStatement.setString(2, record.get("StudentID"));
-                    String sfirstname = record.get("sFirstname");
-//                            String decodedsfn = new String(sfirstname.getBytes("UTF-8"), "UTF-8");
-                    String slirstname = record.get("sLastname");
-//                            String decodedsln = new String(slirstname.getBytes("UTF-8"), "UTF-8");
-                    preparedStatement.setString(3, sfirstname);
-                    preparedStatement.setString(4, slirstname);
-                    preparedStatement.setString(5, record.get("StudentID"));
-                    preparedStatement.setString(6, sfirstname);
-                    preparedStatement.setString(7, slirstname);
+                        PreparedStatement preparedStatement = connection.prepareStatement(INSERT_TEACHER_BY_FILE)) {
+                    preparedStatement.setString(1, record.get("TeacherID"));
+                    preparedStatement.setString(2, record.get("TeacherID"));
+                    preparedStatement.setString(3, record.get("tFirstname"));
+                    preparedStatement.setString(4, record.get("tLastname"));
+                    preparedStatement.setString(5, record.get("tRole"));
+                    preparedStatement.setString(6, record.get("TeacherID"));
+                    preparedStatement.setString(7, record.get("tFirstname"));
+                    preparedStatement.setString(8, record.get("tLastname"));
+                    preparedStatement.setString(9, record.get("tRole"));
                     System.out.println(preparedStatement);
                     preparedStatement.executeUpdate();
                     preparedStatement.close();
@@ -82,43 +81,8 @@
             }
         } catch (Exception e) {
         }
-
-        try (Reader reader = new FileReader(savePath);
-                CSVParser csvParser = new CSVParser(reader, CSVFormat.EXCEL.withFirstRecordAsHeader());) {
-            String StudentID, sFirstname, sLastname;
-            for (CSVRecord record : csvParser) {
-                String strOfStu = record.get("StdCode");
-                String[] arrOfStu = strOfStu.split("\'");
-                StudentID = arrOfStu[1];
-                String name = record.get("StdName");
-                String deTIS60 = new String(name.getBytes("ISO-8859-1"), "TIS-620");
-                String[] arrOfsName = deTIS60.split(" ");
-//                        String decodedUTF8 = new String(deISO885911.getBytes("ISO-8859-11"), "UTF-8");
-//                        String[] arrOfsName = decodedUTF8.split(" ");
-                sFirstname = arrOfsName[1];
-                sLastname = arrOfsName[4];
-//                        out.println(StudentID + " : " + sFirstname + " : " + sLastname + "<br>");
-
-                try (Connection connection = sqlConnect.getConnect();
-                        PreparedStatement ps = connection.prepareStatement(INSERT_STUDENT_BY_FILE)) {
-                    ps.setString(1, StudentID);
-                    ps.setString(2, StudentID);
-                    ps.setString(3, sFirstname);
-                    ps.setString(4, sLastname);
-                    ps.setString(5, StudentID);
-                    ps.setString(6, sFirstname);
-                    ps.setString(7, sLastname);
-                    System.out.println(ps);
-                    ps.executeUpdate();
-                    ps.close();
-                } catch (SQLException e) {
-                    sqlConnect.printSQLException(e);
-                }
-            }
-        } catch (Exception e) {
-        }
         File f = new File(savePath);
         f.delete();
     }
-    response.sendRedirect("edit_student.jsp");
+    response.sendRedirect("edit_teacher.jsp");
 %>

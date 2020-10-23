@@ -1,12 +1,7 @@
-<%-- 
-    Document   : head
-    Created on : Oct 19, 2020, 10:24:44 PM
-    Author     : OBeseCat
---%>
-
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="img/favicon.png" type="image/png" rel="icon">
 <!-- Font Awesome -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+<link rel="stylesheet" type="text/css" href="css/all.css">
 <!-- Bootstrap core CSS -->
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <!-- Material Design Bootstrap -->

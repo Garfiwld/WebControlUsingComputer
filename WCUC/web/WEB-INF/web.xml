@@ -4,26 +4,25 @@
         <servlet-name>upload_teacher_servlet</servlet-name>
         <servlet-class>servlet.upload_teacher_servlet</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>upload_student_servlet</servlet-name>
-        <servlet-class>servlet.upload_student_servlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>UTF8Filter</servlet-name>
-        <servlet-class>servlet.UTF8Filter</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>upload_teacher_servlet</servlet-name>
         <url-pattern>/upload_teacher_servlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>upload_student_servlet</servlet-name>
+        <servlet-class>servlet.upload_student_servlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>upload_student_servlet</servlet-name>
         <url-pattern>/upload_student_servlet</url-pattern>
     </servlet-mapping>    
-    <jsp-config>
+<!--    <jsp-config>
         <jsp-property-group>
             <url-pattern>*.jsp</url-pattern>
             <page-encoding>UTF-8</page-encoding>
         </jsp-property-group>
-    </jsp-config>
+    </jsp-config>-->
+    <web-app-container>
+        <show-archived-real-path-enabled>true</show-archived-real-path-enabled>
+    </web-app-container>
 </web-app>

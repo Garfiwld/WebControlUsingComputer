@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="org.apache.commons.csv.CSVRecord"%>
 <%@page import="org.apache.commons.csv.CSVFormat"%>
 <%@page import="java.io.Reader"%>
@@ -12,7 +13,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.google.gson.Gson"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%!
     public class TeacherModel {

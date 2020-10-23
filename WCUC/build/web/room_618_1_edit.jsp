@@ -56,7 +56,7 @@
                 </div>
 
                 <div class="row">
-                    <iframe src="seat_618_1.jsp"/>"></iframe>
+                    <iframe src="seat_618_1_edit.jsp"/>"></iframe>
                 </div>
             </div>
         </main>
