@@ -1,11 +1,22 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="websocket.SocketServer"%>
 <!DOCTYPE html>
 <html>
+
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <script type="text/javascript">
+            function load()
+            {
+                window.location.href = "login.jsp";
+
+            }
+        </script>
     </head>
-    <body>
-        <h1>Hello World!</h1>
+
+    <body onload="load()">
+        <%
+            SocketServer run = new SocketServer();
+            run.openServer();
+        %>
     </body>
 </html>

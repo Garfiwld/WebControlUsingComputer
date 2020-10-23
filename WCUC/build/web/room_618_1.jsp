@@ -25,28 +25,29 @@
                             <h3>ROOM 618/1</h3>
                         </div>
                         <div class="row">
-                            <div class="col-md-7">
-                                <div class="form-row">
-
-                                    <div class="form-group col-sm-4">                
-                                        <a name="shutdownbtn" id="shutdownbtn" class="btn btn-danger btn-block" href="#" role="button"><i class="fas fa-power-off"></i> Shutdown</a>
-                                    </div>
-                                    <div class="form-group col-sm-4">
-                                        <a name="restartbtn" id="restartbtn" class="btn btn-warning btn-block" href="#" role="button"><i class="fas fa-sync"></i> Restart</a>
-                                    </div>
-                                    <div class="form-group col-sm-4">
-                                        <a name="lockbtn" id="lockbtn" class="btn btn-primary btn-block" href="#" role="button"><i class="fas fa-user-lock"></i> Lock Screen</a>
-                                    </div>
+                            <div class="col-md-4">
+                                <div class="form-group mb-1">                
+                                    <a id="shutdownbtn" name="Shutdown" role="button" class="btn btn-danger btn-block" onclick="allSeat('shutdownbtn')"><i class="fas fa-power-off"></i> Shutdown</a>
+                                </div>
+                                <div class="form-group">
+                                    <a id="restartbtn" name="Restart" role="button" class="btn btn-warning btn-block" onclick="allSeat('restartbtn')"><i class="fas fa-sync"></i> Restart</a>
                                 </div>
                             </div>
-                            <div class="col-md-5">
-                                <div class="form-row">
-                                    <div class="form-group col-sm-6">
-                                        <a name="internetonbtn" id="internetbtn" class="btn btn-primary btn-block" href="#" role="button"><i class="fas fa-signal-alt"></i> Internet : ON</a>
-                                    </div>
-                                    <div class="form-group col-sm-6">
-                                        <a name="internetoffbtn" id="internetbtn" class="btn btn-primary btn-block" href="#" role="button"><i class="fas fa-signal-alt-slash"></i> Internet : OFF</a>
-                                    </div>
+                            <div class="col-md-4">
+                                <div class="form-group mb-1">
+                                    <a id="netonbtn" name="On" role="button" class="btn btn-primary btn-block" onclick="net('netonbtn')"><i class="fas fa-signal-alt"></i> Internet : ON</a>
+                                </div>
+                                <div class="form-group">
+                                    <a id="neroffbtn" name="Off" role="button" class="btn btn-primary btn-block" onclick="net('neroffbtn')"><i class="fas fa-signal-alt-slash"></i> Internet : OFF</a>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group mb-1">
+                                    <a id="lockbtn" name="Lock" role="button" class="btn btn-dark btn-block" onclick="allSeat('lockbtn')"><i class="fas fa-user-lock"></i> Lock Screen</a>
+                                </div>
+                                <div class="form-group">
+                                    <a id="unlockbtn" name="Unlock" role="button" class="btn btn-dark-green btn-block" onclick="allSeat('unlockbtn')"><i class="fas fa-user-unlock"></i> Unlock Screen</a>
                                 </div>
                             </div>
                         </div>
@@ -61,5 +62,25 @@
             </div>
         </main>
         <%@include file="/includes/body.jsp" %>
+        <script>
+            function allSeat(action) {
+                toastr.success(document.getElementById(action).innerHTML + 'Send success.');
+                $.ajax({
+                    url: "ajax_sendmsg.jsp",
+                    type: "GET",
+                    data: "volume=all&Action=" + document.getElementById(action).name,
+                    success: function (response) {
+
+                    }
+                });
+            }
+
+            function net(action) {
+                console.log(action);
+            }
+
+            //popup buttons
+            $('#btnTopLeft').on('click', );
+        </script>
     </body>
 </html>

@@ -74,15 +74,20 @@
                             <input type="text" id="macaddress" class="form-control form-control-sm" placeholder=" " readonly>
                             <label for="macaddress">MacAddress</label>
                         </div>
+
+                        <div class="md-form form-sm">
+                            <input type="text" id="ipv4" class="form-control form-control-sm" placeholder=" " readonly>
+                            <label for="ipv4">IPv4</label>
+                        </div>
                     </div>
 
                     <div class="modal-footer">
                         <div class="mx-auto">
-                            <button type="button"  name="shutdownbtn" id="shutdownbtn" class="btn btn-danger" href="#" role="button"><i class="fas fa-power-off"></i></button>
-                            <button type="button"  name="restartbtn" id="restartbtn" class="btn btn-warning" href="#" role="button"><i class="fas fa-sync"></i></button>
-                            <button type="button" name="lockbtn" id="lockbtn" class="btn btn-primary" href="#" role="button"><i class="fas fa-user-lock"></i></button>
+                            <a id="shutdownbtn" name="Shutdown" role="button" class="btn btn-danger" onclick="singleSeat('shutdownbtn')"><i class="fas fa-power-off"></i></a>
+                            <a id="restartbtn" name="Restart" role="button" class="btn btn-warning" onclick="singleSeat('restartbtn')"><i class="fas fa-sync"></i></a>
+                            <a id="lockbtn" name="Lock" role="button" class="btn btn-dark" onclick="singleSeat('lockbtn')"><i class="fas fa-user-lock"></i></a>
+                            <a id="unlockbtn" name="Unlock" role="button" class="btn btn-dark-green" onclick="singleSeat('unlockbtn')"><i class="fas fa-user-unlock"></i></a>
                         </div>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i></button>
                     </div>
                 </div>
             </div>
@@ -127,6 +132,7 @@
                     data: "action=ajinfo&SeatID=" + seatid,
                     success: function (response) {
                         document.getElementById("macaddress").value = response.MacAddress;
+                        document.getElementById("ipv4").value = response.IPv4;
                         if (response.StudentID !== "") {
                             z.style.display = "block";
 //                            select.append('<div class="md-form form-sm"><input value="' + response.StudentID + '" type="text" id="studentid" class="form-control form-control-sm" readonly><label for="studentid">StudentID</label></div>');
@@ -140,6 +146,27 @@
                 $('#exampleModal').modal('show');
             }
             ;
+
+
+            function singleSeat(action) {
+                var str = ' SeatID ' + document.getElementById("seatidform").value + ' : ' + document.getElementById(action).innerHTML;
+                toastr.success(str + ' Send success.');
+                $.ajax({
+                    url: "ajax_sendmsg.jsp",
+                    type: "GET",
+                    data: "volume=single&Action=" + document.getElementById(action).name + "&IPv4=" + document.getElementById("ipv4").value,
+                    success: function (response) {
+
+                    }
+                });
+            }
+
+            function net(action) {
+                console.log(action);
+            }
+
+            //popup buttons
+            $('#btnTopLeft').on('click', );
         </script>
     </body>
 </html>
