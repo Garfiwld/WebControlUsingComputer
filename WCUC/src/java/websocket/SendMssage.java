@@ -6,7 +6,7 @@ import java.net.Socket;
 
 public class SendMssage {
 
-    public void Sendmsg(String ipv4, String msg) {
+    public void Send(String ipv4, String msg) {
 
         try {
             Socket send = new Socket(ipv4, 26103);

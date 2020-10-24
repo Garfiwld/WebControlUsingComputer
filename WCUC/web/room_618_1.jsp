@@ -44,10 +44,10 @@
 
                             <div class="col-md-4">
                                 <div class="form-group mb-1">
-                                    <a id="lockbtn" name="Lock" role="button" class="btn btn-dark btn-block" onclick="allSeat('lockbtn')"><i class="fas fa-user-lock"></i> Lock Screen</a>
+                                    <a id="lockbtn" name="LockScreen" role="button" class="btn btn-dark btn-block" onclick="allSeat('lockbtn')"><i class="fas fa-user-lock"></i> Lock Screen</a>
                                 </div>
                                 <div class="form-group">
-                                    <a id="unlockbtn" name="Unlock" role="button" class="btn btn-dark-green btn-block" onclick="allSeat('unlockbtn')"><i class="fas fa-user-unlock"></i> Unlock Screen</a>
+                                    <a id="unlockbtn" name="UnlockScreen" role="button" class="btn btn-dark-green btn-block" onclick="allSeat('unlockbtn')"><i class="fas fa-user-unlock"></i> Unlock Screen</a>
                                 </div>
                             </div>
                         </div>

@@ -2,12 +2,12 @@
     contentType="application/json" pageEncoding="UTF-8"
     import="java.io.IOException"
     import="java.io.PrintWriter"
-    import="java.net.Socket"
     import="java.sql.SQLException"
     import="java.sql.ResultSet"
     import="java.sql.PreparedStatement"
-    import="connect.SqlConnect"
     import="java.sql.Connection"
+    import="java.net.Socket"
+    import="connect.SqlConnect"
     %>
 
 <%

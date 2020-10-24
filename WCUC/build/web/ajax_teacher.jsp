@@ -1,4 +1,5 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="application/json" pageEncoding="UTF-8"%>
+<%@page import="com.google.gson.Gson"%>
 <%@page import="org.apache.commons.csv.CSVRecord"%>
 <%@page import="org.apache.commons.csv.CSVFormat"%>
 <%@page import="java.io.Reader"%>
@@ -11,7 +12,6 @@
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="com.google.gson.Gson"%>
 <%@page import="java.util.List"%>
 
 <%!

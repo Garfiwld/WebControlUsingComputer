@@ -1,19 +1,20 @@
-<%@page contentType="application/json" pageEncoding="UTF-8"%>
-<%@page import="org.apache.commons.csv.CSVRecord"%>
-<%@page import="org.apache.commons.csv.CSVFormat"%>
-<%@page import="java.io.Reader"%>
-<%@page import="java.io.InputStreamReader"%>
-<%@page import="java.io.InputStream"%>
-<%@page import="connect.SqlConnect"%>
-<%@page import="java.sql.SQLException"%>
-<%@page import="java.util.Arrays"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.PreparedStatement"%>
-<%@page import="java.sql.Connection"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="com.google.gson.Gson"%>
-<%@page import="java.util.List"%>
-
+<%@page 
+    contentType="application/json" pageEncoding="UTF-8"
+    import="org.apache.commons.csv.CSVRecord"
+    import="org.apache.commons.csv.CSVFormat"
+    import="java.io.Reader"
+    import="java.io.InputStreamReader"
+    import="java.io.InputStream"
+    import="connect.SqlConnect"
+    import="java.sql.SQLException"
+    import="java.util.Arrays"
+    import="java.sql.ResultSet"
+    import="java.sql.PreparedStatement"
+    import="java.sql.Connection"
+    import="java.util.ArrayList"
+    import="com.google.gson.Gson"
+    import="java.util.List"
+    %>
 <%!
     public class SeatModel {
 
@@ -87,12 +88,9 @@
 
     }
 %>
-
 <%
-
     SqlConnect sqlConnect = new SqlConnect();
     Gson gson = new Gson();
-
     String SELECT_ALL_COMPUTER = "SELECT * FROM computer LEFT JOIN student ON computer.StudentID = student.StudentID WHERE SeatID IS NOT NULL";
     String SELECT_SEATINFO_BY_SEATID = "SELECT * FROM computer LEFT JOIN student ON computer.StudentID = student.StudentID WHERE SeatID = ?";
     String SELECT_MAC = "SELECT MacAddress FROM computer WHERE SeatID IS NULL";
@@ -100,7 +98,6 @@
     MacAddress = request.getParameter("MacAddress");
     SeatID = request.getParameter("SeatID");
     cStatus = request.getParameter("cStatus");
-
     String action = request.getParameter("action");
     switch (action) {
         case "ajmac":

@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="application/json" pageEncoding="UTF-8"%>
 <%@page import="org.apache.commons.csv.CSVRecord"%>
 <%@page import="org.apache.commons.csv.CSVFormat"%>
 <%@page import="java.io.Reader"%>
