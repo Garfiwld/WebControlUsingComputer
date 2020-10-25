@@ -71,9 +71,9 @@
             body {
                 white-space: nowrap;
                 margin-top: 10px;
-                margin-left: 10px;
+                margin-left: 0px;
             }
-            .noselect {
+            * {
                 -webkit-touch-callout: none; 
                 -webkit-user-select: none; 
                 -khtml-user-select: none; 
@@ -90,6 +90,7 @@
                 width: 50px;
                 height: 50px;
                 margin: 0.5px;
+                background: white;
             }
             img:hover {
                 -webkit-transform: scale(0.9);
@@ -105,8 +106,14 @@
 
 
 
-        <h3 class="text-center">--- WHITEBOARD ---</h3>
-        <div id="seat" class="noselect">
+        <div class="text-center" style="height: 55px;">
+            <div>
+                <h3 style=" margin-bottom: -15px; ">--- WHITEBOARD ---</h3>
+                <input type="range" id="imgsize" name="imgsize" 
+                       min="25" max="75" value="50" step="5" style="height:40px">
+            </div>
+        </div>
+        <div id="seat" class="text-center">
             <%                for (int y = 0; y < roomY; y++) {
                     for (int x = 0; x < roomX; x++) {
                         out.print("<img id=" + x + "-" + y + " src=\"img/floor.png\">");
@@ -154,6 +161,16 @@
         <%@include file="/includes/body.jsp" %>
         <script>
 
+            var imgsize = document.getElementById("imgsize");
+            imgsize.oninput = function () {
+                var allimg = <% out.println(roomX * roomY);%>;
+                console.log(allimg);
+                for (var i = 0; i < allimg; i++) {
+                    document.images[i].style.width = this.value + "px";
+                    document.images[i].style.height = this.value + "px";
+                }
+            };
+
             setInterval(listseat, 10 * 1000);
             function listseat() {
                 $.ajax({
@@ -164,9 +181,9 @@
                         $.each(response, function (index, value) {
                             if (value.cStatus === 'Login') {
                                 document.getElementById(value.SeatID).src = 'img/user.png';
-                            } else if(value.cStatus === 'Online') {
+                            } else if (value.cStatus === 'Online') {
                                 document.getElementById(value.SeatID).src = 'img/on.png';
-                            }else{
+                            } else {
                                 document.getElementById(value.SeatID).src = 'img/off.png';
                             }
                         });
@@ -174,8 +191,7 @@
                 });
             }
             ;
-
-            var divs = document.querySelectorAll("#seat");
+            
             var clickFunction = function (event) {
                 var seatid = event.target.attributes['id'].value;
                 document.getElementById("SeatID").value = seatid;
@@ -208,8 +224,8 @@
                 $('#exampleModal').modal('toggle');
                 $('#exampleModal').modal('show');
             };
-            for (var i = 0; i < divs.length; i++) {
-                divs[i].addEventListener('click', clickFunction, false);
+            for (var i = 0; i < document.images.length; i++) {
+                document.images[i].addEventListener('click', clickFunction, false);
             }
 
             // Material Select Initialization

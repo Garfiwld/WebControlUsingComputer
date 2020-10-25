@@ -15,9 +15,9 @@
             body {
                 white-space: nowrap;
                 margin-top: 10px;
-                margin-left: 10px;
+                margin-left: 0px;
             }
-            .noselect {
+            * {
                 -webkit-touch-callout: none;
                 -webkit-user-select: none;
                 -khtml-user-select: none;
@@ -35,7 +35,6 @@
                 height: 50px;
                 margin: 0.5px;
                 background: white;
-                display: inline-block;
             }
             img:hover {
                 -webkit-transform: scale(0.9);
@@ -44,8 +43,14 @@
         </style>
     </head>
     <body onload="listseat()">
-        <h3 class="text-center">--- WHITEBOARD ---</h3>
-        <div id="seat" class="noselect">
+        <div class="text-center" style="height: 55px;">
+            <div>
+                <h3 style=" margin-bottom: -15px; ">--- WHITEBOARD ---</h3>
+                <input type="range" id="imgsize" name="imgsize" 
+                       min="25" max="75" value="50" step="5" style="height:40px">
+            </div>
+        </div>
+        <div id="seat" class="text-center">
             <%                for (int y = 0; y < roomY; y++) {
                     for (int x = 0; x < roomX; x++) {
                         out.print("<img id=" + x + "-" + y + " src=\"img/floor.png\">");
@@ -101,6 +106,15 @@
         <%@include file="/includes/body.jsp" %>
         <script>
 
+            var imgsize = document.getElementById("imgsize");
+            imgsize.oninput = function () {
+                var allimg = <% out.println(roomX * roomY);%>;
+                console.log(allimg);
+                for (var i = 0; i < allimg; i++) {
+                    document.images[i].style.width = this.value + "px";
+                    document.images[i].style.height = this.value + "px";
+                }
+            };
             setInterval(listseat, 10 * 1000);
             function listseat() {
                 $.ajax({
@@ -109,22 +123,21 @@
                     data: "action=ajlist",
                     success: function (response) {
                         $.each(response, function (index, value) {
+                            var atSeatID = document.getElementById(value.SeatID);
                             if (value.cStatus === 'Login') {
-                                var el = document.getElementById(value.SeatID);
-                                el.outerHTML = '<img id="' + value.SeatID + '" src="img/user.png" onclick="seatinfo(event)">';
+                                atSeatID.src = 'img/user.png';
+                                atSeatID.addEventListener('click', seatinfo, false);
                             } else if (value.cStatus === 'Online') {
-                                var el = document.getElementById(value.SeatID);
-                                el.outerHTML = '<img id="' + value.SeatID + '" src="img/on.png" onclick="seatinfo(event)">';
+                                atSeatID.src = 'img/on.png';
+                                atSeatID.addEventListener('click', seatinfo, false);
                             } else {
-                                var el = document.getElementById(value.SeatID);
-                                el.outerHTML = '<img id="' + value.SeatID + '" src="img/off.png" onclick="seatinfo(event)">';
+                                atSeatID.src = 'img/off.png';
+                                atSeatID.addEventListener('click', seatinfo, false);
                             }
                         });
                     }
                 });
             }
-            ;
-
 
             function seatinfo(event) {
                 var seatid = event.target.attributes['id'].value;
@@ -152,8 +165,6 @@
                 $('#exampleModal').modal('toggle');
                 $('#exampleModal').modal('show');
             }
-            ;
-
 
             function singleSeat(action) {
                 var str = ' SeatID ' + document.getElementById("seatidform").value + ' : ' + document.getElementById(action).innerHTML;
@@ -174,6 +185,29 @@
 
             //popup buttons
             $('#btnTopLeft').on('click', );
+
+            $(function () {
+                var curDown = false,
+                        curYPos = 0,
+                        curXPos = 0;
+
+                $(window).mousemove(function (m) {
+                    if (curDown) {
+                        window.scrollBy(curXPos - m.pageX, curYPos - m.pageY)
+                    }
+                });
+
+                $(window).mousedown(function (m) {
+                    curYPos = m.pageY;
+                    curXPos = m.pageX;
+                    curDown = true;
+                });
+
+                $(window).mouseup(function () {
+                    curDown = false;
+                });
+            })
+
         </script>
     </body>
 </html>
