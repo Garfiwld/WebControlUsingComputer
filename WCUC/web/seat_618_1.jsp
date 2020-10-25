@@ -186,27 +186,28 @@
             //popup buttons
             $('#btnTopLeft').on('click', );
 
-            $(function () {
-                var curDown = false,
-                        curYPos = 0,
-                        curXPos = 0;
+            //jQuery click and drag scroll
+            const slider = document.querySelector('#seat');
 
-                $(window).mousemove(function (m) {
-                    if (curDown) {
-                        window.scrollBy(curXPos - m.pageX, curYPos - m.pageY)
-                    }
-                });
+            var curDown = false,
+                    curYPos = 0,
+                    curXPos = 0;
 
-                $(window).mousedown(function (m) {
-                    curYPos = m.pageY;
-                    curXPos = m.pageX;
-                    curDown = true;
-                });
+            slider.addEventListener('mousemove', (m) => {
+                if (curDown) {
+                    window.scrollBy(curXPos - m.pageX, curYPos - m.pageY)
+                }
+            });
 
-                $(window).mouseup(function () {
-                    curDown = false;
-                });
-            })
+            slider.addEventListener('mousedown', (m) => {
+                curYPos = m.pageY;
+                curXPos = m.pageX;
+                curDown = true;
+            });
+
+            slider.addEventListener('mouseup', () => {
+                curDown = false;
+            });
 
         </script>
     </body>
