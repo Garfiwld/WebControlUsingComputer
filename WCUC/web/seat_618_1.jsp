@@ -11,29 +11,35 @@
     <head>
         <%@include file="/includes/head.jsp" %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
         <style>
             body {
                 white-space: nowrap;
                 margin-top: 10px;
-                margin-left: 0px;
-            }
-            c:link {text-decoration: none;}
-            c:hover span {display:none}
-            c:hover:before {content:"✅"}
-            c,b{
-                font-size: 50px;
-                letter-spacing: -15px;
-                line-height: 1;
+                margin-left: 10px;
             }
             .noselect {
-                -webkit-touch-callout: none; /* iOS Safari */
-                -webkit-user-select: none; /* Safari */
-                -khtml-user-select: none; /* Konqueror HTML */
-                -moz-user-select: none; /* Old versions of Firefox */
-                -ms-user-select: none; /* Internet Explorer/Edge */
-                user-select: none; /* Non-prefixed version, currently
-                                      supported by Chrome, Edge, Opera and Firefox */
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+            img {
+                -webkit-user-drag: none;
+                -khtml-user-drag: none;
+                -moz-user-drag: none;
+                -o-user-drag: none;
+                user-drag: none;
+                width: 50px;
+                height: 50px;
+                margin: 0.5px;
+                background: white;
+                display: inline-block;
+            }
+            img:hover {
+                -webkit-transform: scale(0.9);
+                transform: scale(0.9);
             }
         </style>
     </head>
@@ -42,7 +48,7 @@
         <div id="seat" class="noselect">
             <%                for (int y = 0; y < roomY; y++) {
                     for (int x = 0; x < roomX; x++) {
-                        out.print("<b id=" + x + "-" + y + ">⬜</b>");
+                        out.print("<img id=" + x + "-" + y + " src=\"img/floor.png\">");
                     }
                     out.print("<br>");
                 }
@@ -103,14 +109,15 @@
                     data: "action=ajlist",
                     success: function (response) {
                         $.each(response, function (index, value) {
-                            if (value.cStatus === 'Online') {
+                            if (value.cStatus === 'Login') {
                                 var el = document.getElementById(value.SeatID);
-                                el.outerHTML = '<c id="' + value.SeatID + '" onclick="seatinfo(event)"><span>👨‍💻</span></c>';
-//                                document.getElementById(value.SeatID).innerHTML = '<span>👨‍💻</span>';
+                                el.outerHTML = '<img id="' + value.SeatID + '" src="img/user.png" onclick="seatinfo(event)">';
+                            } else if (value.cStatus === 'Online') {
+                                var el = document.getElementById(value.SeatID);
+                                el.outerHTML = '<img id="' + value.SeatID + '" src="img/on.png" onclick="seatinfo(event)">';
                             } else {
                                 var el = document.getElementById(value.SeatID);
-                                el.outerHTML = '<c id="' + value.SeatID + '" onclick="seatinfo(event)"><span>🖥️</span></c>';
-//                                document.getElementById(value.SeatID).innerHTML = '<span>🖥️</span>';
+                                el.outerHTML = '<img id="' + value.SeatID + '" src="img/off.png" onclick="seatinfo(event)">';
                             }
                         });
                     }

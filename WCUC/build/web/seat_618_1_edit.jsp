@@ -3,23 +3,45 @@
 <%@page import="java.sql.Connection"%>
 <%@page import="connect.SqlConnect"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    int roomX = 20;
+    int roomY = 20;
+
+    String MacAddress = request.getParameter("MacAddress");
+    String oldMac = request.getParameter("oldMac");
+    if (oldMac == null) {
+        oldMac = "New";
+    }
+    String SeatID = request.getParameter("SeatID");
+    String action = request.getParameter("action");
+    System.out.println(action + " : " + MacAddress + " : " + SeatID);
+    if (action != null) {
+        action(action, oldMac, MacAddress, SeatID);
+    }
+
+%>
 <%!
-    public void action(String action, String MacAddress, String SeatID) {
-        String INSERT_SEAT = "INSERT INTO computer(MacAddress, SeatID) VALUES (?,?) ON DUPLICATE KEY UPDATE MacAddress=?, SeatID=?";
-        String UPDATE_SEAT_DELETE = "UPDATE computer SET SeatID= NULL WHERE SeatID = ?";
+    public void action(String action, String oldMac, String MacAddress, String SeatID) {
+
+        String UPDATE_SEATID_NULL = "UPDATE computer SET SeatID = NULL WHERE MacAddress = ?";
+        String UPDATE_SEATID_VALUE = "UPDATE computer SET SeatID = ? WHERE  MacAddress  = ?";
+        String UPDATE_SEAT_DELETE = "UPDATE computer SET SeatID = NULL WHERE SeatID = ?";
 
         SqlConnect sqlConnect = new SqlConnect();
         switch (action) {
             case "edit":
-                try (Connection connection = sqlConnect.getConnect();
-                        PreparedStatement ps = connection.prepareStatement(INSERT_SEAT)) {
-                    ps.setString(1, MacAddress);
-                    ps.setString(2, SeatID);
-                    ps.setString(3, MacAddress);
-                    ps.setString(4, SeatID);
+                try (Connection connection = sqlConnect.getConnect()) {
+                    PreparedStatement ps = connection.prepareStatement(UPDATE_SEATID_NULL);
+                    ps.setString(1, oldMac);
                     System.out.println(ps);
                     ps.executeUpdate();
                     ps.close();
+                    PreparedStatement ps2 = connection.prepareStatement(UPDATE_SEATID_VALUE);
+                    ps2.setString(1, SeatID);
+                    ps2.setString(2, MacAddress);
+                    System.out.println(ps);
+                    ps2.executeUpdate();
+                    ps2.close();
                     connection.close();
                 } catch (SQLException e) {
                     sqlConnect.printSQLException(e);
@@ -41,46 +63,37 @@
     }
 
 %>
-<%
-    int roomX = 20;
-    int roomY = 20;
-
-    String MacAddress = request.getParameter("MacAddress");
-    String SeatID = request.getParameter("SeatID");
-    String action = request.getParameter("action");
-    System.out.println(action + " : " + MacAddress + " : " + SeatID);
-    if (action != null) {
-        action(action, MacAddress, SeatID);
-    }
-
-%>
 <!DOCTYPE html>
 <html>
     <head>
         <%@include file="/includes/head.jsp" %>
-        <title>JSP Page</title>
         <style>
             body {
                 white-space: nowrap;
                 margin-top: 10px;
-                margin-left: 0px;
-            }
-            b:link {text-decoration: none;}
-            b:hover span {display:none}
-            b:hover:before {content:"✅"}
-            b{
-                font-size: 50px;
-                letter-spacing: -15px;
-                line-height: 1;
+                margin-left: 10px;
             }
             .noselect {
-                -webkit-touch-callout: none; /* iOS Safari */
-                -webkit-user-select: none; /* Safari */
-                -khtml-user-select: none; /* Konqueror HTML */
-                -moz-user-select: none; /* Old versions of Firefox */
-                -ms-user-select: none; /* Internet Explorer/Edge */
-                user-select: none; /* Non-prefixed version, currently
-                                      supported by Chrome, Edge, Opera and Firefox */
+                -webkit-touch-callout: none; 
+                -webkit-user-select: none; 
+                -khtml-user-select: none; 
+                -moz-user-select: none; 
+                -ms-user-select: none; 
+                user-select: none; 
+            }
+            img {
+                -webkit-user-drag: none;
+                -khtml-user-drag: none;
+                -moz-user-drag: none;
+                -o-user-drag: none;
+                user-drag: none;
+                width: 50px;
+                height: 50px;
+                margin: 0.5px;
+            }
+            img:hover {
+                -webkit-transform: scale(0.9);
+                transform: scale(0.9);
             }
             .modal-footer {
                 display: flex;
@@ -96,7 +109,7 @@
         <div id="seat" class="noselect">
             <%                for (int y = 0; y < roomY; y++) {
                     for (int x = 0; x < roomX; x++) {
-                        out.print("<b id=" + x + "-" + y + "><span>⬜</span></b>");
+                        out.print("<img id=" + x + "-" + y + " src=\"img/floor.png\">");
                     }
                     out.print("<br>");
                 }
@@ -114,7 +127,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body mb-0">
-                        <form action="seat_618_1_edit.jsp?action=edit" method="post">
+                        <form id="formAction" action="seat_618_1_edit.jsp?action=edit" method="post">
                             <div class="md-form form-sm">
                                 <input type="text" id="SeatID" name="SeatID" class="form-control form-control-sm" placeholder=" " readonly>
                                 <label for="SeatID">SeatID</label>
@@ -149,20 +162,24 @@
                     data: "action=ajlist",
                     success: function (response) {
                         $.each(response, function (index, value) {
-                            if (value.cStatus === 'Online') {
-                                document.getElementById(value.SeatID).innerHTML = "<span>👨‍💻</span>";
-                            } else {
-                                document.getElementById(value.SeatID).innerHTML = "<span>🖥️</span>";
+                            if (value.cStatus === 'Login') {
+                                document.getElementById(value.SeatID).src = 'img/user.png';
+                            } else if(value.cStatus === 'Online') {
+                                document.getElementById(value.SeatID).src = 'img/on.png';
+                            }else{
+                                document.getElementById(value.SeatID).src = 'img/off.png';
                             }
                         });
                     }
                 });
-            };
+            }
+            ;
 
             var divs = document.querySelectorAll("#seat");
             var clickFunction = function (event) {
                 var seatid = event.target.attributes['id'].value;
                 document.getElementById("SeatID").value = seatid;
+                // setAttribute > href > ปุ่ม Delete
                 var delbtn = document.getElementById("deletebtn");
                 delbtn.setAttribute("href", "seat_618_1_edit.jsp?action=delete&SeatID=" + seatid);
                 var select = $('#MacAddress');
@@ -172,6 +189,7 @@
                     type: "GET",
                     data: "action=ajinfo&SeatID=" + seatid,
                     success: function (response) {
+                        document.getElementById("formAction").action += '&oldMac=' + response.MacAddress;
                         if (response.MacAddress !== null) {
                             select.append('<option disabled selected>' + response.MacAddress + '</option>');
                         }

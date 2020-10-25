@@ -15,13 +15,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class StudentLogin implements Runnable  {
+public class StudentLogin implements Runnable {
 
     SendMssage sendMssage = new SendMssage();
-    
+
     public StudentLogin() {
-        
+
     }
+
     @Override
     public void run() {
         try {
@@ -42,6 +43,7 @@ public class StudentLogin implements Runnable  {
         EchoThread(Socket clientSocket) {
             this.clientSocket = clientSocket;
         }
+
         public void run() {
             try {
                 while (true) {
@@ -49,10 +51,15 @@ public class StudentLogin implements Runnable  {
                     String action = read.readLine();
                     System.out.println("action : " + action);
                     switch (action) {
-                        case "MatchMac":
+                        case "HeartBeat":
                             String ipv4 = read.readLine();
                             String macadress = read.readLine();
-                            updateMarchmac(ipv4, macadress);
+                            updateMarchmac(ipv4, macadress, "Login");
+                            break;
+                        case "MatchMac":
+                            ipv4 = read.readLine();
+                            macadress = read.readLine();
+                            updateMarchmac(ipv4, macadress, "Online");
                             break;
                         case "Login":
                             String studentid = read.readLine();
@@ -83,7 +90,7 @@ public class StudentLogin implements Runnable  {
                     }
                 }
 
-            } catch (IOException e) {
+            } catch (Exception e) {
 
             }
         }
@@ -92,7 +99,7 @@ public class StudentLogin implements Runnable  {
     SqlConnect sqlcon = new SqlConnect();
     private static final String SELECT_STUDENT_LOGIN = "SELECT * FROM student  WHERE student.StudentID=? and student.sPassword=?";
     private static final String UPDATE_STUDENT_ONLINE = "UPDATE computer SET cStatus=?,StudentID=? WHERE MacAddress = ?";
-    private static final String UPDATE_MATCHMAC = "INSERT INTO computer (MacAddress, IPv4) VALUES(?, ?) ON DUPLICATE KEY UPDATE IPv4 = ?";
+    private static final String UPDATE_MATCHMAC = "INSERT INTO computer (MacAddress, IPv4, cStatus) VALUES(?, ?, ?) ON DUPLICATE KEY UPDATE IPv4 = ?, cStatus=?";
     private static final String UPDATE_SPASSWORD = "Update student set sPassword = ?, sFirstLogin = ? Where StudentID = ?";
 
     public List<String> studentLogin(String studentid, String spassword) {
@@ -126,7 +133,7 @@ public class StudentLogin implements Runnable  {
         List<String> studentloginList = new ArrayList<>();
         Connection connection = sqlcon.getConnect();
         try (PreparedStatement ps = connection.prepareStatement(UPDATE_STUDENT_ONLINE);) {
-            ps.setString(1, "Online");
+            ps.setString(1, "Login");
             ps.setString(2, studentid);
             ps.setString(3, macaddress);
             System.out.println(ps);
@@ -140,12 +147,14 @@ public class StudentLogin implements Runnable  {
         }
     }
 
-    public void updateMarchmac(String ipAdress, String macAdress) {
+    public void updateMarchmac(String ipAdress, String macAdress, String cStatus) {
         Connection connection = sqlcon.getConnect();
         try (PreparedStatement ps = connection.prepareStatement(UPDATE_MATCHMAC);) {
             ps.setString(1, macAdress);
             ps.setString(2, ipAdress);
-            ps.setString(3, ipAdress);
+            ps.setString(3, cStatus);
+            ps.setString(4, ipAdress);
+            ps.setString(5, cStatus);
             System.out.println(ps);
             ps.executeUpdate();
             ps.close();
