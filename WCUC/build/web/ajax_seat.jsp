@@ -13,11 +13,15 @@
     String SELECT_ALL_COMPUTER = "SELECT * FROM computer LEFT JOIN student ON computer.StudentID = student.StudentID WHERE SeatID IS NOT NULL";
     String SELECT_SEATINFO_BY_SEATID = "SELECT * FROM computer LEFT JOIN student ON computer.StudentID = student.StudentID WHERE SeatID = ?";
     String SELECT_MAC = "SELECT MacAddress FROM computer WHERE SeatID IS NULL";
+    String UPDATE_SEATID_NULL = "UPDATE computer SET SeatID = NULL WHERE MacAddress = ?";
+    String UPDATE_SEATID_VALUE = "UPDATE computer SET SeatID = ? WHERE  MacAddress  = ?";
+    String UPDATE_SEAT_DELETE = "UPDATE computer SET SeatID = NULL WHERE SeatID = ?";
     String MacAddress, SeatID, cStatus;
     MacAddress = request.getParameter("MacAddress");
     SeatID = request.getParameter("SeatID");
     cStatus = request.getParameter("cStatus");
     String action = request.getParameter("action");
+    String oldMac = request.getParameter("oldMac");
     switch (action) {
         case "ajmac":
             List<String> listMac = new ArrayList<>();
@@ -63,7 +67,6 @@
             ArrayList<SeatModel> listSeat = new ArrayList<>();
             try (Connection connection = sqlConnect.getConnect();
                     PreparedStatement ps = connection.prepareStatement(SELECT_ALL_COMPUTER);) {
-                System.out.println(ps);
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
                     String macaddress = rs.getString("MacAddress");
@@ -82,6 +85,51 @@
             } catch (SQLException e) {
                 sqlConnect.printSQLException(e);
             }
+            break;
+
+        case "ajedit":
+            try (Connection connection = sqlConnect.getConnect()) {
+                PreparedStatement ps = connection.prepareStatement(UPDATE_SEATID_NULL);
+                ps.setString(1, oldMac);
+                System.out.println(ps);
+                ps.executeUpdate();
+                PreparedStatement ps2 = connection.prepareStatement(UPDATE_SEATID_VALUE);
+                ps2.setString(1, SeatID);
+                ps2.setString(2, MacAddress);
+                System.out.println(ps2);
+                ps2.executeUpdate();
+                ps.close();
+                ps2.close();
+                connection.close();
+            } catch (SQLException e) {
+                sqlConnect.printSQLException(e);
+            }
+            break;
+        case "ajdelete":
+            try (Connection connection = sqlConnect.getConnect();
+                    PreparedStatement ps = connection.prepareStatement(UPDATE_SEAT_DELETE)) {
+                ps.setString(1, SeatID);
+                System.out.println(ps);
+                ps.executeUpdate();
+                ps.close();
+                connection.close();
+            } catch (SQLException e) {
+                sqlConnect.printSQLException(e);
+            }
+            break;
+        case "dummy":
+            for (int i = 0; i < 60; i++) {
+                try (Connection connection = sqlConnect.getConnect();
+                        PreparedStatement ps = connection.prepareStatement("INSERT INTO computer(MacAddress) VALUES (" + i + ");")) {
+                    System.out.println(ps);
+                    ps.executeUpdate();
+                    ps.close();
+                    connection.close();
+                } catch (SQLException e) {
+                    sqlConnect.printSQLException(e);
+                }
+            }
+
             break;
     }
 %>

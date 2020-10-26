@@ -1,67 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.sql.SQLException"%>
-<%@page import="java.sql.PreparedStatement"%>
-<%@page import="java.sql.Connection"%>
-<%@page import="connect.SqlConnect"%>
 <%
-    int roomX = 20;
-    int roomY = 20;
-
-    String MacAddress = request.getParameter("MacAddress");
-    String oldMac = request.getParameter("oldMac");
-    if (oldMac == null) {
-        oldMac = "New";
-    }
-    String SeatID = request.getParameter("SeatID");
-    String action = request.getParameter("action");
-    System.out.println(action + " : " + MacAddress + " : " + SeatID);
-    if (action != null) {
-        action(action, oldMac, MacAddress, SeatID);
-    }
-
-%>
-<%!
-    public void action(String action, String oldMac, String MacAddress, String SeatID) {
-
-        String UPDATE_SEATID_NULL = "UPDATE computer SET SeatID = NULL WHERE MacAddress = ?";
-        String UPDATE_SEATID_VALUE = "UPDATE computer SET SeatID = ? WHERE  MacAddress  = ?";
-        String UPDATE_SEAT_DELETE = "UPDATE computer SET SeatID = NULL WHERE SeatID = ?";
-
-        SqlConnect sqlConnect = new SqlConnect();
-        switch (action) {
-            case "edit":
-                try (Connection connection = sqlConnect.getConnect()) {
-                    PreparedStatement ps = connection.prepareStatement(UPDATE_SEATID_NULL);
-                    ps.setString(1, oldMac);
-                    System.out.println(ps);
-                    ps.executeUpdate();
-                    ps.close();
-                    PreparedStatement ps2 = connection.prepareStatement(UPDATE_SEATID_VALUE);
-                    ps2.setString(1, SeatID);
-                    ps2.setString(2, MacAddress);
-                    System.out.println(ps);
-                    ps2.executeUpdate();
-                    ps2.close();
-                    connection.close();
-                } catch (SQLException e) {
-                    sqlConnect.printSQLException(e);
-                }
-                break;
-            case "delete":
-                try (Connection connection = sqlConnect.getConnect();
-                        PreparedStatement ps = connection.prepareStatement(UPDATE_SEAT_DELETE)) {
-                    ps.setString(1, SeatID);
-                    System.out.println(ps);
-                    ps.executeUpdate();
-                    ps.close();
-                    connection.close();
-                } catch (SQLException e) {
-                    sqlConnect.printSQLException(e);
-                }
-                break;
-        }
-    }
-
+    // --- ตั้งค่าขนาดของห้อง ---
+    int roomX = 13, roomY = 13;
 %>
 <!DOCTYPE html>
 <html>
@@ -116,7 +56,7 @@
         <div id="seat" class="text-center">
             <%                for (int y = 0; y < roomY; y++) {
                     for (int x = 0; x < roomX; x++) {
-                        out.print("<img id=" + x + "-" + y + " src=\"img/floor.png\">");
+                        out.print("<img id=" + x + "-" + y + " src=\"img/Floor.png\">");
                     }
                     out.print("<br>");
                 }
@@ -134,24 +74,21 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body mb-0">
-                        <form id="formAction" action="seat_618_1_edit.jsp?action=edit" method="post">
-                            <div class="md-form form-sm">
-                                <input type="text" id="SeatID" name="SeatID" class="form-control form-control-sm" placeholder=" " readonly>
-                                <label for="SeatID">SeatID</label>
-                            </div>
+                        <div class="md-form form-sm">
+                            <input type="text" id="SeatID" name="SeatID" class="form-control form-control-sm" placeholder=" " readonly>
+                            <label for="SeatID">SeatID</label>
+                        </div>
+                        <select id="MacAddress" name="MacAddress" class="mdb-select colorful-select dropdown-secondary md-form" searchable="Search here.." required>
+                        </select>
+                        <label class="mdb-main-label">MacAddress</label>
 
-                            <select id="MacAddress" name="MacAddress" class="mdb-select colorful-select dropdown-secondary md-form" searchable="Search here.." required>
-                            </select>
-                            <label class="mdb-main-label">MacAddress</label>
-
-                            <div class="text-center mt-1-half">
-                                <button type="submit" class="btn btn-secondary mb-2 btn-block">Submit</button>
-                            </div>
-                        </form>
+                        <div class="text-center mt-1-half">
+                            <button type="submit" class="btn btn-secondary mb-2 btn-block" onclick="ajedit()">Submit</button>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <div class="align-baseline">
-                            <a id="deletebtn" role="button" class="btn btn-danger" aria-pressed="true"><i class="fas fa-trash-alt"></i> Delete</a>
+                            <a id="deletebtn" role="button" class="btn btn-danger" aria-pressed="true" onclick="ajdelete()"><i class="fas fa-trash-alt"></i> Delete</a>
                         </div>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i></button>
                     </div>
@@ -160,7 +97,47 @@
         </div>
         <%@include file="/includes/body.jsp" %>
         <script>
+            // --- อัพเดทสถานะ cStatus และแสดงผลบนเว็บ ---
 
+            setInterval(listseat, 10 * 1000);
+            function listseat() {
+                $.ajax({
+                    url: "ajax_seat.jsp",
+                    type: "GET",
+                    data: "action=ajlist",
+                    success: function (response) {
+                        $.each(response, function (index, value) {
+                            document.getElementById(value.SeatID).src = 'img/' + value.cStatus + '.png';
+                        });
+                    }
+                });
+            }
+
+            var oldMac;
+            function ajedit() {
+                var SeatID = document.getElementById("SeatID").value;
+                var MacAddress = document.getElementById("MacAddress").value;
+                $.ajax({
+                    url: "ajax_seat.jsp",
+                    type: "GET",
+                    data: {action: 'ajedit', oldMac: oldMac, MacAddress: MacAddress, SeatID: SeatID}
+                });
+                document.getElementById(SeatID).src = 'img/Offline.png';
+                $('#exampleModal').modal('hide');
+            }
+            function ajdelete() {
+                var SeatID = document.getElementById("SeatID").value;
+                $.ajax({
+                    url: "ajax_seat.jsp",
+                    type: "GET",
+                    data: {action: 'ajdelete', SeatID: SeatID}
+                });
+                document.getElementById(SeatID).src = 'img/Floor.png';
+                $('#exampleModal').modal('hide');
+            }
+
+
+            // --- ปรับขนาด ICON บยเว็บ ---
             var imgsize = document.getElementById("imgsize");
             imgsize.oninput = function () {
                 var allimg = <% out.println(roomX * roomY);%>;
@@ -171,46 +148,28 @@
                 }
             };
 
-            setInterval(listseat, 10 * 1000);
-            function listseat() {
-                $.ajax({
-                    url: "ajax_seat.jsp",
-                    type: "GET",
-                    data: "action=ajlist",
-                    success: function (response) {
-                        $.each(response, function (index, value) {
-                            if (value.cStatus === 'Login') {
-                                document.getElementById(value.SeatID).src = 'img/user.png';
-                            } else if (value.cStatus === 'Online') {
-                                document.getElementById(value.SeatID).src = 'img/on.png';
-                            } else {
-                                document.getElementById(value.SeatID).src = 'img/off.png';
-                            }
-                        });
-                    }
-                });
-            }
-            ;
-
+            // --- แสดงหน้าตางการตั้งค่าตอมพิวเตอร์ ---
             var clickFunction = function (event) {
                 var seatid = event.target.attributes['id'].value;
                 document.getElementById("SeatID").value = seatid;
                 // setAttribute > href > ปุ่ม Delete
-                var delbtn = document.getElementById("deletebtn");
-                delbtn.setAttribute("href", "seat_618_1_edit.jsp?action=delete&SeatID=" + seatid);
+//                var delbtn = document.getElementById("deletebtn");
+//                delbtn.setAttribute("href", "seat_618_1_edit.jsp?action=delete&SeatID=" + seatid);
                 var select = $('#MacAddress');
                 select.find('option').remove();
+                // --- รับค่า MacAddress ที่ถูกใช้งานมาแสดงผล ---
                 $.ajax({
                     url: "ajax_seat.jsp",
                     type: "GET",
                     data: "action=ajinfo&SeatID=" + seatid,
                     success: function (response) {
-                        document.getElementById("formAction").action += '&oldMac=' + response.MacAddress;
+                        oldMac = response.MacAddress;
                         if (response.MacAddress !== null) {
-                            select.append('<option disabled selected>' + response.MacAddress + '</option>');
+                            select.append('<option selected disabled value="' + oldMac + '">' + oldMac + '</option>');
                         }
                     }
                 });
+                // --- รับค่า MacAddress ที่ยังไม่ถูกใช้งานมาแสดงผล
                 $.ajax({
                     url: "ajax_seat.jsp",
                     type: "GET",

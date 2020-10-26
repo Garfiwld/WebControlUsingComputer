@@ -3,8 +3,8 @@
 
 %>
 <%
-    int roomX = 20;
-    int roomY = 20;
+    int roomX = 13;
+    int roomY = 13;
 %>
 <!DOCTYPE html>
 <html>
@@ -46,14 +46,14 @@
         <div class="text-center" style="height: 55px;">
             <div>
                 <h3 style=" margin-bottom: -15px; ">--- WHITEBOARD ---</h3>
-                <input type="range" id="imgsize" name="imgsize" 
+                <input type="range" id="imgsize" name="imgsize"
                        min="25" max="75" value="50" step="5" style="height:40px">
             </div>
         </div>
         <div id="seat" class="text-center">
             <%                for (int y = 0; y < roomY; y++) {
                     for (int x = 0; x < roomX; x++) {
-                        out.print("<img id=" + x + "-" + y + " src=\"img/floor.png\">");
+                        out.print("<img id=" + x + "-" + y + " src=\"img/Floor.png\">");
                     }
                     out.print("<br>");
                 }
@@ -125,13 +125,13 @@
                         $.each(response, function (index, value) {
                             var atSeatID = document.getElementById(value.SeatID);
                             if (value.cStatus === 'Login') {
-                                atSeatID.src = 'img/user.png';
+                                atSeatID.src = 'img/Login.png';
                                 atSeatID.addEventListener('click', seatinfo, false);
                             } else if (value.cStatus === 'Online') {
-                                atSeatID.src = 'img/on.png';
+                                atSeatID.src = 'img/Online.png';
                                 atSeatID.addEventListener('click', seatinfo, false);
                             } else {
-                                atSeatID.src = 'img/off.png';
+                                atSeatID.src = 'img/Offline.png';
                                 atSeatID.addEventListener('click', seatinfo, false);
                             }
                         });

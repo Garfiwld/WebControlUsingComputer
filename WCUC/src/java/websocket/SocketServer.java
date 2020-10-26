@@ -32,7 +32,6 @@ public class SocketServer {
     public void HeartBeat() {
         Connection connection = sqlcon.getConnect();
         try (PreparedStatement ps = connection.prepareStatement(SELECT_COMPUTER_ONLINE);) {
-            System.out.println(ps);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     String macaddress = rs.getString("MacAddress");
