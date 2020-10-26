@@ -3,6 +3,9 @@ package student;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JOptionPane;
 
 public class LockScreen extends javax.swing.JFrame {
 
@@ -11,11 +14,27 @@ public class LockScreen extends javax.swing.JFrame {
         setUndecorated(true);
         setExtendedState(this.MAXIMIZED_BOTH);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        
+
         initComponents();
         getContentPane().setBackground(Color.DARK_GRAY);
         Dimension position = Toolkit.getDefaultToolkit().getScreenSize();
         jLabel1.setBounds(position.width / 2 - (jLabel1.getPreferredSize().width / 2), position.height / 2, jLabel1.getPreferredSize().width, jLabel1.getPreferredSize().height);
+
+        addWindowListener(new WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent we) {
+                String ObjButtons[] = {"Yes", "No"};
+                int PromptResult = JOptionPane.showOptionDialog(null,
+                        "Are you sure you want to exit?", "Online Examination System",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
+                        ObjButtons, ObjButtons[1]);
+                if (PromptResult == 0) {
+                    System.exit(0);
+                }
+            }
+        });
+
     }
 
     @SuppressWarnings("unchecked")
