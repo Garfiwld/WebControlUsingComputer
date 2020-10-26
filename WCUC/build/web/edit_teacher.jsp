@@ -126,7 +126,18 @@
                                             },
                                             {
                                                 text: 'Export csv',
-                                                extend: 'csvHtml5'
+                                                extend: 'csvHtml5',
+                                                filename: function () {
+                                                    var date = new Date();
+                                                    var hours = date.getHours();
+                                                    var minutes = date.getMinutes();
+                                                    minutes = minutes < 10 ? '0' + minutes : minutes;
+                                                    var seconds = date.getSeconds();
+                                                    seconds = seconds < 10 ? '0' + seconds : seconds;
+                                                    var strDate = date.getMonth() + 1 + "-" + date.getDate() + "-" + date.getFullYear();
+                                                    var strTime = hours + '-' + minutes + '-' + seconds;
+                                                    return  "TEACHER_ROOM_618_1_" + strDate + "_" + strTime;
+                                                }
                                             }],
                                         onAddRow: function (datatable, rowdata, success, error) {
                                             $.ajax({

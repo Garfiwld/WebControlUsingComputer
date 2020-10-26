@@ -81,6 +81,7 @@
                     },
                     columns: columnDefs,
                     dom: 'Bfrtip', // Needs button container
+                    order: [[1, 'desc'], [2, 'asc'], [4, 'asc']],
                     select: false,
                     responsive: true,
                     altEditor: true, // Enable altEditor
@@ -91,9 +92,21 @@
                         },
                         {
                             text: 'Export csv',
-                            extend: 'csvHtml5'
+                            extend: 'csvHtml5',
+                            filename: function () {
+                                var date = new Date();
+                                var hours = date.getHours();
+                                var minutes = date.getMinutes();
+                                minutes = minutes < 10 ? '0' + minutes : minutes;
+                                var seconds = date.getSeconds();
+                                seconds = seconds < 10 ? '0' + seconds : seconds;
+                                var strDate = date.getMonth() + 1 + "-" + date.getDate() + "-" + date.getFullYear();
+                                var strTime = hours + '-' + minutes + '-' + seconds;
+                                return  "ROOM_618_1_" + strDate + "_" + strTime;
+                            }
                         }]
-                });
+                }
+                );
                 /* --- End --- myTable = $('#example').DataTable*/
             });
         </script>
