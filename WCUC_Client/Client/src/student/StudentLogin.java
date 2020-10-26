@@ -7,6 +7,8 @@ import connect.SocketConnect;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.InetAddress;
@@ -33,8 +35,6 @@ public class StudentLogin extends javax.swing.JFrame {
         getContentPane().setBackground(Color.DARK_GRAY);
 
         initComponents();
-//        jL_Mac.setText(jL_Mac.getText() + studentModel.getMacaddress());
-//        jL_IP.setText(jL_IP.getText() + studentModel.getIpv4());
         Dimension position = Toolkit.getDefaultToolkit().getScreenSize();
         int wCenter = position.width / 2;
         int hCenter = position.height / 2;
@@ -42,6 +42,17 @@ public class StudentLogin extends javax.swing.JFrame {
         jTF_StudentID.setBounds(wCenter - (jTF_StudentID.getPreferredSize().width / 2), hCenter, jTF_StudentID.getPreferredSize().width, 45);
         jP_sPassword.setBounds(wCenter - (jTF_StudentID.getPreferredSize().width / 2), hCenter + 45 + 10, jTF_StudentID.getPreferredSize().width, 45);
         jB_Login.setBounds(wCenter - (jB_Login.getPreferredSize().width / 2), hCenter + 45 + 10 + 45 + 10, jB_Login.getPreferredSize().width, 40);
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent we) {
+                System.out.println("--- Restart ---");
+                try {
+                    Runtime.getRuntime().exec("cmd /c shutdown -r");
+                } catch (IOException ex) {
+                }
+            }
+        });
 
     }
 
@@ -122,6 +133,7 @@ public class StudentLogin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(getContentPane(), "Failed connect server.");
         }
     }//GEN-LAST:event_jB_LoginActionPerformed
+
     public static void main(String args[]) throws IOException, InterruptedException {
 
         try {
@@ -142,7 +154,7 @@ public class StudentLogin extends javax.swing.JFrame {
          */
         getIPv4AndMac();
 
-        /*       
+        /*
          *  อัพเดท IPv4 กับ MacAddress ที่ Database
          */
         MatchMac();
@@ -206,15 +218,15 @@ public class StudentLogin extends javax.swing.JFrame {
     public static void Restart() {
         System.out.println("--- Restart ---");
         try {
-//                                Runtime.getRuntime().exec("cmd /c C:\\Controllab\\restart.bat");
-        } catch (Exception e) {
+            Runtime.getRuntime().exec("cmd /c shutdown -r");
+        } catch (IOException e) {
         }
     }
 
     public static void Shutdown() {
         System.out.println("--- Shutdown ---");
         try {
-//                                Runtime.getRuntime().exec("cmd /c C:\\Controllab\\restart.bat");
+            Runtime.getRuntime().exec("cmd /c shutdown -s");
         } catch (Exception e) {
         }
     }

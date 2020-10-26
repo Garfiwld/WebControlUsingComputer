@@ -12,7 +12,7 @@ public class ReciveMessage {
 
     SocketConnect socketConnect = new SocketConnect();
     LockScreen lockScreen = new LockScreen();
-    
+
     public void start() {
 
         ReciveMsg.start();
@@ -33,17 +33,15 @@ public class ReciveMessage {
                         case "Shutdown":
                             System.out.println("case : Shutdown");
                             try {
-//                                Runtime.getRuntime().exec("cmd /c C:\\Controllab\\shutdown.bat");
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                                Runtime.getRuntime().exec("cmd /c shutdown -s");
+                            } catch (IOException e) {
                             }
                             break;
                         case "Restart":
                             System.out.println("case : Restart");
                             try {
-//                                Runtime.getRuntime().exec("cmd /c C:\\Controllab\\restart.bat");
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                                Runtime.getRuntime().exec("cmd /c shutdown -r");
+                            } catch (IOException e) {
                             }
                             break;
                         case "LockScreen":

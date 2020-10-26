@@ -3,60 +3,87 @@ package student;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.JOptionPane;
+import java.io.IOException;
+import javax.swing.JFrame;
 
-public class LockScreen extends javax.swing.JFrame {
+public class LockScreen extends JFrame {
 
     public LockScreen() {
         setAlwaysOnTop(true);
         setUndecorated(true);
         setExtendedState(this.MAXIMIZED_BOTH);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        getContentPane().setBackground(Color.DARK_GRAY);
 
         initComponents();
-        getContentPane().setBackground(Color.DARK_GRAY);
         Dimension position = Toolkit.getDefaultToolkit().getScreenSize();
-        jLabel1.setBounds(position.width / 2 - (jLabel1.getPreferredSize().width / 2), position.height / 2, jLabel1.getPreferredSize().width, jLabel1.getPreferredSize().height);
+        jL_LOCK.setBounds(position.width / 2 - (jL_LOCK.getPreferredSize().width / 2), position.height / 2, jL_LOCK.getPreferredSize().width, jL_LOCK.getPreferredSize().height);
+        jL_Warning.setBounds(position.width / 2 - (jL_Warning.getPreferredSize().width / 2), position.height / 2 + 60, jL_Warning.getPreferredSize().width, jL_Warning.getPreferredSize().height);
 
-        addWindowListener(new WindowAdapter() {
+        addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
 
             @Override
-            public void windowClosing(WindowEvent we) {
-                String ObjButtons[] = {"Yes", "No"};
-                int PromptResult = JOptionPane.showOptionDialog(null,
-                        "Are you sure you want to exit?", "Online Examination System",
-                        JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
-                        ObjButtons, ObjButtons[1]);
-                if (PromptResult == 0) {
-                    System.exit(0);
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_WINDOWS || e.getKeyCode() == KeyEvent.VK_CONTROL || e.getKeyCode() == KeyEvent.VK_ALT) {
+                    System.out.println("--- Restart ---");
+                    try {
+                        Runtime.getRuntime().exec("cmd /c shutdown -r");
+                    } catch (IOException ex) {
+                    }
                 }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
             }
         });
 
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent we) {
+                System.out.println("--- Restart ---");
+                try {
+                    Runtime.getRuntime().exec("cmd /c shutdown -r");
+                } catch (IOException ex) {
+                }
+            }
+        });
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jL_Warning = new javax.swing.JLabel();
+        jL_LOCK = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("!!! LOCKSCREEN BY TEACHER !!!");
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(70, 50, 960, 60);
+        jL_Warning.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jL_Warning.setForeground(new java.awt.Color(255, 255, 255));
+        jL_Warning.setText("Warning! don't press key Ctrl, Windows, Alt");
+        getContentPane().add(jL_Warning);
+        jL_Warning.setBounds(70, 160, 960, 60);
+
+        jL_LOCK.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+        jL_LOCK.setForeground(new java.awt.Color(255, 255, 255));
+        jL_LOCK.setText("!!! LOCKSCREEN BY TEACHER !!!");
+        getContentPane().add(jL_LOCK);
+        jL_LOCK.setBounds(70, 50, 960, 60);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jL_LOCK;
+    private javax.swing.JLabel jL_Warning;
     // End of variables declaration//GEN-END:variables
 }
