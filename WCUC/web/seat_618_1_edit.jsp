@@ -97,8 +97,8 @@
         </div>
         <%@include file="/includes/body.jsp" %>
         <script>
-            // --- อัพเดทสถานะ cStatus และแสดงผลบนเว็บ ---
 
+            // --- อัพเดทสถานะ cStatus และแสดงผลบนเว็บ ---
             setInterval(listseat, 10 * 1000);
             function listseat() {
                 $.ajax({

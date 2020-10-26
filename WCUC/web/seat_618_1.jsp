@@ -91,13 +91,14 @@
                             <label for="ipv4">IPv4</label>
                         </div>
                     </div>
-
-                    <div class="modal-footer">
-                        <div class="mx-auto">
-                            <a id="shutdownbtn" name="Shutdown" role="button" class="btn btn-danger" onclick="singleSeat('shutdownbtn')"><i class="fas fa-power-off"></i></a>
-                            <a id="restartbtn" name="Restart" role="button" class="btn btn-warning" onclick="singleSeat('restartbtn')"><i class="fas fa-sync"></i></a>
-                            <a id="lockbtn" name="LockScreen" role="button" class="btn btn-dark" onclick="singleSeat('lockbtn')"><i class="fas fa-user-lock"></i></a>
-                            <a id="unlockbtn" name="UnlockScreen" role="button" class="btn btn-dark-green" onclick="singleSeat('unlockbtn')"><i class="fas fa-user-unlock"></i></a>
+                    <div id="seatcontrol">
+                        <div class="modal-footer">
+                            <div class="mx-auto">
+                                <a id="shutdownbtn" name="Shutdown" role="button" class="btn btn-danger" onclick="singleSeat('shutdownbtn')"><i class="fas fa-power-off"></i></a>
+                                <a id="restartbtn" name="Restart" role="button" class="btn btn-warning" onclick="singleSeat('restartbtn')"><i class="fas fa-sync"></i></a>
+                                <a id="lockbtn" name="LockScreen" role="button" class="btn btn-dark" onclick="singleSeat('lockbtn')"><i class="fas fa-user-lock"></i></a>
+                                <a id="unlockbtn" name="UnlockScreen" role="button" class="btn btn-dark-green" onclick="singleSeat('unlockbtn')"><i class="fas fa-user-unlock"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -105,7 +106,7 @@
         </div>
         <%@include file="/includes/body.jsp" %>
         <script>
-
+            // --- ปรับขนาด ICON บยเว็บ ---
             var imgsize = document.getElementById("imgsize");
             imgsize.oninput = function () {
                 var allimg = <% out.println(roomX * roomY);%>;
@@ -115,7 +116,7 @@
                     document.images[i].style.height = this.value + "px";
                 }
             };
-            setInterval(listseat, 10 * 1000);
+            // --- รับค่าจาก ajax มาอัพเดทสถานะคอมพิวเตอร์ ---
             function listseat() {
                 $.ajax({
                     url: "ajax_seat.jsp",
@@ -126,26 +127,28 @@
                             var atSeatID = document.getElementById(value.SeatID);
                             if (value.cStatus === 'Login') {
                                 atSeatID.src = 'img/Login.png';
-                                atSeatID.addEventListener('click', seatinfo, false);
+                                atSeatID.addEventListener('click', setinfo, false);
                             } else if (value.cStatus === 'Online') {
                                 atSeatID.src = 'img/Online.png';
-                                atSeatID.addEventListener('click', seatinfo, false);
+                                atSeatID.addEventListener('click', setinfo, false);
                             } else {
                                 atSeatID.src = 'img/Offline.png';
-                                atSeatID.addEventListener('click', seatinfo, false);
+                                atSeatID.addEventListener('click', setinfo, false);
                             }
                         });
                     }
                 });
             }
-
-            function seatinfo(event) {
+            // --- ทำการเรียกใช้ฟังก์ชั่น listseat ทุก 10 วินาที
+            setInterval(listseat, 10 * 1000);
+            // --- ajax รับข้อมูลของ SeatID ที่เลือกมาแสดง
+            function setinfo(event) {
                 var seatid = event.target.attributes['id'].value;
                 document.getElementById("seatidform").value = seatid;
-//                var select = $('#studentinfo');
-//                select.find('div').remove();
-                var z = document.getElementById("studentinfo");
-                z.style.display = "none";
+                var stdinfo = document.getElementById("studentinfo");
+                stdinfo.style.display = "none";
+                var seatcontrol = document.getElementById('seatcontrol');
+                seatcontrol.style.display = "none";
                 $.ajax({
                     url: "ajax_seat.jsp",
                     type: "GET",
@@ -153,8 +156,11 @@
                     success: function (response) {
                         document.getElementById("macaddress").value = response.MacAddress;
                         document.getElementById("ipv4").value = response.IPv4;
+                        if (response.IPv4 !== undefined) {
+                            seatcontrol.style.display = "block";
+                        }
                         if (response.StudentID !== undefined) {
-                            z.style.display = "block";
+                            stdinfo.style.display = "block";
                             document.getElementById("studentid").value = response.StudentID;
                             document.getElementById("sname").value = response.sFirstname + ' ' + response.sLastname;
                         }
@@ -163,50 +169,36 @@
                 $('#exampleModal').modal('toggle');
                 $('#exampleModal').modal('show');
             }
-
+            // --- ส่งการควยคุมจาก SeatID ที่เลือก ---
             function singleSeat(action) {
                 var str = ' SeatID ' + document.getElementById("seatidform").value + ' : ' + document.getElementById(action).innerHTML;
                 toastr.success(str + ' Send success.');
                 $.ajax({
                     url: "ajax_sendmsg.jsp",
                     type: "GET",
-                    data: "volume=single&Action=" + document.getElementById(action).name + "&IPv4=" + document.getElementById("ipv4").value,
-                    success: function (response) {
-
-                    }
+                    data: "casesend=single&Action=" + document.getElementById(action).name + "&IPv4=" + document.getElementById("ipv4").value
                 });
             }
-
-            function net(action) {
-                console.log(action);
-            }
-
-            //popup buttons
+            // --- ตั้งค่า toastr ---
             $('#btnTopLeft').on('click', );
-
-            //jQuery click and drag scroll
+            // --- jQuery click and drag scroll ---
             const slider = document.querySelector('#seat');
-
             var curDown = false,
                     curYPos = 0,
                     curXPos = 0;
-
             slider.addEventListener('mousemove', (m) => {
                 if (curDown) {
                     window.scrollBy(curXPos - m.pageX, curYPos - m.pageY)
                 }
             });
-
             slider.addEventListener('mousedown', (m) => {
                 curYPos = m.pageY;
                 curXPos = m.pageX;
                 curDown = true;
             });
-
             slider.addEventListener('mouseup', () => {
                 curDown = false;
             });
-
         </script>
     </body>
 </html>
