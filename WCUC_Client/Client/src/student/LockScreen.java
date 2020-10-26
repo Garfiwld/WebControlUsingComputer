@@ -7,6 +7,7 @@ import java.awt.Toolkit;
 public class LockScreen extends javax.swing.JFrame {
 
     public LockScreen() {
+        setAlwaysOnTop(true);
         setUndecorated(true);
         setExtendedState(this.MAXIMIZED_BOTH);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);

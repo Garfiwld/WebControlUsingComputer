@@ -26,9 +26,10 @@ public class StudentLogin extends javax.swing.JFrame {
     public static StudentLogin studentLogin;
 
     public StudentLogin() {
-        //setUndecorated(true);
+        setAlwaysOnTop(true);
+        setUndecorated(true);
         setExtendedState(this.MAXIMIZED_BOTH);
-        //setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         getContentPane().setBackground(Color.DARK_GRAY);
 
         initComponents();
