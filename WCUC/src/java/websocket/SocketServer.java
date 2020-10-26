@@ -26,8 +26,8 @@ public class SocketServer {
 
     SendMssage sendMssage = new SendMssage();
     SqlConnect sqlcon = new SqlConnect();
-    private static final String SELECT_COMPUTER_ONLINE = "SELECT MacAddress, IPv4 FROM computer WHERE cStatus != 'Offline'";
-    private static final String UPDATE_OFFLINE = "UPDATE computer SET cStatus = 'Offline', StudentID = '' WHERE MacAddress = ?";
+    private static final String SELECT_COMPUTER_ONLINE = "SELECT MacAddress, IPv4 FROM computer WHERE IPv4 IS NOT NULL";
+    private static final String UPDATE_OFFLINE = "UPDATE computer SET IPv4 = NULL, cStatus = 'Offline', StudentID = NULL WHERE MacAddress = ?";
 
     public void HeartBeat() {
         Connection connection = sqlcon.getConnect();

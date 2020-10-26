@@ -1,8 +1,8 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="connect.SqlConnect"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     int roomX = 20;
     int roomY = 20;
@@ -74,12 +74,12 @@
                 margin-left: 0px;
             }
             * {
-                -webkit-touch-callout: none; 
-                -webkit-user-select: none; 
-                -khtml-user-select: none; 
-                -moz-user-select: none; 
-                -ms-user-select: none; 
-                user-select: none; 
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
             }
             img {
                 -webkit-user-drag: none;
@@ -109,7 +109,7 @@
         <div class="text-center" style="height: 55px;">
             <div>
                 <h3 style=" margin-bottom: -15px; ">--- WHITEBOARD ---</h3>
-                <input type="range" id="imgsize" name="imgsize" 
+                <input type="range" id="imgsize" name="imgsize"
                        min="25" max="75" value="50" step="5" style="height:40px">
             </div>
         </div>
@@ -191,7 +191,7 @@
                 });
             }
             ;
-            
+
             var clickFunction = function (event) {
                 var seatid = event.target.attributes['id'].value;
                 document.getElementById("SeatID").value = seatid;

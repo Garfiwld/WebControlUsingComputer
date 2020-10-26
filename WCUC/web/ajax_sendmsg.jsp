@@ -1,14 +1,12 @@
-<%@page 
-    contentType="application/json" pageEncoding="UTF-8"
-    import="java.io.IOException"
-    import="java.io.PrintWriter"
-    import="java.sql.SQLException"
-    import="java.sql.ResultSet"
-    import="java.sql.PreparedStatement"
-    import="java.sql.Connection"
-    import="java.net.Socket"
-    import="connect.SqlConnect"
-    %>
+<%@page contentType="application/json" pageEncoding="UTF-8"%>
+<%@page import="java.io.IOException"%>
+<%@page import="java.io.PrintWriter"%>
+<%@page import="java.net.Socket"%>
+<%@page import="java.sql.SQLException"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="connect.SqlConnect"%>
 
 <%
     SqlConnect sqlConnect = new SqlConnect();

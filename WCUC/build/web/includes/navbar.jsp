@@ -11,7 +11,10 @@
                     </a>
                 </li>                
                 <li class="nav-item">
-                    <a class="nav-link waves-effect waves-light" href="room_618_1.jsp"><i class="fas fa-users-class"></i> Room Control</a>
+                    <a class="nav-link waves-effect waves-light" href="room_618_1.jsp"><i class="fas fa-th"></i> Room Control</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link waves-effect waves-light" href="room_info.jsp"><i class="fas fa-users-class"></i> Room Info</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link waves-effect waves-light" href="room_618_1_edit.jsp"><i class="fas fa-th"></i> Edit Room And Seat</a>

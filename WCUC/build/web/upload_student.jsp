@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.sql.PreparedStatement"%>
@@ -41,7 +42,7 @@
         String boundary = contentType.substring(lastIndex + 1,
                 contentType.length());
         int pos;
-        //extracting the index of file 
+        //extracting the index of file
         pos = file.indexOf("filename=\"");
         pos = file.indexOf("\n", pos) + 1;
         pos = file.indexOf("\n", pos) + 1;

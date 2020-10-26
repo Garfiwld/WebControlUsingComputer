@@ -4,11 +4,8 @@
     <head>
         <%@include file="/includes/head.jsp" %>
         <link rel="stylesheet" type="text/css" href="addons/jQDataTables/datatables.css"/>
-        <title>Edit Student</title>
+        <title>Room Info</title>
         <style>
-            table.dataTable tbody>tr.selected, table.dataTable tbody>tr>.selected {
-                background-color: #d86fd2;
-            }
             .pagination .page-item.active .page-link {
                 background-color: #aa66cc;
             }
@@ -28,21 +25,8 @@
 
                         <!--Header -->
                         <div class="form-header purple-gradient accent-1">
-                            <h3>Edit Student</h3>
+                            <h3>Room Info</h3>
                         </div>
-
-                        <form action="upload_student.jsp" method="POST" enctype="multipart/form-data">
-                            <div class="col-md-6 mx-auto">
-                                <div class="form-group">
-                                    <label for="uploadFile">Upload File</label>
-                                    <input type="file" accept=".csv" class="form-control-file" id="uploadFile" name="uploadFile" required>
-                                </div>
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-secondary btn-block">Submit</button>
-                                </div>
-                            </div>
-                        </form>
-
                         <table cellpadding="0" cellspacing="0" border="0" class="dataTable table table-striped" id="example"></table>
                     </div>
                 </div>
@@ -55,35 +39,49 @@
             $(document).ready(function () {
                 var columnDefs = [
                     {
+                        data: "MacAddress",
+                        title: "MacAddress"
+                    },
+                    {
+                        defaultContent: "",
+                        data: "IPv4",
+                        title: "IPv4"
+                    },
+                    {
+                        data: "cStatus",
+                        title: "cStatus"
+                    },
+                    {
+                        data: "SeatID",
+                        title: "SeatID"
+                    },
+                    {
+                        defaultContent: "",
                         data: "StudentID",
                         title: "StudentID"
+
                     },
                     {
-                        data: "sPassword",
-                        title: "sPassword"
-                    },
-                    {
+                        defaultContent: "",
                         data: "sFirstname",
                         title: "sFirstname"
+
                     },
                     {
+                        defaultContent: "",
                         data: "sLastname",
                         title: "sLastname"
-                    },
-                    {
-                        data: "sFirstLogin",
-                        title: "sFirstLogin"
 
                     }
                 ];
                 $('#example').DataTable({
                     ajax: {
-                        url: 'ajax_student.jsp?action=ajlist',
+                        url: 'ajax_seat.jsp?action=ajlist',
                         dataSrc: ''
                     },
                     columns: columnDefs,
                     dom: 'Bfrtip', // Needs button container
-                    select: 'single',
+                    select: false,
                     responsive: true,
                     altEditor: true, // Enable altEditor
                     buttons: [
@@ -96,7 +94,7 @@
                             extend: 'csvHtml5'
                         }]
                 });
-                /*myTable = $('#example').DataTable*/
+                /* --- End --- myTable = $('#example').DataTable*/
             });
         </script>
     </body>

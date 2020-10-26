@@ -153,10 +153,8 @@
                     success: function (response) {
                         document.getElementById("macaddress").value = response.MacAddress;
                         document.getElementById("ipv4").value = response.IPv4;
-                        if (response.StudentID !== "") {
+                        if (response.StudentID !== undefined) {
                             z.style.display = "block";
-//                            select.append('<div class="md-form form-sm"><input value="' + response.StudentID + '" type="text" id="studentid" class="form-control form-control-sm" readonly><label for="studentid">StudentID</label></div>');
-//                            select.append('<div class="md-form form-sm"><input value="' + response.sFirstname + ' ' + response.sLastname + '" type="text" id="sname" class="form-control form-control-sm" readonly><label for="sname">Name</label></div>');
                             document.getElementById("studentid").value = response.StudentID;
                             document.getElementById("sname").value = response.sFirstname + ' ' + response.sLastname;
                         }

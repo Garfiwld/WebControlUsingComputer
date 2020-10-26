@@ -1,93 +1,12 @@
-<%@page 
-    contentType="application/json" pageEncoding="UTF-8"
-    import="org.apache.commons.csv.CSVRecord"
-    import="org.apache.commons.csv.CSVFormat"
-    import="java.io.Reader"
-    import="java.io.InputStreamReader"
-    import="java.io.InputStream"
-    import="connect.SqlConnect"
-    import="java.sql.SQLException"
-    import="java.util.Arrays"
-    import="java.sql.ResultSet"
-    import="java.sql.PreparedStatement"
-    import="java.sql.Connection"
-    import="java.util.ArrayList"
-    import="com.google.gson.Gson"
-    import="java.util.List"
-    %>
-<%!
-    public class SeatModel {
-
-        protected String MacAddress, IPv4, SeatID, cStatus, StudentID, sFirstname, sLastname;
-
-        public SeatModel(String MacAddress, String IPv4, String SeatID, String cStatus, String StudentID, String sFirstname, String sLastname) {
-            this.MacAddress = MacAddress;
-            this.IPv4 = IPv4;
-            this.SeatID = SeatID;
-            this.cStatus = cStatus;
-            this.StudentID = StudentID;
-            this.sFirstname = sFirstname;
-            this.sLastname = sLastname;
-        }
-
-        public String getMacAddress() {
-            return MacAddress;
-        }
-
-        public void setMacAddress(String MacAddress) {
-            this.MacAddress = MacAddress;
-        }
-
-        public String getIPv4() {
-            return IPv4;
-        }
-
-        public void setIPv4(String IPv4) {
-            this.IPv4 = IPv4;
-        }
-
-        public String getSeatID() {
-            return SeatID;
-        }
-
-        public void setSeatID(String SeatID) {
-            this.SeatID = SeatID;
-        }
-
-        public String getCstatus() {
-            return cStatus;
-        }
-
-        public void setCstatus(String cStatus) {
-            this.cStatus = cStatus;
-        }
-
-        public String getStudentID() {
-            return StudentID;
-        }
-
-        public void setStudentID(String StudentID) {
-            this.StudentID = StudentID;
-        }
-
-        public String getSfirstname() {
-            return sFirstname;
-        }
-
-        public void setSfirstname(String sFirstname) {
-            this.sFirstname = sFirstname;
-        }
-
-        public String getSlastname() {
-            return sLastname;
-        }
-
-        public void setSlastname(String sLastname) {
-            this.sLastname = sLastname;
-        }
-
-    }
-%>
+<%@page contentType="application/json" pageEncoding="UTF-8"%>
+<%@page import="java.sql.SQLException"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="com.google.gson.Gson"%>
+<%@page import="connect.SqlConnect"%>
 <%
     SqlConnect sqlConnect = new SqlConnect();
     Gson gson = new Gson();
@@ -164,5 +83,78 @@
                 sqlConnect.printSQLException(e);
             }
             break;
+    }
+%>
+<%!
+    public class SeatModel {
+
+        protected String MacAddress, IPv4, SeatID, cStatus, StudentID, sFirstname, sLastname;
+
+        public SeatModel(String MacAddress, String IPv4, String SeatID, String cStatus, String StudentID, String sFirstname, String sLastname) {
+            this.MacAddress = MacAddress;
+            this.IPv4 = IPv4;
+            this.SeatID = SeatID;
+            this.cStatus = cStatus;
+            this.StudentID = StudentID;
+            this.sFirstname = sFirstname;
+            this.sLastname = sLastname;
+        }
+
+        public String getMacAddress() {
+            return MacAddress;
+        }
+
+        public void setMacAddress(String MacAddress) {
+            this.MacAddress = MacAddress;
+        }
+
+        public String getIPv4() {
+            return IPv4;
+        }
+
+        public void setIPv4(String IPv4) {
+            this.IPv4 = IPv4;
+        }
+
+        public String getSeatID() {
+            return SeatID;
+        }
+
+        public void setSeatID(String SeatID) {
+            this.SeatID = SeatID;
+        }
+
+        public String getCstatus() {
+            return cStatus;
+        }
+
+        public void setCstatus(String cStatus) {
+            this.cStatus = cStatus;
+        }
+
+        public String getStudentID() {
+            return StudentID;
+        }
+
+        public void setStudentID(String StudentID) {
+            this.StudentID = StudentID;
+        }
+
+        public String getSfirstname() {
+            return sFirstname;
+        }
+
+        public void setSfirstname(String sFirstname) {
+            this.sFirstname = sFirstname;
+        }
+
+        public String getSlastname() {
+            return sLastname;
+        }
+
+        public void setSlastname(String sLastname) {
+            this.sLastname = sLastname;
+        }
+
     }
 %>

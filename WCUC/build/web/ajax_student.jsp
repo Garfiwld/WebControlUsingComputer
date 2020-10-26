@@ -13,7 +13,39 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.google.gson.Gson"%>
 <%@page import="java.util.List"%>
+<%
 
+    SqlConnect sqlConnect = new SqlConnect();
+    Gson gson = new Gson();
+    ArrayList<StudentModel> listTeacher = new ArrayList<>();
+
+    String SELECT_ALL_STUDENT = "SELECT * FROM student";
+
+    String action = request.getParameter("action");
+    switch (action) {
+        case "ajlist":
+            try (Connection connection = sqlConnect.getConnect();
+                    PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_STUDENT);) {
+                System.out.println(preparedStatement);
+                ResultSet rs = preparedStatement.executeQuery();
+                while (rs.next()) {
+                    String studentid = rs.getString("StudentID");
+                    String spassword = rs.getString("sPassword");
+                    String sfirstname = rs.getString("sFirstname");
+                    String slastname = rs.getString("sLastname");
+                    String sfirstlogin = rs.getString("sFirstLogin");
+                    listTeacher.add(new StudentModel(studentid, spassword, sfirstname, slastname, sfirstlogin));
+                }
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+                sqlConnect.printSQLException(e);
+            }
+            String json = gson.toJson(listTeacher);
+            out.print(json);
+            break;
+    }
+%>
 <%!
     public class StudentModel {
 
@@ -74,39 +106,5 @@
             this.sFirstLogin = sFirstLogin;
         }
 
-    }
-%>
-
-<%
-
-    SqlConnect sqlConnect = new SqlConnect();
-    Gson gson = new Gson();
-    ArrayList<StudentModel> listTeacher = new ArrayList<>();
-
-    String SELECT_ALL_STUDENT = "SELECT * FROM student";
-
-    String action = request.getParameter("action");
-    switch (action) {
-        case "ajlist":
-            try (Connection connection = sqlConnect.getConnect();
-                    PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_STUDENT);) {
-                System.out.println(preparedStatement);
-                ResultSet rs = preparedStatement.executeQuery();
-                while (rs.next()) {
-                    String studentid = rs.getString("StudentID");
-                    String spassword = rs.getString("sPassword");
-                    String sfirstname = rs.getString("sFirstname");
-                    String slastname = rs.getString("sLastname");
-                    String sfirstlogin = rs.getString("sFirstLogin");
-                    listTeacher.add(new StudentModel(studentid, spassword, sfirstname, slastname, sfirstlogin));
-                }
-                preparedStatement.close();
-                connection.close();
-            } catch (SQLException e) {
-                sqlConnect.printSQLException(e);
-            }
-            String json = gson.toJson(listTeacher);
-            out.print(json);
-            break;
     }
 %>

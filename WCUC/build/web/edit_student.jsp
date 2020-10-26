@@ -10,8 +10,10 @@
                 background-color: #d86fd2;
             }
             .pagination .page-item.active .page-link {
-                color: #fff;
                 background-color: #aa66cc;
+            }
+            .pagination .page-item.active .page-link:hover {
+                background-color: #d86fd2;
             }
         </style>
     </head>
@@ -46,9 +48,6 @@
                 </div>
             </div>
         </main>
-
-
-
         <%@include file="/includes/body.jsp" %>
         <script type="text/javascript" src="addons/jQDataTables/datatables.js"></script>
         <script src="addons/jQDataTables/dataTables.altEditor.free.js" ></script>
@@ -57,37 +56,27 @@
                 var columnDefs = [
                     {
                         data: "StudentID",
-                        title: "StudentID",
-                        pattern: "[0-9]{13}",
-                        hoverMsg: "0-9 13 Digit Only!.",
-                        unique: true,
-                        required: true
+                        title: "StudentID"
                     },
                     {
                         data: "sPassword",
-                        title: "sPassword",
-                        required: true
+                        title: "sPassword"
                     },
                     {
                         data: "sFirstname",
-                        title: "sFirstname",
-                        required: true
+                        title: "sFirstname"
                     },
                     {
                         data: "sLastname",
-                        title: "sLastname",
-                        required: true
+                        title: "sLastname"
                     },
                     {
                         data: "sFirstLogin",
-                        title: "sFirstLogin",
-                        type: "readonly"
-                        
+                        title: "sFirstLogin"
+
                     }
                 ];
-                var myTable;
-                myTable = $('#example').DataTable({
-                    "sPaginationType": "full_numbers",
+                $('#example').DataTable({
                     ajax: {
                         url: 'ajax_student.jsp?action=ajlist',
                         dataSrc: ''
@@ -99,41 +88,13 @@
                     altEditor: true, // Enable altEditor
                     buttons: [
                         {
+                            text: 'Refresh',
+                            name: 'refresh'
+                        },
+                        {
                             text: 'Export csv',
                             extend: 'csvHtml5'
-                        }],
-                    onAddRow: function (datatable, rowdata, success, error) {
-                        $.ajax({
-                            // a tipycal url would be / with type='PUT'
-                            url: 'ajax_student.jsp?action=ajadd',
-                            type: 'GET',
-                            data: rowdata,
-                            success: success,
-                            error: error
-                        });
-                    }
-                    ,
-                    onDeleteRow: function (datatable, rowdata, success, error) {
-                        $.ajax({
-                            // a tipycal url would be /{id} with type='DELETE'
-                            url: 'ajax_student.jsp?action=ajdelete',
-                            type: 'GET',
-                            data: rowdata,
-                            success: success,
-                            error: error
-                        });
-                    }
-                    ,
-                    onEditRow: function (datatable, rowdata, success, error) {
-                        $.ajax({
-                            // a tipycal url would be /{id} with type='POST'
-                            url: 'ajax_student.jsp?action=ajedit',
-                            type: 'GET',
-                            data: rowdata,
-                            success: success,
-                            error: error
-                        });
-                    }
+                        }]
                 });
                 /*myTable = $('#example').DataTable*/
             });

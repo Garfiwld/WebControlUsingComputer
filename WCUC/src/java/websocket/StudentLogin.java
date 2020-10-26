@@ -98,7 +98,7 @@ public class StudentLogin implements Runnable {
 
     SqlConnect sqlcon = new SqlConnect();
     private static final String SELECT_STUDENT_LOGIN = "SELECT * FROM student  WHERE student.StudentID=? and student.sPassword=?";
-    private static final String UPDATE_STUDENT_ONLINE = "UPDATE computer SET cStatus=?,StudentID=? WHERE MacAddress = ?";
+    private static final String UPDATE_STUDENT_ONLINE = "UPDATE computer SET cStatus='Online',StudentID=? WHERE MacAddress = ?";
     private static final String UPDATE_MATCHMAC = "INSERT INTO computer (MacAddress, IPv4, cStatus) VALUES(?, ?, ?) ON DUPLICATE KEY UPDATE IPv4 = ?, cStatus=?";
     private static final String UPDATE_SPASSWORD = "Update student set sPassword = ?, sFirstLogin = ? Where StudentID = ?";
 
@@ -133,9 +133,8 @@ public class StudentLogin implements Runnable {
         List<String> studentloginList = new ArrayList<>();
         Connection connection = sqlcon.getConnect();
         try (PreparedStatement ps = connection.prepareStatement(UPDATE_STUDENT_ONLINE);) {
-            ps.setString(1, "Login");
-            ps.setString(2, studentid);
-            ps.setString(3, macaddress);
+            ps.setString(1, studentid);
+            ps.setString(2, macaddress);
             System.out.println(ps);
             ps.executeUpdate();
             ps.close();

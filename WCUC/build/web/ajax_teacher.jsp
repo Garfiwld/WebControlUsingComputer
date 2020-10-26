@@ -13,63 +13,6 @@
 <%@page import="java.sql.Connection"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
-
-<%!
-    public class TeacherModel {
-
-        protected String TeacherID, tPassword, tFirstname, tLastname, tRole;
-
-        public TeacherModel(String TeacherID, String tPassword, String tFirstname, String tLastname, String tRole) {
-            this.TeacherID = TeacherID;
-            this.tPassword = tPassword;
-            this.tFirstname = tFirstname;
-            this.tLastname = tLastname;
-            this.tRole = tRole;
-        }
-
-        public String getTeacherID() {
-            return TeacherID;
-        }
-
-        public void setTeacherID(String TeacherID) {
-            this.TeacherID = TeacherID;
-        }
-
-        public String gettPassword() {
-            return tPassword;
-        }
-
-        public void settPassword(String tPassword) {
-            this.tPassword = tPassword;
-        }
-
-        public String gettFirstname() {
-            return tFirstname;
-        }
-
-        public void settFirstname(String tFirstname) {
-            this.tFirstname = tFirstname;
-        }
-
-        public String gettLastname() {
-            return tLastname;
-        }
-
-        public void settLastname(String tLastname) {
-            this.tLastname = tLastname;
-        }
-
-        public String gettRole() {
-            return tRole;
-        }
-
-        public void settRole(String tRole) {
-            this.tRole = tRole;
-        }
-
-    }
-%>
-
 <%
 
     SqlConnect sqlConnect = new SqlConnect();
@@ -160,5 +103,61 @@
                 sqlConnect.printSQLException(e);
             }
             break;
+    }
+%>
+
+<%!
+    public class TeacherModel {
+
+        protected String TeacherID, tPassword, tFirstname, tLastname, tRole;
+
+        public TeacherModel(String TeacherID, String tPassword, String tFirstname, String tLastname, String tRole) {
+            this.TeacherID = TeacherID;
+            this.tPassword = tPassword;
+            this.tFirstname = tFirstname;
+            this.tLastname = tLastname;
+            this.tRole = tRole;
+        }
+
+        public String getTeacherID() {
+            return TeacherID;
+        }
+
+        public void setTeacherID(String TeacherID) {
+            this.TeacherID = TeacherID;
+        }
+
+        public String gettPassword() {
+            return tPassword;
+        }
+
+        public void settPassword(String tPassword) {
+            this.tPassword = tPassword;
+        }
+
+        public String gettFirstname() {
+            return tFirstname;
+        }
+
+        public void settFirstname(String tFirstname) {
+            this.tFirstname = tFirstname;
+        }
+
+        public String gettLastname() {
+            return tLastname;
+        }
+
+        public void settLastname(String tLastname) {
+            this.tLastname = tLastname;
+        }
+
+        public String gettRole() {
+            return tRole;
+        }
+
+        public void settRole(String tRole) {
+            this.tRole = tRole;
+        }
+
     }
 %>
