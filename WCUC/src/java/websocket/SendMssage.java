@@ -18,4 +18,16 @@ public class SendMssage {
             return false;
         }
     }
+    public boolean SendInternetContol(String msg) {
+        try {
+            Socket send = new Socket("192.168.1.112", 26104);
+            PrintWriter out = new PrintWriter(send.getOutputStream());
+            out.println(msg);
+            out.flush();
+            return true;
+        } catch (IOException ex) {
+            System.out.println("SendInternetContol Offline");
+            return false;
+        }
+    }
 }

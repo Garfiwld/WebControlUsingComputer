@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class SocketServer {
+public class StartServer {
 
     public void openServer() {
         System.out.println("openServer");

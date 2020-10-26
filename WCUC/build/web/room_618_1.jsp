@@ -26,7 +26,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-4">
-                                <div class="form-group mb-1">                
+                                <div class="form-group mb-1">
                                     <a id="shutdownbtn" name="Shutdown" role="button" class="btn btn-danger btn-block" onclick="allSeat('shutdownbtn')"><i class="fas fa-power-off"></i> Shutdown</a>
                                 </div>
                                 <div class="form-group">
@@ -35,10 +35,10 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group mb-1">
-                                    <a id="netonbtn" name="On" role="button" class="btn btn-primary btn-block" onclick="net('netonbtn')"><i class="fas fa-signal-alt"></i> Internet : ON</a>
+                                    <a id="netonbtn" name="InternetOn" role="button" class="btn btn-primary btn-block" onclick="net('netonbtn')"><i class="fas fa-signal-alt"></i> Internet : ON</a>
                                 </div>
                                 <div class="form-group">
-                                    <a id="neroffbtn" name="Off" role="button" class="btn btn-primary btn-block" onclick="net('neroffbtn')"><i class="fas fa-signal-alt-slash"></i> Internet : OFF</a>
+                                    <a id="neroffbtn" name="InternetOff" role="button" class="btn btn-primary btn-block" onclick="net('neroffbtn')"><i class="fas fa-signal-alt-slash"></i> Internet : OFF</a>
                                 </div>
                             </div>
 
@@ -68,15 +68,17 @@
                 $.ajax({
                     url: "ajax_sendmsg.jsp",
                     type: "GET",
-                    data: "volume=all&Action=" + document.getElementById(action).name,
-                    success: function (response) {
-
-                    }
+                    data: "casesend=all&Action=" + document.getElementById(action).name
                 });
             }
 
             function net(action) {
-                console.log(action);
+                toastr.success(document.getElementById(action).innerHTML + 'Send success.');
+                $.ajax({
+                    url: "ajax_sendmsg.jsp",
+                    type: "GET",
+                    data: "&casesend=" + document.getElementById(action).name + "&room=618_1"
+                });
             }
 
             //popup buttons

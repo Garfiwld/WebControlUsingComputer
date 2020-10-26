@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="websocket.SocketServer"%>
+<%@page import="websocket.StartServer"%>
 <!DOCTYPE html>
 <html>
 
@@ -15,7 +15,7 @@
 
     <body onload="load()">
         <%
-            SocketServer run = new SocketServer();
+            StartServer run = new StartServer();
             run.openServer();
         %>
     </body>
