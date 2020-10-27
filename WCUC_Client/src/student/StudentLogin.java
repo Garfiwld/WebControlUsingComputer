@@ -116,16 +116,17 @@ public class StudentLogin extends javax.swing.JFrame {
         *   รับค่าจากฟอร์มและส่งไป Server
          */
         try (Socket socketLogin = new Socket(host, portLogin);
-                PrintWriter out = new PrintWriter(socketLogin.getOutputStream())) {
-            out.println("Login");
+                PrintWriter put = new PrintWriter(socketLogin.getOutputStream())) {
             String StudentID = StudentLogin.jTF_StudentID.getText();
             studentModel.setStudentid(StudentID);
-            out.println(StudentID);
             String sPassword = String.valueOf(jP_sPassword.getPassword());
-            out.println(sPassword);
-            out.println(studentModel.getMacaddress());
-            out.println(studentModel.getIpv4());
-            out.flush();
+            studentModel.setSpassword(sPassword);
+            put.println("Login");
+            put.println(studentModel.getStudentid());
+            put.println(studentModel.getSpassword());
+            put.println(studentModel.getMacaddress());
+            put.println(studentModel.getIpv4());
+            put.flush();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(getContentPane(), "Failed connect server.");
         }
@@ -187,13 +188,13 @@ public class StudentLogin extends javax.swing.JFrame {
 
                 studentLogin.jL_Mac.setText("MacAdress : " + studentModel.getMacaddress());
                 studentLogin.jL_IP.setText("IPv4Adress : " + studentModel.getIpv4());
-                System.out.println(studentModel.getMacaddress() + " : " + studentModel.getIpv4());
+                System.out.println("\ngetIPv4AndMac : " + studentModel.getMacaddress() + " : " + studentModel.getIpv4());
                 break;
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(studentLogin.getContentPane(), "Please check internet connection!");
-                if (++numtries == 3) {
-                    Restart();
+                if (++numtries > 1) {
+                    Shutdown();
                 }
+                JOptionPane.showMessageDialog(studentLogin.getContentPane(), "Please check internet connection!");
                 try {
                     Thread.sleep(10 * 1000);
                 } catch (InterruptedException ex) {
@@ -206,11 +207,11 @@ public class StudentLogin extends javax.swing.JFrame {
     public static void MatchMac() {
         getIPv4AndMac();
         try (Socket socketLogin = new Socket(host, portLogin)) {
-            PrintWriter out = new PrintWriter(socketLogin.getOutputStream());
-            out.println("MatchMac");
-            out.println(studentModel.getIpv4());
-            out.println(studentModel.getMacaddress());
-            out.flush();
+            PrintWriter put = new PrintWriter(socketLogin.getOutputStream());
+            put.println("MatchMac");
+            put.println(studentModel.getIpv4());
+            put.println(studentModel.getMacaddress());
+            put.flush();
         } catch (Exception ex) {
             System.out.println("Can't connect server.");
             MatchMac();
@@ -226,21 +227,14 @@ public class StudentLogin extends javax.swing.JFrame {
                 while (true) {
                     getIPv4AndMac();
                     try (Socket socketLogin = new Socket(host, portLogin)) {
-                        PrintWriter out = new PrintWriter(socketLogin.getOutputStream());
-                        out.println("HeartBeat");
-                        out.println(studentModel.getIpv4());
-                        out.println(studentModel.getMacaddress());
-                        out.flush();
+                        PrintWriter put = new PrintWriter(socketLogin.getOutputStream());
+                        System.out.println("\n--- HeartBeat ---");
+                        put.println("HeartBeat");
+                        put.println(studentModel.getIpv4());
+                        put.println(studentModel.getMacaddress());
+                        put.flush();
+                        break;
                     } catch (Exception e) {
-                        JOptionPane.showMessageDialog(studentLogin.getContentPane(), "Please check internet connection!");
-                        if (++numtries == 3) {
-                            Restart();
-                        }
-                        try {
-                            Thread.sleep(10 * 1000);
-                        } catch (InterruptedException ex) {
-                            Thread.currentThread().interrupt();
-                        }
                     }
                 }
             }
@@ -248,17 +242,17 @@ public class StudentLogin extends javax.swing.JFrame {
     }
 
     public static void Restart() {
-        System.out.println("--- Restart ---");
+        System.out.println("\n--- Restart ---");
 //        try {
-//            Runtime.getRuntime().exec("cmd /c shutdown -r -t 0");
+//            Runtime.getRuntime().exec("cmd /c shutdown -r -f -t 0");
 //        } catch (IOException e) {
 //        }
     }
 
     public static void Shutdown() {
-        System.out.println("--- Shutdown ---");
+        System.out.println("\n--- Shutdown ---");
 //        try {
-//            Runtime.getRuntime().exec("cmd /c shutdown -s -t 0");
+//            Runtime.getRuntime().exec("cmd /c shutdown -s -f -t 0");
 //        } catch (IOException e) {
 //        }
     }
