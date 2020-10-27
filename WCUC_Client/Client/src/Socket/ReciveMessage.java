@@ -1,6 +1,5 @@
 package Socket;
 
-import connect.SocketConnect;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,7 +9,6 @@ import student.LockScreen;
 
 public class ReciveMessage {
 
-    SocketConnect socketConnect = new SocketConnect();
     LockScreen lockScreen = new LockScreen();
 
     public void start() {

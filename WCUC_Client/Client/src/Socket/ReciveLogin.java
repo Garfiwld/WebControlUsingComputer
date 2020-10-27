@@ -1,7 +1,6 @@
 package Socket;
 
 import Model.StudentModel;
-import connect.SocketConnect;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,7 +15,6 @@ import student.StudentLogin;
 
 public class ReciveLogin {
 
-    SocketConnect socketConnect = new SocketConnect();
     StudentModel studentModel = new StudentModel();
 
     public void start() {
@@ -47,7 +45,7 @@ public class ReciveLogin {
                                     String result = jpf.getText();
                                     try {
                                         System.out.println("SocketNewpassword");
-                                        Socket socketLogin = socketConnect.socketLogin();
+                                        Socket socketLogin = new Socket(StudentLogin.host, StudentLogin.portLogin);
                                         try (PrintWriter out = new PrintWriter(socketLogin.getOutputStream())) {
                                             out.println("UpdatePassword");
                                             out.println(studentModel.getStudentid());
@@ -61,7 +59,7 @@ public class ReciveLogin {
                             } else {
                                 StudentLogin.studentLogin.setVisible(false);
                             }
-                            student.StudentLogin.HeartBeat();
+                            StudentLogin.HeartBeat();
                             break;
                         case "LoginFailed":
                             JOptionPane.showMessageDialog(StudentLogin.studentLogin.getContentPane(), "Username or Password Invalid.");

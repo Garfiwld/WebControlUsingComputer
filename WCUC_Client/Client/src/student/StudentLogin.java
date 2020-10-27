@@ -3,7 +3,6 @@ package student;
 import Socket.ReciveLogin;
 import Model.StudentModel;
 import Socket.ReciveMessage;
-import connect.SocketConnect;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -23,8 +22,10 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 public class StudentLogin extends javax.swing.JFrame {
 
+    public static final String host = "192.168.1.111";
+    public static final int portLogin = 25101;
+
     static StudentModel studentModel = new StudentModel();
-    SocketConnect socketConnect = new SocketConnect();
     public static StudentLogin studentLogin;
 
     public StudentLogin() {
@@ -118,7 +119,7 @@ public class StudentLogin extends javax.swing.JFrame {
         /*
         *   รับค่าจากฟอร์มและส่งไป Server
          */
-        try (Socket socketLogin = new SocketConnect().socketLogin();
+        try (Socket socketLogin = new Socket(host, portLogin);
                 PrintWriter out = new PrintWriter(socketLogin.getOutputStream())) {
             out.println("Login");
             String StudentID = StudentLogin.jTF_StudentID.getText();
@@ -148,11 +149,6 @@ public class StudentLogin extends javax.swing.JFrame {
         }
 
         studentLogin = new StudentLogin();
-
-        /*
-         *  รับค่า MacAddress & IPv4
-         */
-        getIPv4AndMac();
 
         /*
          *  อัพเดท IPv4 กับ MacAddress ที่ Database
@@ -195,24 +191,64 @@ public class StudentLogin extends javax.swing.JFrame {
 
                 studentLogin.jL_Mac.setText("MacAdress : " + studentModel.getMacaddress());
                 studentLogin.jL_IP.setText("IPv4Adress : " + studentModel.getIpv4());
+                System.out.println(studentModel.getMacaddress() + " : " + studentModel.getIpv4());
                 break;
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(studentLogin.getContentPane(), "Please check internet connection!");
-                if (numtries++ == 3) {
+                if (++numtries == 3) {
                     Restart();
                 }
-                wait(10 * 1000);
-                continue;
+                try {
+                    Thread.sleep(10 * 1000);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
             }
         }
     }
 
-    public static void wait(int ms) {
-        try {
-            Thread.sleep(ms);
-        } catch (InterruptedException ex) {
-            Thread.currentThread().interrupt();
+    public static void MatchMac() {
+        getIPv4AndMac();
+        try (Socket socketLogin = new Socket(host, portLogin)) {
+            PrintWriter out = new PrintWriter(socketLogin.getOutputStream());
+            out.println("MatchMac");
+            out.println(studentModel.getIpv4());
+            out.println(studentModel.getMacaddress());
+            out.flush();
+        } catch (Exception ex) {
+            System.out.println("Can't connect server.");
+            MatchMac();
         }
+    }
+
+    public static void HeartBeat() {
+        Timer t = new Timer();
+        t.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                int numtries = 0;
+                while (true) {
+                    getIPv4AndMac();
+                    try (Socket socketLogin = new Socket(host, portLogin)) {
+                        PrintWriter out = new PrintWriter(socketLogin.getOutputStream());
+                        out.println("HeartBeat");
+                        out.println(studentModel.getIpv4());
+                        out.println(studentModel.getMacaddress());
+                        out.flush();
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(studentLogin.getContentPane(), "Please check internet connection!");
+                        if (++numtries == 3) {
+                            Restart();
+                        }
+                        try {
+                            Thread.sleep(10 * 1000);
+                        } catch (InterruptedException ex) {
+                            Thread.currentThread().interrupt();
+                        }
+                    }
+                }
+            }
+        }, 0, 5 * 1000);
     }
 
     public static void Restart() {
@@ -227,39 +263,8 @@ public class StudentLogin extends javax.swing.JFrame {
         System.out.println("--- Shutdown ---");
         try {
             Runtime.getRuntime().exec("cmd /c shutdown -s");
-        } catch (Exception e) {
+        } catch (IOException e) {
         }
-    }
-
-    public static void MatchMac() {
-        try (Socket socketLogin = new SocketConnect().socketLogin()) {
-            PrintWriter out = new PrintWriter(socketLogin.getOutputStream());
-            out.println("MatchMac");
-            out.println(studentModel.getIpv4());
-            out.println(studentModel.getMacaddress());
-            out.flush();
-        } catch (Exception ex) {
-            MatchMac();
-        }
-    }
-
-    public static void HeartBeat() {
-        Timer t = new Timer();
-        t.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                getIPv4AndMac();
-                try (Socket socketLogin = new SocketConnect().socketLogin()) {
-                    PrintWriter out = new PrintWriter(socketLogin.getOutputStream());
-                    out.println("HeartBeat");
-                    out.println(studentModel.getIpv4());
-                    out.println(studentModel.getMacaddress());
-                    out.flush();
-                } catch (Exception ex) {
-                    MatchMac();
-                }
-            }
-        }, 0, 5 * 1000);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
