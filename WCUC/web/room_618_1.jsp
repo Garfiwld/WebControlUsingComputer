@@ -71,7 +71,7 @@
                     type: "GET",
                     data: "casesend=all&Action=" + action.name,
                     success: function (response) {
-                        response.success ? toastr.success(action.innerHTML + ' Success.') : toastr.error(action.innerHTML + ' Fail.');
+                        response ? toastr.success(action.innerHTML + ' Success.') : toastr.error(action.innerHTML + ' Fail.');
                     }
                 });
             }

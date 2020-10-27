@@ -171,11 +171,14 @@
             // --- ส่งการควยคุมจาก SeatID ที่เลือก ---
             function singleSeat(action) {
                 var str = ' SeatID ' + document.getElementById("seatidform").value + ' : ' + document.getElementById(action).innerHTML;
-                toastr.success(str + ' Send success.');
+                toastr.success(str + 'Sended please wait...');
                 $.ajax({
                     url: "ajax_sendmsg.jsp",
                     type: "GET",
-                    data: "casesend=single&Action=" + document.getElementById(action).name + "&IPv4=" + document.getElementById("ipv4").value
+                    data: "casesend=single&Action=" + document.getElementById(action).name + "&IPv4=" + document.getElementById("ipv4").value,
+                    success: function (response) {
+                        response ? toastr.success(str + ' Success.') : toastr.error(str + ' Fail.');
+                    }
                 });
             }
             // --- ตั้งค่า toastr ---
