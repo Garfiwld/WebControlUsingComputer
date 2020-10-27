@@ -22,3 +22,7 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 /WCUC/dist/
+/WCUC_InternetControl/WCUC_InternetControl/nbproject/private/
+/WCUC_Client/WCUC_Client/nbproject/private/
+/WCUC_Client/nbproject/private/
+/WCUC_InternetControl/nbproject/private/
