@@ -1,4 +1,5 @@
 <%@page contentType="application/json" pageEncoding="UTF-8"%>
+<%@page import="websocket.SendMssage"%>
 <%@page import="java.io.IOException"%>
 <%@page import="java.io.PrintWriter"%>
 <%@page import="java.net.Socket"%>
@@ -10,6 +11,7 @@
 
 <%
     SqlConnect sqlConnect = new SqlConnect();
+    SendMssage sendMssage = new SendMssage();
     String SELECT_ALL_COMPUTER = "SELECT IPv4 FROM computer WHERE IPv4 IS NOT NULL";
 
     String ipv4, action, casesend, room;
@@ -19,7 +21,7 @@
     room = request.getParameter("room");
     switch (casesend) {
         case "single":
-            SendMsg(ipv4, action);
+            sendMssage.Send(ipv4, action);
             break;
         case "all":
             try (Connection connection = sqlConnect.getConnect();
@@ -27,7 +29,7 @@
                 System.out.println(ps);
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
-                    SendMsg(rs.getString("IPv4"), action);
+                    sendMssage.Send(rs.getString("IPv4"), action);
                 }
                 ps.close();
                 connection.close();
@@ -36,38 +38,10 @@
             }
             break;
         case "InternetOn":
-            SendInternetContol(casesend, room);
+            sendMssage.SendInternetContol(casesend, room);
             break;
         case "InternetOff":
-            SendInternetContol(casesend, room);
+            sendMssage.SendInternetContol(casesend, room);
             break;
-    }
-%>
-
-<%!
-    public void SendMsg(String ipv4, String msg) {
-
-        try {
-            Socket send = new Socket(ipv4, 26103);
-            PrintWriter out = new PrintWriter(send.getOutputStream());
-            out.println(msg);
-            out.flush();
-        } catch (IOException ex) {
-            System.out.println("Client Offline IPv4 : " + ipv4);
-        }
-    }
-
-    public boolean SendInternetContol(String msg, String room) {
-        try {
-            Socket send = new Socket("192.168.1.112", 26104);
-            PrintWriter out = new PrintWriter(send.getOutputStream());
-            out.println(msg);
-            out.println(room);
-            out.flush();
-            return true;
-        } catch (IOException ex) {
-            System.out.println("SendInternetContol Offline");
-            return false;
-        }
     }
 %>

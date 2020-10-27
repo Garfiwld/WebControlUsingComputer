@@ -7,10 +7,6 @@
         <div class="navbar-collapse collapse show" id="navbarSupportedContent-5" style="">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link waves-effect waves-light" href="#"><i class="fas fa-grip-horizontal"></i> Dashboard
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link waves-effect waves-light" href="room_618_1.jsp"><i class="fas fa-th"></i> Room Control</a>
                 </li>
                 <li class="nav-item">

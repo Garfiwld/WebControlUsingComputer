@@ -51,38 +51,14 @@
         int startPos = ((file.substring(0, pos)).getBytes()).length;
         int endPos = ((file.substring(0, boundaryLocation)).getBytes()).length;
 
-        //String savePath = application.getRealPath("\\upload\\" + saveFile);
-        String savePath = "E:\\0_Workspace\\WebControlUsingComputer\\WCUC\\web\\upload\\" + saveFile;
+        String savePath = getServletContext().getRealPath("/") + saveFile;
+        System.out.println(savePath);
+//        String savePath = servletContext.getRealPath("\\upload\\" + saveFile);
+//        String savePath = ".\\upload\\" + saveFile;
         FileOutputStream fileOut = new FileOutputStream(savePath);
         fileOut.write(dataBytes, startPos, (endPos - startPos));
         fileOut.flush();
         fileOut.close();
-
-        try (Reader reader = new FileReader(savePath);
-                CSVParser csvParser = new CSVParser(reader, CSVFormat.RFC4180.withFirstRecordAsHeader())) {
-            for (CSVRecord record : csvParser) {
-                try (Connection connection = sqlConnect.getConnect();
-                        PreparedStatement preparedStatement = connection.prepareStatement(INSERT_STUDENT_BY_FILE)) {
-                    preparedStatement.setString(1, record.get("StudentID"));
-                    preparedStatement.setString(2, record.get("StudentID"));
-                    String sfirstname = record.get("sFirstname");
-//                            String decodedsfn = new String(sfirstname.getBytes("UTF-8"), "UTF-8");
-                    String slirstname = record.get("sLastname");
-//                            String decodedsln = new String(slirstname.getBytes("UTF-8"), "UTF-8");
-                    preparedStatement.setString(3, sfirstname);
-                    preparedStatement.setString(4, slirstname);
-                    preparedStatement.setString(5, record.get("StudentID"));
-                    preparedStatement.setString(6, sfirstname);
-                    preparedStatement.setString(7, slirstname);
-                    System.out.println(preparedStatement);
-                    preparedStatement.executeUpdate();
-                    preparedStatement.close();
-                } catch (SQLException e) {
-                    sqlConnect.printSQLException(e);
-                }
-            }
-        } catch (Exception e) {
-        }
 
         try (Reader reader = new FileReader(savePath);
                 CSVParser csvParser = new CSVParser(reader, CSVFormat.EXCEL.withFirstRecordAsHeader());) {
@@ -92,13 +68,13 @@
                 String[] arrOfStu = strOfStu.split("\'");
                 StudentID = arrOfStu[1];
                 String name = record.get("StdName");
-                String deTIS60 = new String(name.getBytes("ISO-8859-1"), "TIS-620");
-                String[] arrOfsName = deTIS60.split(" ");
+                String decodeTIS620 = new String(name.getBytes("ISO-8859-1"), "TIS-620");
+                String[] arrOfsName = decodeTIS620.split(" ");
 //                        String decodedUTF8 = new String(deISO885911.getBytes("ISO-8859-11"), "UTF-8");
 //                        String[] arrOfsName = decodedUTF8.split(" ");
                 sFirstname = arrOfsName[1];
                 sLastname = arrOfsName[4];
-//                        out.println(StudentID + " : " + sFirstname + " : " + sLastname + "<br>");
+                out.println(StudentID + " : " + sFirstname + " : " + sLastname + "<br>");
 
                 try (Connection connection = sqlConnect.getConnect();
                         PreparedStatement ps = connection.prepareStatement(INSERT_STUDENT_BY_FILE)) {

@@ -18,11 +18,13 @@ public class SendMssage {
             return false;
         }
     }
-    public boolean SendInternetContol(String msg) {
+
+    public boolean SendInternetContol(String msg, String room) {
         try {
             Socket send = new Socket("192.168.1.112", 26104);
             PrintWriter out = new PrintWriter(send.getOutputStream());
             out.println(msg);
+            out.println(room);
             out.flush();
             return true;
         } catch (IOException ex) {

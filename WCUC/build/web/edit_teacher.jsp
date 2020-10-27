@@ -33,18 +33,6 @@
                         <div class="form-header purple-gradient accent-1">
                             <h3>Edit Teacher</h3>
                         </div>
-
-                        <form action="upload_teacher.jsp" method="POST" enctype="multipart/form-data">
-                            <div class="col-md-6 mx-auto">
-                                <div class="form-group">
-                                    <label for="uploadFile">Upload File</label>
-                                    <input type="file" accept=".csv" class="form-control-file" id="uploadFile" name="uploadFile" required>
-                                </div>
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-secondary btn-block">Submit</button>
-                                </div>
-                            </div>
-                        </form>
                         <table cellpadding="0" cellspacing="0" border="0" class="dataTable table table-striped" id="example"></table>
                         <div id="editinw" class="text-center" style="display:none;">
                             <button class="btn btn-secondary" onclick="editinw()">Submit</button>
@@ -123,21 +111,6 @@
                                             {
                                                 text: 'Refresh',
                                                 name: 'refresh'
-                                            },
-                                            {
-                                                text: 'Export csv',
-                                                extend: 'csvHtml5',
-                                                filename: function () {
-                                                    var date = new Date();
-                                                    var hours = date.getHours();
-                                                    var minutes = date.getMinutes();
-                                                    minutes = minutes < 10 ? '0' + minutes : minutes;
-                                                    var seconds = date.getSeconds();
-                                                    seconds = seconds < 10 ? '0' + seconds : seconds;
-                                                    var strDate = date.getMonth() + 1 + "-" + date.getDate() + "-" + date.getFullYear();
-                                                    var strTime = hours + '-' + minutes + '-' + seconds;
-                                                    return  "TEACHER_ROOM_618_1_" + strDate + "_" + strTime;
-                                                }
                                             }],
                                         onAddRow: function (datatable, rowdata, success, error) {
                                             $.ajax({
