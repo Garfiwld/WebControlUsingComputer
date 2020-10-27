@@ -7,7 +7,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.IOException;
 import javax.swing.JFrame;
 
 public class LockScreen extends JFrame {
@@ -31,12 +30,8 @@ public class LockScreen extends JFrame {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_WINDOWS || e.getKeyCode() == KeyEvent.VK_CONTROL || e.getKeyCode() == KeyEvent.VK_ALT) {
-                    System.out.println("--- Restart ---");
-                    try {
-                        Runtime.getRuntime().exec("cmd /c shutdown -r");
-                    } catch (IOException ex) {
-                    }
+                if (e.getKeyCode() == KeyEvent.VK_WINDOWS || e.getKeyCode() == KeyEvent.VK_CONTROL || e.getKeyCode() == KeyEvent.VK_ALT || e.getKeyCode() == KeyEvent.VK_TAB || e.getKeyCode() == KeyEvent.VK_SHIFT) {
+                    StudentLogin.Restart();
                 }
             }
 
@@ -48,11 +43,7 @@ public class LockScreen extends JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent we) {
-                System.out.println("--- Restart ---");
-                try {
-                    Runtime.getRuntime().exec("cmd /c shutdown -r");
-                } catch (IOException ex) {
-                }
+                StudentLogin.Restart();
             }
         });
     }
@@ -69,7 +60,7 @@ public class LockScreen extends JFrame {
 
         jL_Warning.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jL_Warning.setForeground(new java.awt.Color(255, 255, 255));
-        jL_Warning.setText("Warning! don't press key Ctrl, Windows, Alt");
+        jL_Warning.setText("Warning! don't press key Ctrl, Windows, Alt, Shift, Tab");
         getContentPane().add(jL_Warning);
         jL_Warning.setBounds(70, 160, 960, 60);
 

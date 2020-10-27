@@ -2,7 +2,7 @@ package Model;
 
 public class StudentModel {
 
-    protected static String ipv4, macaddress, studentid, course, section, datetime;
+    protected static String ipv4, macaddress, studentid;
 
     public static String getIpv4() {
         return ipv4;
@@ -26,30 +26,6 @@ public class StudentModel {
 
     public static void setStudentid(String studentid) {
         StudentModel.studentid = studentid;
-    }
-
-    public static String getCourse() {
-        return course;
-    }
-
-    public static void setCourse(String course) {
-        StudentModel.course = course;
-    }
-
-    public static String getSection() {
-        return section;
-    }
-
-    public static void setSection(String section) {
-        StudentModel.section = section;
-    }
-
-    public static String getDatetime() {
-        return datetime;
-    }
-
-    public static void setDatetime(String datetime) {
-        StudentModel.datetime = datetime;
     }
 
 }
