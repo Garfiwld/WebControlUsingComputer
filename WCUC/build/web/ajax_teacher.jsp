@@ -23,6 +23,7 @@
     String INSERT_TEACHER = "INSERT INTO teacher (TeacherID, tPassword, tFirstname, tLastname, tRole) VALUES (?, ?, ?, ?, ?);";
     String UPDATE_TEACHER = "UPDATE teacher SET TeacherID = ?,tPassword= ?, tFirstname = ?, tLastname = ?, tRole = ? WHERE TeacherID = ?;";
     String DELETE_TEACHER = "DELETE FROM teacher WHERE TeacherID = ?;";
+    String INSERT_INW = "INSERT INTO teacher (TeacherID, tPassword, tFirstname, tLastname, tRole) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE TeacherID=?, tFirstname=?, tLastname=?, tRole=?";
 
     String TeacherID, tPassword, tFirstname, tLastname, tRole;
     TeacherID = request.getParameter("TeacherID");
@@ -99,6 +100,27 @@
                 preparedStatement.close();
                 connection.close();
                 out.print(rowDeleted);
+            } catch (SQLException e) {
+                sqlConnect.printSQLException(e);
+            }
+            break;
+        case "ajinw":
+            try (Connection connection = sqlConnect.getConnect();
+                    PreparedStatement preparedStatement = connection.prepareStatement(INSERT_INW);) {
+                preparedStatement.setString(1, TeacherID);
+                preparedStatement.setString(2, tPassword);
+                preparedStatement.setString(3, tFirstname);
+                preparedStatement.setString(4, tLastname);
+                preparedStatement.setString(5, tRole);
+                preparedStatement.setString(6, TeacherID);
+                preparedStatement.setString(7, tFirstname);
+                preparedStatement.setString(8, tLastname);
+                preparedStatement.setString(9, tRole);
+                preparedStatement.executeUpdate();
+                preparedStatement.close();
+                connection.close();
+                TeacherModel teacherEdit = new TeacherModel(TeacherID, tPassword, tFirstname, tLastname, tRole);
+                out.print(gson.toJson(teacherEdit));
             } catch (SQLException e) {
                 sqlConnect.printSQLException(e);
             }

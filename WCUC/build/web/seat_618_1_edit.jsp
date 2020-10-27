@@ -113,35 +113,10 @@
                 });
             }
 
-            var oldMac;
-            function ajedit() {
-                var SeatID = document.getElementById("SeatID").value;
-                var MacAddress = document.getElementById("MacAddress").value;
-                $.ajax({
-                    url: "ajax_seat.jsp",
-                    type: "GET",
-                    data: {action: 'ajedit', oldMac: oldMac, MacAddress: MacAddress, SeatID: SeatID}
-                });
-                document.getElementById(SeatID).src = 'img/Offline.png';
-                $('#exampleModal').modal('hide');
-            }
-            function ajdelete() {
-                var SeatID = document.getElementById("SeatID").value;
-                $.ajax({
-                    url: "ajax_seat.jsp",
-                    type: "GET",
-                    data: {action: 'ajdelete', SeatID: SeatID}
-                });
-                document.getElementById(SeatID).src = 'img/Floor.png';
-                $('#exampleModal').modal('hide');
-            }
-
-
             // --- ปรับขนาด ICON บยเว็บ ---
             var imgsize = document.getElementById("imgsize");
             imgsize.oninput = function () {
                 var allimg = <% out.println(roomX * roomY);%>;
-                console.log(allimg);
                 for (var i = 0; i < allimg; i++) {
                     document.images[i].style.width = this.value + "px";
                     document.images[i].style.height = this.value + "px";
@@ -149,15 +124,14 @@
             };
 
             // --- แสดงหน้าตางการตั้งค่าตอมพิวเตอร์ ---
+            var oldMac;
             var clickFunction = function (event) {
                 var seatid = event.target.attributes['id'].value;
                 document.getElementById("SeatID").value = seatid;
-                // setAttribute > href > ปุ่ม Delete
-//                var delbtn = document.getElementById("deletebtn");
-//                delbtn.setAttribute("href", "seat_618_1_edit.jsp?action=delete&SeatID=" + seatid);
                 var select = $('#MacAddress');
                 select.find('option').remove();
                 // --- รับค่า MacAddress ที่ถูกใช้งานมาแสดงผล ---
+                oldMac = null;
                 $.ajax({
                     url: "ajax_seat.jsp",
                     type: "GET",
@@ -191,6 +165,29 @@
             $(document).ready(function () {
                 $('.mdb-select').materialSelect();
             });
+
+            function ajedit() {
+                var SeatID = document.getElementById("SeatID").value;
+                var MacAddress = document.getElementById("MacAddress").value;
+                console.log(oldMac + ' : ' + MacAddress + ' : ' + SeatID);
+                $.ajax({
+                    url: "ajax_seat.jsp",
+                    type: "GET",
+                    data: {action: 'ajedit', oldMac: oldMac, MacAddress: MacAddress, SeatID: SeatID}
+                });
+                document.getElementById(SeatID).src = 'img/Offline.png';
+                $('#exampleModal').modal('hide');
+            }
+            function ajdelete() {
+                var SeatID = document.getElementById("SeatID").value;
+                $.ajax({
+                    url: "ajax_seat.jsp",
+                    type: "GET",
+                    data: {action: 'ajdelete', SeatID: SeatID}
+                });
+                document.getElementById(SeatID).src = 'img/Floor.png';
+                $('#exampleModal').modal('hide');
+            }
 
         </script>
     </body>

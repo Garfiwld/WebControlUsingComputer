@@ -110,7 +110,6 @@
             var imgsize = document.getElementById("imgsize");
             imgsize.oninput = function () {
                 var allimg = <% out.println(roomX * roomY);%>;
-                console.log(allimg);
                 for (var i = 0; i < allimg; i++) {
                     document.images[i].style.width = this.value + "px";
                     document.images[i].style.height = this.value + "px";

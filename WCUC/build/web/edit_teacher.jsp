@@ -35,6 +35,7 @@
                         </div>
                         <table cellpadding="0" cellspacing="0" border="0" class="dataTable table table-striped" id="example"></table>
                         <div id="editinw" class="text-center" style="display:none;">
+                            <button class="btn btn-secondary" onclick="newinw()">New Row</button>
                             <button class="btn btn-secondary" onclick="editinw()">Submit</button>
                         </div>
                     </div>
@@ -159,11 +160,10 @@
                                 function editinw() {
                                     document.getElementById('editinw').style.display = "none"
                                     $('#example').removeClass("editMode");
-
                                     var thInw = document.getElementsByTagName("th");
                                     var trInw = document.getElementsByTagName("tr");
                                     for (var i = 1; i < trInw.length; i++) {
-                                        var urlInw = 'ajax_teacher.jsp?action=ajedit';
+                                        var urlInw = 'ajax_teacher.jsp?action=ajinw';
                                         for (var j = 0; j < thInw.length; j++) {
                                             trInw[i].getElementsByTagName("td")[j].contentEditable = "false";
                                             console.log('&' + thInw[j].outerText + '=' + trInw[i].getElementsByTagName("td")[j].outerText);
@@ -178,6 +178,12 @@
                                             }
                                         });
                                     }
+                                }
+
+                                //
+                                function newinw() {
+                                    var tbody = document.querySelector("#example > tbody");
+                                    tbody.innerHTML += document.querySelector("#example > tbody > tr.even.selected").innerHTML;
                                 }
         </script>
     </body>

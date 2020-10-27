@@ -52,9 +52,6 @@
         int endPos = ((file.substring(0, boundaryLocation)).getBytes()).length;
 
         String savePath = getServletContext().getRealPath("/") + saveFile;
-        System.out.println(savePath);
-//        String savePath = servletContext.getRealPath("\\upload\\" + saveFile);
-//        String savePath = ".\\upload\\" + saveFile;
         FileOutputStream fileOut = new FileOutputStream(savePath);
         fileOut.write(dataBytes, startPos, (endPos - startPos));
         fileOut.flush();
