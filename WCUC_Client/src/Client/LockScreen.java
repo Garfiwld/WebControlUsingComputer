@@ -1,5 +1,6 @@
-package student;
+package Client;
 
+import Model.StudentModel;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -10,6 +11,9 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 
 public class LockScreen extends JFrame {
+
+    StudentModel studentModel = new StudentModel();
+    StudentLogin studentLogin = new StudentLogin();
 
     public LockScreen() {
         setAlwaysOnTop(true);
@@ -30,8 +34,12 @@ public class LockScreen extends JFrame {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_WINDOWS || e.getKeyCode() == KeyEvent.VK_CONTROL || e.getKeyCode() == KeyEvent.VK_ALT || e.getKeyCode() == KeyEvent.VK_TAB || e.getKeyCode() == KeyEvent.VK_SHIFT) {
-                    StudentLogin.Restart();
+                if (e.getKeyCode() == KeyEvent.VK_WINDOWS
+                        || e.getKeyCode() == KeyEvent.VK_CONTROL
+                        || e.getKeyCode() == KeyEvent.VK_ALT
+                        || e.getKeyCode() == KeyEvent.VK_TAB
+                        || e.getKeyCode() == KeyEvent.VK_SHIFT) {
+                    main.Restart();
                 }
             }
 
@@ -43,7 +51,7 @@ public class LockScreen extends JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent we) {
-                StudentLogin.Restart();
+                main.Restart();
             }
         });
     }

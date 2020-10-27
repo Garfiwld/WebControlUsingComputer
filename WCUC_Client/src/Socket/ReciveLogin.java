@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import student.StudentLogin;
+import Client.main;
 
 public class ReciveLogin {
 
@@ -31,38 +31,38 @@ public class ReciveLogin {
                     Socket socketAccept = serversocketStudent.accept();
                     BufferedReader read = new BufferedReader(new InputStreamReader(socketAccept.getInputStream()));
                     String action = read.readLine();
-                    System.out.println("\naction : " + action);
+                    System.out.println("\n[GET] : " + action);
                     switch (action) {
                         case "LoginSuccess":
-                            JOptionPane.showMessageDialog(StudentLogin.studentLogin.getContentPane(), "Login Success.");
+                            JOptionPane.showMessageDialog(main.studentLogin.getContentPane(), "Login Success.");
                             String sfirstlogin = read.readLine();
                             if (sfirstlogin.equals("Yes")) {
                                 JTextField jpf = new JPasswordField(15);
                                 JLabel jl = new JLabel("Please input your new password");
                                 Object object[] = {jpf, jl};
-                                int i = JOptionPane.showConfirmDialog(StudentLogin.studentLogin.getContentPane(), object, "First Login", JOptionPane.WARNING_MESSAGE);
+                                int i = JOptionPane.showConfirmDialog(main.studentLogin.getContentPane(), object, "First Login", JOptionPane.WARNING_MESSAGE);
                                 if (i == JOptionPane.OK_OPTION) {
                                     String newPassword = jpf.getText();
                                     try {
-                                        System.out.println("SocketNewpassword");
-                                        Socket socketLogin = new Socket(StudentLogin.host, StudentLogin.portLogin);
+                                        Socket socketLogin = new Socket(main.host, main.port);
                                         try (PrintWriter put = new PrintWriter(socketLogin.getOutputStream())) {
                                             put.println("UpdatePassword");
                                             put.println(studentModel.getStudentid());
                                             put.println(newPassword);
                                             put.flush();
+                                            System.out.println("\n[PUT] UpdatePassword : " + studentModel.getStudentid() + " : " + newPassword);
                                         }
-                                        StudentLogin.studentLogin.setVisible(false);
+                                        main.studentLogin.setVisible(false);
                                     } catch (IOException e) {
                                     }
                                 }
                             } else {
-                                StudentLogin.studentLogin.setVisible(false);
+                                main.studentLogin.setVisible(false);
                             }
-                            StudentLogin.HeartBeat();
+                            main.HeartBeat();
                             break;
                         case "LoginFailed":
-                            JOptionPane.showMessageDialog(StudentLogin.studentLogin.getContentPane(), "Username or Password Invalid.");
+                            JOptionPane.showMessageDialog(main.studentLogin.getContentPane(), "Username or Password Invalid.");
                             break;
                     }
                 }

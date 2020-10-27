@@ -5,11 +5,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
-import student.LockScreen;
+import Client.LockScreen;
+import Client.StudentLogin;
+import Client.main;
 
 public class ReciveMessage {
 
     LockScreen lockScreen = new LockScreen();
+    StudentLogin studentLogin = new StudentLogin();
 
     public void start() {
 
@@ -26,34 +29,23 @@ public class ReciveMessage {
                     Socket readAccept = serversocketStudent.accept();
                     BufferedReader read = new BufferedReader(new InputStreamReader(readAccept.getInputStream()));
                     String msg = read.readLine();
-                    System.out.println("ReciveMsg msg : " + msg);
+                    System.out.println("\n[GET] " + msg);
                     switch (msg) {
                         case "Shutdown":
-                            System.out.println("case : Shutdown");
-                            try {
-                                Runtime.getRuntime().exec("cmd /c shutdown -s");
-                            } catch (IOException e) {
-                            }
+                            main.Shutdown();
                             break;
                         case "Restart":
-                            System.out.println("case : Restart");
-                            try {
-                                Runtime.getRuntime().exec("cmd /c shutdown -r");
-                            } catch (IOException e) {
-                            }
+                            main.Restart();
                             break;
                         case "LockScreen":
-                            System.out.println("case : LockScreen");
                             lockScreen.setVisible(true);
                             break;
                         case "UnlockScreen":
-                            System.out.println("case : UnlockScreen");
                             lockScreen.setVisible(false);
                             break;
                     }
                 }
             } catch (IOException ex) {
-                System.out.println(ex);
             }
         }
     });
