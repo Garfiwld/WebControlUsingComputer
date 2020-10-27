@@ -2,7 +2,6 @@ package websocket;
 
 import connect.SqlConnect;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
@@ -15,47 +14,36 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ReciveMessage implements Runnable {
+public class ReciveMessage {
 
     SendMssage sendMssage = new SendMssage();
 
-    @Override
-    public void run() {
-        try {
-            ServerSocket Serversocket = new ServerSocket(25101);
-            while (true) {
-                Socket socket = Serversocket.accept();
-                new EchoThread(socket).start();
-            }
-        } catch (IOException e) {
+    public void start() {
 
-        }
+        ReciveMessage.start();
+
     }
-
-    public class EchoThread extends Thread {
-
-        protected Socket clientSocket;
-
-        EchoThread(Socket clientSocket) {
-            this.clientSocket = clientSocket;
-        }
-
+    Thread ReciveMessage = new Thread(new Runnable() {
+        @Override
         public void run() {
             try {
+                ServerSocket serversocketStudent = new ServerSocket(25101);
                 while (true) {
-                    BufferedReader read = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                    Socket readAccept = serversocketStudent.accept();
+                    BufferedReader read = new BufferedReader(new InputStreamReader(readAccept.getInputStream()));
                     String action = read.readLine();
-                    System.out.println("action : " + action);
                     switch (action) {
                         case "HeartBeat":
                             String ipv4 = read.readLine();
                             String macadress = read.readLine();
-                            updateMarchmac(ipv4, macadress, "Login");
+                            updateMatchMac(ipv4, macadress, "Login");
+                            System.out.println("\n[GET] HeartBeat : " + ipv4 + " : " + macadress);
                             break;
                         case "MatchMac":
                             ipv4 = read.readLine();
                             macadress = read.readLine();
-                            updateMarchmac(ipv4, macadress, "Online");
+                            updateMatchMac(ipv4, macadress, "Online");
+                            System.out.println("\n[GET] MatchMac : " + ipv4 + " : " + macadress);
                             break;
                         case "Login":
                             String studentid = read.readLine();
@@ -75,13 +63,16 @@ public class ReciveMessage implements Runnable {
                                 out.println("LoginFailed");
                                 out.flush();
                             }
+                            System.out.println("\n[GET] Login : " + studentid + " : " + spassword + " : " + macaddress + " : " + ipv4);
                             break;
                         case "UpdatePassword":
                             String StudentID = read.readLine();
                             String sPassword = read.readLine();
                             updateStudentPassword(StudentID, sPassword);
+                            System.out.println("\n[GET] UpdatePassword : " + StudentID + " : " + sPassword);
                             break;
                         default:
+                            System.out.println("\n[GET] " + action);
                             break;
                     }
                 }
@@ -90,7 +81,7 @@ public class ReciveMessage implements Runnable {
 
             }
         }
-    }
+    });
 
     SqlConnect sqlcon = new SqlConnect();
     private static final String SELECT_STUDENT_LOGIN = "SELECT * FROM student  WHERE student.StudentID=? and student.sPassword=?";
@@ -104,7 +95,7 @@ public class ReciveMessage implements Runnable {
         try (PreparedStatement ps = connection.prepareStatement(SELECT_STUDENT_LOGIN);) {
             ps.setString(1, studentid);
             ps.setString(2, spassword);
-            System.out.println(ps);
+//            System.out.println("--- Check student login ---\n" + ps + "\n");
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     String s0 = rs.getString("StudentID");
@@ -131,7 +122,7 @@ public class ReciveMessage implements Runnable {
         try (PreparedStatement ps = connection.prepareStatement(UPDATE_STUDENT_ONLINE);) {
             ps.setString(1, studentid);
             ps.setString(2, macaddress);
-            System.out.println(ps);
+//            System.out.println("--- Update status student Online. ---- \n" + ps + "\n");
             ps.executeUpdate();
             ps.close();
             connection.close();
@@ -142,7 +133,7 @@ public class ReciveMessage implements Runnable {
         }
     }
 
-    public void updateMarchmac(String ipAdress, String macAdress, String cStatus) {
+    public void updateMatchMac(String ipAdress, String macAdress, String cStatus) {
         Connection connection = sqlcon.getConnect();
         try (PreparedStatement ps = connection.prepareStatement(UPDATE_MATCHMAC);) {
             ps.setString(1, macAdress);
@@ -150,7 +141,7 @@ public class ReciveMessage implements Runnable {
             ps.setString(3, cStatus);
             ps.setString(4, ipAdress);
             ps.setString(5, cStatus);
-            System.out.println(ps);
+//            System.out.println("--- Update MatchMac. ---- \n" + ps + "\n");
             ps.executeUpdate();
             ps.close();
             connection.close();
@@ -165,7 +156,7 @@ public class ReciveMessage implements Runnable {
             ps.setString(1, spassword);
             ps.setString(2, "No");
             ps.setString(3, studentid);
-            System.out.println(ps);
+//            System.out.println("--- Update student new password. ---- \n" + ps + "\n");
             ps.executeUpdate();
             ps.close();
             connection.close();

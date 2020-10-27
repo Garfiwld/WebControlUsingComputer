@@ -67,6 +67,7 @@
             ArrayList<SeatModel> listSeat = new ArrayList<>();
             try (Connection connection = sqlConnect.getConnect();
                     PreparedStatement ps = connection.prepareStatement(SELECT_ALL_COMPUTER);) {
+                System.out.println("\n--- Update computer status. --- : " + ps);
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
                     String macaddress = rs.getString("MacAddress");

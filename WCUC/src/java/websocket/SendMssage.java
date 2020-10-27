@@ -9,12 +9,13 @@ public class SendMssage {
     public boolean Send(String ipv4, String msg) {
         try {
             Socket send = new Socket(ipv4, 26103);
-            PrintWriter out = new PrintWriter(send.getOutputStream());
-            out.println(msg);
-            out.flush();
+            PrintWriter put = new PrintWriter(send.getOutputStream());
+            put.println(msg);
+            put.flush();
+            System.out.println("\n[PUT] " + msg + " : " + ipv4 + " : 26103");
             return true;
         } catch (IOException ex) {
-            System.out.println("Client Offline IPv4 : " + ipv4);
+            System.out.println("\n[PUT] Error Client Offline. IPv4 : " + ipv4 + " : 26103");
             return false;
         }
     }
@@ -22,13 +23,14 @@ public class SendMssage {
     public boolean SendInternetContol(String msg, String room) {
         try {
             Socket send = new Socket("192.168.1.112", 26104);
-            PrintWriter out = new PrintWriter(send.getOutputStream());
-            out.println(msg);
-            out.println(room);
-            out.flush();
+            PrintWriter put = new PrintWriter(send.getOutputStream());
+            put.println(msg);
+            put.println(room);
+            put.flush();
+            System.out.println("\n[PUT] " + msg + " : " + room + " : 192.168.1.112 : 26104");
             return true;
         } catch (IOException ex) {
-            System.out.println("SendInternetContol Offline");
+            System.out.println("\n[PUT] Error SendInternetContol Offline" + " : 192.168.1.112 : 26104");
             return false;
         }
     }
