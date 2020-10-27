@@ -47,11 +47,7 @@ public class StudentLogin extends javax.swing.JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent we) {
-                System.out.println("--- Restart ---");
-                try {
-                    Runtime.getRuntime().exec("cmd /c shutdown -r");
-                } catch (IOException ex) {
-                }
+                Restart();
             }
         });
 
@@ -254,7 +250,7 @@ public class StudentLogin extends javax.swing.JFrame {
     public static void Restart() {
         System.out.println("--- Restart ---");
         try {
-            Runtime.getRuntime().exec("cmd /c shutdown -r");
+            Runtime.getRuntime().exec("cmd /c shutdown -r -t 0");
         } catch (IOException e) {
         }
     }
@@ -262,7 +258,7 @@ public class StudentLogin extends javax.swing.JFrame {
     public static void Shutdown() {
         System.out.println("--- Shutdown ---");
         try {
-            Runtime.getRuntime().exec("cmd /c shutdown -s");
+            Runtime.getRuntime().exec("cmd /c shutdown -s -t 0");
         } catch (IOException e) {
         }
     }
