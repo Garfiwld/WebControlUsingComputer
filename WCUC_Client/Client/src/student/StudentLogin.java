@@ -1,7 +1,7 @@
 package student;
 
-import Socket.ReciveLogin;
 import Model.StudentModel;
+import Socket.ReciveLogin;
 import Socket.ReciveMessage;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -249,18 +249,18 @@ public class StudentLogin extends javax.swing.JFrame {
 
     public static void Restart() {
         System.out.println("--- Restart ---");
-        try {
-            Runtime.getRuntime().exec("cmd /c shutdown -r -t 0");
-        } catch (IOException e) {
-        }
+//        try {
+//            Runtime.getRuntime().exec("cmd /c shutdown -r -t 0");
+//        } catch (IOException e) {
+//        }
     }
 
     public static void Shutdown() {
         System.out.println("--- Shutdown ---");
-        try {
-            Runtime.getRuntime().exec("cmd /c shutdown -s -t 0");
-        } catch (IOException e) {
-        }
+//        try {
+//            Runtime.getRuntime().exec("cmd /c shutdown -s -t 0");
+//        } catch (IOException e) {
+//        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

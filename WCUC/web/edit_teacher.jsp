@@ -35,7 +35,7 @@
                         </div>
                         <table cellpadding="0" cellspacing="0" border="0" class="dataTable table table-striped" id="example"></table>
                         <div id="editinw" class="text-center" style="display:none;">
-                            <button class="btn btn-secondary" onclick="newinw()">New Row</button>
+                            <button class="btn btn-secondary" onclick="newinw()">Add</button>
                             <button class="btn btn-secondary" onclick="editinw()">Submit</button>
                         </div>
                     </div>
@@ -183,7 +183,7 @@
                                 //
                                 function newinw() {
                                     var tbody = document.querySelector("#example > tbody");
-                                    tbody.innerHTML += document.querySelector("#example > tbody > tr.even.selected").innerHTML;
+                                    tbody.innerHTML += tbody.rows[0].innerHTML;
                                 }
         </script>
     </body>

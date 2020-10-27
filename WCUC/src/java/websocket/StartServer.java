@@ -12,7 +12,7 @@ public class StartServer {
 
     public void openServer() {
         System.out.println("openServer");
-        Thread ReciveMssage = new Thread(new StudentLogin());
+        Thread ReciveMssage = new Thread(new ReciveMessage());
         ReciveMssage.start();
 
         Timer t = new Timer();
@@ -37,6 +37,7 @@ public class StartServer {
                     String macaddress = rs.getString("MacAddress");
                     String ipv4 = rs.getString("IPv4");
                     if (!sendMssage.Send(ipv4, "HeartBeat")) {
+                        System.out.println(ipv4 + " : Offline");
                         updateOffine(macaddress);
                     }
                 }

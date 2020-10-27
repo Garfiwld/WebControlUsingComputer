@@ -15,13 +15,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class StudentLogin implements Runnable {
+public class ReciveMessage implements Runnable {
 
     SendMssage sendMssage = new SendMssage();
-
-    public StudentLogin() {
-
-    }
 
     @Override
     public void run() {

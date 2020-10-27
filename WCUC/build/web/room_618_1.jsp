@@ -64,20 +64,28 @@
         <%@include file="/includes/body.jsp" %>
         <script>
             function allSeat(action) {
-                toastr.success(document.getElementById(action).innerHTML + 'Send success.');
+                var action = document.getElementById(action);
+                toastr.success(action.innerHTML + 'Sended please wait...');
                 $.ajax({
                     url: "ajax_sendmsg.jsp",
                     type: "GET",
-                    data: "casesend=all&Action=" + document.getElementById(action).name
+                    data: "casesend=all&Action=" + action.name,
+                    success: function (response) {
+                        response.success ? toastr.success(action.innerHTML + ' Success.') : toastr.error(action.innerHTML + ' Fail.');
+                    }
                 });
             }
 
             function net(action) {
-                toastr.success(document.getElementById(action).innerHTML + 'Send success.');
+                var action = document.getElementById(action);
+                toastr.success(action.innerHTML + 'Sended please wait...');
                 $.ajax({
                     url: "ajax_sendmsg.jsp",
                     type: "GET",
-                    data: "&casesend=" + document.getElementById(action).name + "&room=618_1"
+                    data: "&casesend=" + action.name + "&room=618_1",
+                    success: function (response) {
+                        response ? toastr.success(action.innerHTML + ' Success.') : toastr.error(action.innerHTML + ' Fail.');
+                    }
                 });
             }
 

@@ -29,7 +29,7 @@
                 System.out.println(ps);
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
-                    sendMssage.Send(rs.getString("IPv4"), action);
+                    out.println(sendMssage.Send(rs.getString("IPv4"), action));
                 }
                 ps.close();
                 connection.close();
@@ -38,10 +38,10 @@
             }
             break;
         case "InternetOn":
-            sendMssage.SendInternetContol(casesend, room);
+            out.println(sendMssage.SendInternetContol(casesend, room));
             break;
         case "InternetOff":
-            sendMssage.SendInternetContol(casesend, room);
+            out.println(sendMssage.SendInternetContol(casesend, room));
             break;
     }
 %>
