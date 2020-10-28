@@ -5,8 +5,6 @@ import Socket.ReciveLogin;
 import Socket.ReciveMessage;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
 import java.net.Socket;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -14,7 +12,7 @@ import javax.swing.JOptionPane;
 
 public class main {
 
-    public static final String host = "192.168.1.111";
+    public static final String host = "192.168.14.27";
     public static final int port = 25101;
 
     public static StudentModel studentModel = new StudentModel();
@@ -48,16 +46,22 @@ public class main {
         int numtries = 0;
         while (true) {
             try {
-                InetAddress localhost = InetAddress.getLocalHost();
-                InetAddress hostaddress = InetAddress.getByName(localhost.getHostAddress());
-                NetworkInterface ni = NetworkInterface.getByInetAddress(hostaddress);
-                byte[] mac = ni.getHardwareAddress();
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < mac.length; i++) {
-                    sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));
+                Process px = Runtime.getRuntime().exec("cmd /c ipconfig /all | findstr /C:Addres");
+                java.io.BufferedReader inx = new java.io.BufferedReader(new java.io.InputStreamReader(px.getInputStream()));
+                String message = new String();
+                String line = null;
+                while ((line = inx.readLine()) != null) {
+                    message += line;
                 }
-                studentModel.setIpv4(localhost.getHostAddress());
-                studentModel.setMacaddress(sb.toString());
+                String[] result1 = message.split(":");
+                String[] result2 = result1[1].split(" ");
+                studentModel.setMacaddress(result2[1]);
+                System.out.println(result2[1]);
+
+                String[] result3 = message.split(":");
+                String[] result4 = result3[8].split(" ");
+                System.out.println(result4[1].replace("(Preferred)", ""));
+                studentModel.setIpv4(result4[1].replace("(Preferred)", ""));
 
                 studentLogin.jL_Mac.setText("MacAdress : " + studentModel.getMacaddress());
                 studentLogin.jL_IP.setText("IPv4Adress : " + studentModel.getIpv4());
@@ -115,17 +119,17 @@ public class main {
 
     public static void Restart() {
         System.out.println("\n--- Restart ---");
-//        try {
-//            Runtime.getRuntime().exec("cmd /c shutdown -r -f -t 0");
-//        } catch (IOException e) {
-//        }
+        try {
+            Runtime.getRuntime().exec("cmd /c shutdown -r -f -t 0");
+        } catch (IOException e) {
+        }
     }
 
     public static void Shutdown() {
         System.out.println("\n--- Shutdown ---");
-//        try {
-//            Runtime.getRuntime().exec("cmd /c shutdown -s -f -t 0");
-//        } catch (IOException e) {
-//        }
+        try {
+            Runtime.getRuntime().exec("cmd /c shutdown -s -f -t 0");
+        } catch (IOException e) {
+        }
     }
 }

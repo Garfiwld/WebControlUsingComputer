@@ -29,11 +29,11 @@ public class ReciveMessage {
                         BufferedReader read = new BufferedReader(new InputStreamReader(readAccept.getInputStream()));
                         String msg = read.readLine();
                         String room = read.readLine();
-                        System.out.println("case : InternetOn | room : " + room);
+                        System.out.println("[GET] InternetOn " + msg + " : room : " + room);
                         switch (msg) {
                             case "InternetOn":
                                 try {
-                                    Runtime.getRuntime().exec("C:\\WCUC_InternetControl\\WCUC_Autoit\\" + room + "_UnBlock.exe");
+                                    Runtime.getRuntime().exec("cmd /c C:\\WCUC_InternetControl\\WCUC_Autoit\\" + room + "_UnBlock.exe");
                                     System.out.println("case : InternetOn | room : " + room + " completed.");
                                 } catch (IOException e) {
                                     System.out.println("case : InternetOn | room : " + room + " failed.");
@@ -41,7 +41,7 @@ public class ReciveMessage {
                                 break;
                             case "InternetOff":
                                 try {
-                                    Runtime.getRuntime().exec("C:\\WCUC_InternetControl\\WCUC_Autoit\\" + room + "_Block.exe");
+                                    Runtime.getRuntime().exec("cmd /c C:\\WCUC_InternetControl\\WCUC_Autoit\\" + room + "_Block.exe");
                                     System.out.println("case : InternetOn | room : " + room + " completed.");
                                 } catch (IOException e) {
                                     System.out.println("case : InternetOn | room : " + room + " failed.");
