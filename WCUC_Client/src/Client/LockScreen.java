@@ -37,8 +37,19 @@ public class LockScreen extends JFrame {
                 if (e.getKeyCode() == KeyEvent.VK_WINDOWS
                         || e.getKeyCode() == KeyEvent.VK_CONTROL
                         || e.getKeyCode() == KeyEvent.VK_ALT
-                        || e.getKeyCode() == KeyEvent.VK_TAB
-                        || e.getKeyCode() == KeyEvent.VK_SHIFT) {
+                        || e.getKeyCode() == KeyEvent.VK_SHIFT
+                        || e.getKeyCode() == KeyEvent.VK_F1
+                        || e.getKeyCode() == KeyEvent.VK_F2
+                        || e.getKeyCode() == KeyEvent.VK_F3
+                        || e.getKeyCode() == KeyEvent.VK_F4
+                        || e.getKeyCode() == KeyEvent.VK_F5
+                        || e.getKeyCode() == KeyEvent.VK_F6
+                        || e.getKeyCode() == KeyEvent.VK_F7
+                        || e.getKeyCode() == KeyEvent.VK_F8
+                        || e.getKeyCode() == KeyEvent.VK_F9
+                        || e.getKeyCode() == KeyEvent.VK_F10
+                        || e.getKeyCode() == KeyEvent.VK_F11
+                        || e.getKeyCode() == KeyEvent.VK_F12) {
                     main.Restart();
                 }
             }
@@ -68,7 +79,7 @@ public class LockScreen extends JFrame {
 
         jL_Warning.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jL_Warning.setForeground(new java.awt.Color(255, 255, 255));
-        jL_Warning.setText("Warning! don't press key Ctrl, Windows, Alt, Shift, Tab");
+        jL_Warning.setText("Warning! don't press key Ctrl, Windows, Alt, Shift, Funtion 1-12");
         getContentPane().add(jL_Warning);
         jL_Warning.setBounds(70, 160, 960, 60);
 
