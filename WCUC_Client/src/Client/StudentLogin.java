@@ -5,9 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.PrintWriter;
 import java.net.Socket;
 import javax.swing.JOptionPane;
@@ -32,75 +29,6 @@ public class StudentLogin extends javax.swing.JFrame {
         jP_sPassword.setBounds(wCenter - (jTF_StudentID.getPreferredSize().width / 2), hCenter + 45 + 10, jTF_StudentID.getPreferredSize().width, 45);
         jB_Login.setBounds(wCenter - (jB_Login.getPreferredSize().width / 2), hCenter + 45 + 10 + 45 + 10, jB_Login.getPreferredSize().width, 40);
         jL_Warning.setBounds(position.width / 2 - (jL_Warning.getPreferredSize().width / 2), hCenter + 45 + 10 + 45 + 10 + 40 + 10, jL_Warning.getPreferredSize().width, jL_Warning.getPreferredSize().height);
-        jTF_StudentID.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_WINDOWS
-                        || e.getKeyCode() == KeyEvent.VK_CONTROL
-                        || e.getKeyCode() == KeyEvent.VK_ALT
-                        || e.getKeyCode() == KeyEvent.VK_SHIFT
-                        || e.getKeyCode() == KeyEvent.VK_F1
-                        || e.getKeyCode() == KeyEvent.VK_F2
-                        || e.getKeyCode() == KeyEvent.VK_F3
-                        || e.getKeyCode() == KeyEvent.VK_F4
-                        || e.getKeyCode() == KeyEvent.VK_F5
-                        || e.getKeyCode() == KeyEvent.VK_F6
-                        || e.getKeyCode() == KeyEvent.VK_F7
-                        || e.getKeyCode() == KeyEvent.VK_F8
-                        || e.getKeyCode() == KeyEvent.VK_F9
-                        || e.getKeyCode() == KeyEvent.VK_F10
-                        || e.getKeyCode() == KeyEvent.VK_F11
-                        || e.getKeyCode() == KeyEvent.VK_F12) {
-                    main.Restart();
-                }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
-        jP_sPassword.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_WINDOWS
-                        || e.getKeyCode() == KeyEvent.VK_CONTROL
-                        || e.getKeyCode() == KeyEvent.VK_ALT
-                        || e.getKeyCode() == KeyEvent.VK_SHIFT
-                        || e.getKeyCode() == KeyEvent.VK_F1
-                        || e.getKeyCode() == KeyEvent.VK_F2
-                        || e.getKeyCode() == KeyEvent.VK_F3
-                        || e.getKeyCode() == KeyEvent.VK_F4
-                        || e.getKeyCode() == KeyEvent.VK_F5
-                        || e.getKeyCode() == KeyEvent.VK_F6
-                        || e.getKeyCode() == KeyEvent.VK_F7
-                        || e.getKeyCode() == KeyEvent.VK_F8
-                        || e.getKeyCode() == KeyEvent.VK_F9
-                        || e.getKeyCode() == KeyEvent.VK_F10
-                        || e.getKeyCode() == KeyEvent.VK_F11
-                        || e.getKeyCode() == KeyEvent.VK_F12) {
-                    main.Restart();
-                }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent we) {
-                main.Restart();
-            }
-        });
-
     }
 
     @SuppressWarnings("unchecked")
@@ -126,11 +54,21 @@ public class StudentLogin extends javax.swing.JFrame {
 
         jTF_StudentID.setColumns(18);
         jTF_StudentID.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTF_StudentID.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTF_StudentIDKeyPressed(evt);
+            }
+        });
         getContentPane().add(jTF_StudentID);
-        jTF_StudentID.setBounds(80, 90, 284, 20);
+        jTF_StudentID.setBounds(80, 80, 284, 30);
 
         jP_sPassword.setColumns(18);
         jP_sPassword.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jP_sPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jP_sPasswordKeyPressed(evt);
+            }
+        });
         getContentPane().add(jP_sPassword);
         jP_sPassword.setBounds(80, 120, 284, 28);
 
@@ -139,6 +77,11 @@ public class StudentLogin extends javax.swing.JFrame {
         jB_Login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jB_LoginActionPerformed(evt);
+            }
+        });
+        jB_Login.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jB_LoginKeyPressed(evt);
             }
         });
         getContentPane().add(jB_Login);
@@ -196,6 +139,75 @@ public class StudentLogin extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         main.Restart();
     }//GEN-LAST:event_formWindowClosing
+
+    private void jTF_StudentIDKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTF_StudentIDKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_WINDOWS
+                || evt.getKeyCode() == KeyEvent.VK_CONTROL
+                || evt.getKeyCode() == KeyEvent.VK_ALT
+                || evt.getKeyCode() == KeyEvent.VK_SHIFT
+                || evt.getKeyCode() == KeyEvent.VK_F1
+                || evt.getKeyCode() == KeyEvent.VK_F2
+                || evt.getKeyCode() == KeyEvent.VK_F3
+                || evt.getKeyCode() == KeyEvent.VK_F4
+                || evt.getKeyCode() == KeyEvent.VK_F5
+                || evt.getKeyCode() == KeyEvent.VK_F6
+                || evt.getKeyCode() == KeyEvent.VK_F7
+                || evt.getKeyCode() == KeyEvent.VK_F8
+                || evt.getKeyCode() == KeyEvent.VK_F9
+                || evt.getKeyCode() == KeyEvent.VK_F10
+                || evt.getKeyCode() == KeyEvent.VK_F11
+                || evt.getKeyCode() == KeyEvent.VK_F12) {
+            main.Restart();
+        }
+    }//GEN-LAST:event_jTF_StudentIDKeyPressed
+
+    private void jP_sPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jP_sPasswordKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jB_Login.doClick();
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_WINDOWS
+                || evt.getKeyCode() == KeyEvent.VK_CONTROL
+                || evt.getKeyCode() == KeyEvent.VK_ALT
+                || evt.getKeyCode() == KeyEvent.VK_SHIFT
+                || evt.getKeyCode() == KeyEvent.VK_F1
+                || evt.getKeyCode() == KeyEvent.VK_F2
+                || evt.getKeyCode() == KeyEvent.VK_F3
+                || evt.getKeyCode() == KeyEvent.VK_F4
+                || evt.getKeyCode() == KeyEvent.VK_F5
+                || evt.getKeyCode() == KeyEvent.VK_F6
+                || evt.getKeyCode() == KeyEvent.VK_F7
+                || evt.getKeyCode() == KeyEvent.VK_F8
+                || evt.getKeyCode() == KeyEvent.VK_F9
+                || evt.getKeyCode() == KeyEvent.VK_F10
+                || evt.getKeyCode() == KeyEvent.VK_F11
+                || evt.getKeyCode() == KeyEvent.VK_F12) {
+            main.Restart();
+        }
+    }//GEN-LAST:event_jP_sPasswordKeyPressed
+
+    private void jB_LoginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jB_LoginKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jB_Login.doClick();
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_WINDOWS
+                || evt.getKeyCode() == KeyEvent.VK_CONTROL
+                || evt.getKeyCode() == KeyEvent.VK_ALT
+                || evt.getKeyCode() == KeyEvent.VK_SHIFT
+                || evt.getKeyCode() == KeyEvent.VK_F1
+                || evt.getKeyCode() == KeyEvent.VK_F2
+                || evt.getKeyCode() == KeyEvent.VK_F3
+                || evt.getKeyCode() == KeyEvent.VK_F4
+                || evt.getKeyCode() == KeyEvent.VK_F5
+                || evt.getKeyCode() == KeyEvent.VK_F6
+                || evt.getKeyCode() == KeyEvent.VK_F7
+                || evt.getKeyCode() == KeyEvent.VK_F8
+                || evt.getKeyCode() == KeyEvent.VK_F9
+                || evt.getKeyCode() == KeyEvent.VK_F10
+                || evt.getKeyCode() == KeyEvent.VK_F11
+                || evt.getKeyCode() == KeyEvent.VK_F12) {
+            main.Restart();
+        }
+    }//GEN-LAST:event_jB_LoginKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jB_Login;

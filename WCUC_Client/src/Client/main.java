@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 
 public class main {
 
-    public static final String host = "192.168.14.27";
+    public static final String host = "192.168.1.111";
     public static final int port = 25101;
 
     public static StudentModel studentModel = new StudentModel();
@@ -103,20 +103,20 @@ public class main {
 
     public static void Restart() {
         System.out.println("\n--- Restart ---");
-//        JOptionPane.showMessageDialog(studentLogin.getContentPane(), "--- Restart ---");
-        try {
-            Runtime.getRuntime().exec("cmd /c shutdown -r -f -t 0");
-        } catch (IOException e) {
-        }
+        JOptionPane.showMessageDialog(studentLogin.getContentPane(), "--- Restart ---");
+//        try {
+//            Runtime.getRuntime().exec("cmd /c shutdown -r -f -t 0");
+//        } catch (IOException e) {
+//        }
     }
 
     public static void Shutdown() {
         System.out.println("\n--- Shutdown ---");
-//        JOptionPane.showMessageDialog(studentLogin.getContentPane(), "--- Shutdown ---");
-        try {
-            Runtime.getRuntime().exec("cmd /c shutdown -s -f -t 0");
-        } catch (IOException e) {
-        }
+        JOptionPane.showMessageDialog(studentLogin.getContentPane(), "--- Shutdown ---");
+//        try {
+//            Runtime.getRuntime().exec("cmd /c shutdown -s -f -t 0");
+//        } catch (IOException e) {
+//        }
     }
 
     public static void setIPv4AndMac() {

@@ -1,5 +1,6 @@
 package Socket;
 
+import Client.main;
 import Model.StudentModel;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,7 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import Client.main;
 
 public class ReciveLogin {
 
@@ -34,7 +34,7 @@ public class ReciveLogin {
                     System.out.println("\n[GET] : " + action);
                     switch (action) {
                         case "LoginSuccess":
-                            JOptionPane.showMessageDialog(main.studentLogin.getContentPane(), "Login Success.");
+//                            JOptionPane.showMessageDialog(main.studentLogin.getContentPane(), "Login Success.");
                             String sfirstlogin = read.readLine();
                             if (sfirstlogin.equals("Yes")) {
                                 JTextField jpf = new JPasswordField(15);

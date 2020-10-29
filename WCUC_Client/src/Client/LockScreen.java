@@ -5,9 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 
 public class LockScreen extends JFrame {
@@ -26,45 +23,6 @@ public class LockScreen extends JFrame {
         Dimension position = Toolkit.getDefaultToolkit().getScreenSize();
         jL_LOCK.setBounds(position.width / 2 - (jL_LOCK.getPreferredSize().width / 2), position.height / 2, jL_LOCK.getPreferredSize().width, jL_LOCK.getPreferredSize().height);
         jL_Warning.setBounds(position.width / 2 - (jL_Warning.getPreferredSize().width / 2), position.height / 2 + 60, jL_Warning.getPreferredSize().width, jL_Warning.getPreferredSize().height);
-
-        addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_WINDOWS
-                        || e.getKeyCode() == KeyEvent.VK_CONTROL
-                        || e.getKeyCode() == KeyEvent.VK_ALT
-                        || e.getKeyCode() == KeyEvent.VK_SHIFT
-                        || e.getKeyCode() == KeyEvent.VK_F1
-                        || e.getKeyCode() == KeyEvent.VK_F2
-                        || e.getKeyCode() == KeyEvent.VK_F3
-                        || e.getKeyCode() == KeyEvent.VK_F4
-                        || e.getKeyCode() == KeyEvent.VK_F5
-                        || e.getKeyCode() == KeyEvent.VK_F6
-                        || e.getKeyCode() == KeyEvent.VK_F7
-                        || e.getKeyCode() == KeyEvent.VK_F8
-                        || e.getKeyCode() == KeyEvent.VK_F9
-                        || e.getKeyCode() == KeyEvent.VK_F10
-                        || e.getKeyCode() == KeyEvent.VK_F11
-                        || e.getKeyCode() == KeyEvent.VK_F12) {
-                    main.Restart();
-                }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
-
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent we) {
-                main.Restart();
-            }
-        });
     }
 
     @SuppressWarnings("unchecked")
@@ -75,6 +33,16 @@ public class LockScreen extends JFrame {
         jL_LOCK = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
         getContentPane().setLayout(null);
 
         jL_Warning.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -91,6 +59,31 @@ public class LockScreen extends JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        main.Restart();
+    }//GEN-LAST:event_formWindowClosing
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_WINDOWS
+                || evt.getKeyCode() == KeyEvent.VK_CONTROL
+                || evt.getKeyCode() == KeyEvent.VK_ALT
+                || evt.getKeyCode() == KeyEvent.VK_SHIFT
+                || evt.getKeyCode() == KeyEvent.VK_F1
+                || evt.getKeyCode() == KeyEvent.VK_F2
+                || evt.getKeyCode() == KeyEvent.VK_F3
+                || evt.getKeyCode() == KeyEvent.VK_F4
+                || evt.getKeyCode() == KeyEvent.VK_F5
+                || evt.getKeyCode() == KeyEvent.VK_F6
+                || evt.getKeyCode() == KeyEvent.VK_F7
+                || evt.getKeyCode() == KeyEvent.VK_F8
+                || evt.getKeyCode() == KeyEvent.VK_F9
+                || evt.getKeyCode() == KeyEvent.VK_F10
+                || evt.getKeyCode() == KeyEvent.VK_F11
+                || evt.getKeyCode() == KeyEvent.VK_F12) {
+            main.Restart();
+        }
+    }//GEN-LAST:event_formKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jL_LOCK;
