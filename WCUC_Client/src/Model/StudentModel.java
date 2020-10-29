@@ -2,7 +2,7 @@ package Model;
 
 public class StudentModel {
 
-    protected static String ipv4, macaddress, studentid, spassword;
+    protected static String ipv4, macaddress, studentid, spassword, status;
 
     public static String getIpv4() {
         return ipv4;
@@ -34,6 +34,14 @@ public class StudentModel {
 
     public static void setSpassword(String spassword) {
         StudentModel.spassword = spassword;
+    }
+
+    public static String getStatus() {
+        return status;
+    }
+
+    public static void setStatus(String status) {
+        StudentModel.status = status;
     }
 
 }

@@ -17,8 +17,8 @@ public class StudentLogin extends javax.swing.JFrame {
     StudentModel studentModel = new StudentModel();
 
     public StudentLogin() {
-//        setAlwaysOnTop(true);
-//        setUndecorated(true);
+        setAlwaysOnTop(true);
+        setUndecorated(true);
         setExtendedState(this.MAXIMIZED_BOTH);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         getContentPane().setBackground(Color.DARK_GRAY);
@@ -32,7 +32,7 @@ public class StudentLogin extends javax.swing.JFrame {
         jP_sPassword.setBounds(wCenter - (jTF_StudentID.getPreferredSize().width / 2), hCenter + 45 + 10, jTF_StudentID.getPreferredSize().width, 45);
         jB_Login.setBounds(wCenter - (jB_Login.getPreferredSize().width / 2), hCenter + 45 + 10 + 45 + 10, jB_Login.getPreferredSize().width, 40);
         jL_Warning.setBounds(position.width / 2 - (jL_Warning.getPreferredSize().width / 2), hCenter + 45 + 10 + 45 + 10 + 40 + 10, jL_Warning.getPreferredSize().width, jL_Warning.getPreferredSize().height);
-        addKeyListener(new KeyListener() {
+        jTF_StudentID.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
             }
@@ -63,7 +63,37 @@ public class StudentLogin extends javax.swing.JFrame {
             public void keyReleased(KeyEvent e) {
             }
         });
+        jP_sPassword.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
 
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_WINDOWS
+                        || e.getKeyCode() == KeyEvent.VK_CONTROL
+                        || e.getKeyCode() == KeyEvent.VK_ALT
+                        || e.getKeyCode() == KeyEvent.VK_SHIFT
+                        || e.getKeyCode() == KeyEvent.VK_F1
+                        || e.getKeyCode() == KeyEvent.VK_F2
+                        || e.getKeyCode() == KeyEvent.VK_F3
+                        || e.getKeyCode() == KeyEvent.VK_F4
+                        || e.getKeyCode() == KeyEvent.VK_F5
+                        || e.getKeyCode() == KeyEvent.VK_F6
+                        || e.getKeyCode() == KeyEvent.VK_F7
+                        || e.getKeyCode() == KeyEvent.VK_F8
+                        || e.getKeyCode() == KeyEvent.VK_F9
+                        || e.getKeyCode() == KeyEvent.VK_F10
+                        || e.getKeyCode() == KeyEvent.VK_F11
+                        || e.getKeyCode() == KeyEvent.VK_F12) {
+                    main.Restart();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent we) {
@@ -87,17 +117,22 @@ public class StudentLogin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAlwaysOnTop(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
         getContentPane().setLayout(null);
 
         jTF_StudentID.setColumns(18);
         jTF_StudentID.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         getContentPane().add(jTF_StudentID);
-        jTF_StudentID.setBounds(80, 90, 276, 20);
+        jTF_StudentID.setBounds(80, 90, 284, 20);
 
         jP_sPassword.setColumns(18);
         jP_sPassword.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         getContentPane().add(jP_sPassword);
-        jP_sPassword.setBounds(80, 120, 276, 28);
+        jP_sPassword.setBounds(80, 120, 284, 28);
 
         jB_Login.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jB_Login.setText("LOGIN");
@@ -107,7 +142,7 @@ public class StudentLogin extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jB_Login);
-        jB_Login.setBounds(90, 160, 85, 31);
+        jB_Login.setBounds(90, 160, 83, 38);
 
         tLogin.setFont(new java.awt.Font("Tahoma", 0, 50)); // NOI18N
         tLogin.setForeground(new java.awt.Color(255, 255, 255));
@@ -157,6 +192,10 @@ public class StudentLogin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(getContentPane(), "Failed connect server.");
         }
     }//GEN-LAST:event_jB_LoginActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        main.Restart();
+    }//GEN-LAST:event_formWindowClosing
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jB_Login;

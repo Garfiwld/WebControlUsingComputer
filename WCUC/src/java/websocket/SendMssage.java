@@ -15,7 +15,7 @@ public class SendMssage {
             System.out.println("\n[PUT] " + msg + " : " + ipv4 + " : 26103");
             return true;
         } catch (IOException ex) {
-            System.out.println("\n[PUT] Error Client Offline. IPv4 : " + ipv4 + " : 26103");
+            System.out.println("\n[PUT ERROR] Client Offline. IPv4 : " + ipv4 + " : 26103");
             return false;
         }
     }
@@ -30,7 +30,7 @@ public class SendMssage {
             System.out.println("\n[PUT] " + msg + " : " + room + " : 192.168.1.112 : 26104");
             return true;
         } catch (IOException ex) {
-            System.out.println("\n[PUT] Error SendInternetContol Offline" + " : 192.168.1.112 : 26104");
+            System.out.println("\n[PUT ERROR] SendInternetContol Offline" + " : 192.168.1.112 : 26104");
             return false;
         }
     }

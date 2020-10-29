@@ -1,7 +1,6 @@
-<%@page import="java.util.Arrays"%>
-<%@page import="com.google.gson.Gson"%>
-<%@page import="java.util.ArrayList"%>
 <%@page contentType="application/json" pageEncoding="UTF-8"%>
+<%@page import="java.util.Arrays"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="websocket.SendMssage"%>
 <%@page import="java.io.IOException"%>
 <%@page import="java.io.PrintWriter"%>
@@ -15,15 +14,13 @@
 <%
     SqlConnect sqlConnect = new SqlConnect();
     SendMssage sendMssage = new SendMssage();
-    Gson gson = new Gson();
 
     String SELECT_ALL_COMPUTER = "SELECT IPv4 FROM computer WHERE IPv4 IS NOT NULL";
 
-    String ipv4, action, casesend, room;
+    String ipv4, action, casesend, room = "618_1";
     ipv4 = request.getParameter("IPv4");
     action = request.getParameter("Action");
     casesend = request.getParameter("casesend");
-    room = request.getParameter("room");
     switch (casesend) {
         case "single":
             out.println(sendMssage.Send(ipv4, action));
@@ -31,7 +28,6 @@
         case "all":
             try (Connection connection = sqlConnect.getConnect();
                     PreparedStatement ps = connection.prepareStatement(SELECT_ALL_COMPUTER);) {
-                System.out.println(ps);
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
                     sendMssage.Send(rs.getString("IPv4"), action);

@@ -16,8 +16,6 @@ import java.util.List;
 
 public class ReciveMessage {
 
-    SendMssage sendMssage = new SendMssage();
-
     public void start() {
 
         ReciveMessage.start();
@@ -36,8 +34,9 @@ public class ReciveMessage {
                         case "HeartBeat":
                             String ipv4 = read.readLine();
                             String macadress = read.readLine();
-                            updateMatchMac(ipv4, macadress, "Login");
-                            System.out.println("\n[GET] HeartBeat : " + ipv4 + " : " + macadress);
+                            String status = read.readLine();
+                            updateMatchMac(ipv4, macadress, status);
+                            System.out.println("\n[GET] HeartBeat : " + ipv4 + " : " + macadress + " : " + status);
                             break;
                         case "MatchMac":
                             ipv4 = read.readLine();
@@ -70,6 +69,15 @@ public class ReciveMessage {
                             String sPassword = read.readLine();
                             updateStudentPassword(StudentID, sPassword);
                             System.out.println("\n[GET] UpdatePassword : " + StudentID + " : " + sPassword);
+                            break;
+                        case "InternetOn":
+                            System.out.println("\n[GET] " + action);
+                            break;
+                        case "InternetOff":
+                            System.out.println("\n[GET] " + action);
+                            break;
+                        case "InternetFail":
+                            System.out.println("\n[GET] " + action);
                             break;
                         default:
                             System.out.println("\n[GET] " + action);

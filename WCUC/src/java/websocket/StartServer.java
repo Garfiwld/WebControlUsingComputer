@@ -20,7 +20,7 @@ public class StartServer {
             public void run() {
                 HeartBeat();
             }
-        }, 0, 5000);
+        }, 0, 5 * 1000);
     }
 
     SendMssage sendMssage = new SendMssage();
@@ -32,7 +32,7 @@ public class StartServer {
         Connection connection = sqlcon.getConnect();
         try (PreparedStatement ps = connection.prepareStatement(SELECT_COMPUTER_ONLINE);) {
             try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
+                while (rs.next()) {
                     String macaddress = rs.getString("MacAddress");
                     String ipv4 = rs.getString("IPv4");
                     if (!sendMssage.Send(ipv4, "HeartBeat")) {
