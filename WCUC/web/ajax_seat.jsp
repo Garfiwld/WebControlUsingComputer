@@ -1,12 +1,12 @@
-<%@page contentType="application/json" pageEncoding="UTF-8"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
+<%@page import="Server.SqlConnect"%>
+<%@page contentType="application/json" pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="com.google.gson.Gson"%>
-<%@include file="SqlConnect.jsp" %>
 <%
     SqlConnect sqlConnect = new SqlConnect();
     Gson gson = new Gson();
@@ -134,8 +134,7 @@
             break;
     }
 %>
-<%!
-    public class SeatModel {
+<%!    public class SeatModel {
 
         protected String MacAddress, IPv4, SeatID, cStatus, StudentID, sFirstname, sLastname;
 

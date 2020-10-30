@@ -1,15 +1,11 @@
+<%@page import="Server.SendMessage"%>
+<%@page import="Server.SqlConnect"%>
 <%@page contentType="application/json" pageEncoding="UTF-8"%>
 <%@page import="java.util.Arrays"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.io.IOException"%>
 <%@page import="java.io.PrintWriter"%>
 <%@page import="java.net.Socket"%>
-<%@page import="java.sql.SQLException"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.PreparedStatement"%>
-<%@page import="java.sql.Connection"%>
-<%@include file="SqlConnect.jsp" %>
-<%@include file="SendMessage.jsp" %>
 <%
     SqlConnect sqlConnect = new SqlConnect();
     SendMessage sendMssage = new SendMessage();

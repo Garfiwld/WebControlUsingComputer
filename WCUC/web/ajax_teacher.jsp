@@ -1,3 +1,8 @@
+<%@page import="java.sql.SQLException"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="Server.SqlConnect"%>
 <%@page contentType="application/json" pageEncoding="UTF-8"%>
 <%@page import="com.google.gson.Gson"%>
 <%@page import="org.apache.commons.csv.CSVRecord"%>
@@ -5,14 +10,9 @@
 <%@page import="java.io.Reader"%>
 <%@page import="java.io.InputStreamReader"%>
 <%@page import="java.io.InputStream"%>
-<%@page import="java.sql.SQLException"%>
 <%@page import="java.util.Arrays"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.PreparedStatement"%>
-<%@page import="java.sql.Connection"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
-<%@include file="SqlConnect.jsp" %>
 <%
 
     SqlConnect sqlConnect = new SqlConnect();
