@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>JSP Page</title>
+        <title>Room Control</title>
         <%@include file="/includes/head.jsp" %>
         <style>
             html,

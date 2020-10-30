@@ -5,7 +5,6 @@
 <%@page import="java.io.Reader"%>
 <%@page import="java.io.InputStreamReader"%>
 <%@page import="java.io.InputStream"%>
-<%@page import="connect.SqlConnect"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.util.Arrays"%>
 <%@page import="java.sql.ResultSet"%>
@@ -13,6 +12,7 @@
 <%@page import="java.sql.Connection"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
+<%@include file="SqlConnect.jsp" %>
 <%
 
     SqlConnect sqlConnect = new SqlConnect();
@@ -128,8 +128,7 @@
     }
 %>
 
-<%!
-    public class TeacherModel {
+<%!    public class TeacherModel {
 
         protected String TeacherID, tPassword, tFirstname, tLastname, tRole;
 

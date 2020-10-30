@@ -6,7 +6,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="com.google.gson.Gson"%>
-<%@page import="connect.SqlConnect"%>
+<%@include file="SqlConnect.jsp" %>
 <%
     SqlConnect sqlConnect = new SqlConnect();
     Gson gson = new Gson();

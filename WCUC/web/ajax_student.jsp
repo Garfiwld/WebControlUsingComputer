@@ -4,7 +4,7 @@
 <%@page import="java.io.Reader"%>
 <%@page import="java.io.InputStreamReader"%>
 <%@page import="java.io.InputStream"%>
-<%@page import="connect.SqlConnect"%>
+<%@include file="SqlConnect.jsp" %>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.util.Arrays"%>
 <%@page import="java.sql.ResultSet"%>
@@ -46,8 +46,7 @@
             break;
     }
 %>
-<%!
-    public class StudentModel {
+<%!    public class StudentModel {
 
         protected String StudentID, sPassword, sFirstname, sLastname, sFirstLogin;
 

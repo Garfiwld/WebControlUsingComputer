@@ -2,7 +2,7 @@
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.sql.PreparedStatement"%>
-<%@page import="connect.SqlConnect"%>
+<%@include file="SqlConnect.jsp" %>
 <%@page import="java.io.File"%>
 <%@page import="org.apache.commons.csv.CSVRecord"%>
 <%@page import="org.apache.commons.csv.CSVParser"%>

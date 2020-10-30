@@ -1,7 +1,6 @@
 <%@page contentType="application/json" pageEncoding="UTF-8"%>
 <%@page import="java.util.Arrays"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="websocket.SendMssage"%>
 <%@page import="java.io.IOException"%>
 <%@page import="java.io.PrintWriter"%>
 <%@page import="java.net.Socket"%>
@@ -9,11 +8,11 @@
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
-<%@page import="connect.SqlConnect"%>
-
+<%@include file="SqlConnect.jsp" %>
+<%@include file="SendMessage.jsp" %>
 <%
     SqlConnect sqlConnect = new SqlConnect();
-    SendMssage sendMssage = new SendMssage();
+    SendMessage sendMssage = new SendMessage();
 
     String SELECT_ALL_COMPUTER = "SELECT IPv4 FROM computer WHERE IPv4 IS NOT NULL";
 
