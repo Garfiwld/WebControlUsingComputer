@@ -3,7 +3,9 @@ package Client;
 import Model.StudentModel;
 import Socket.ReciveLogin;
 import Socket.ReciveMessage;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Timer;
@@ -13,7 +15,7 @@ import javax.swing.JOptionPane;
 
 public class main {
 
-    public static final String host = "192.168.1.111";
+    public static final String host = "192.168.14.120";
     public static final int port = 25101;
 
     public static StudentModel studentModel = new StudentModel();
@@ -103,32 +105,32 @@ public class main {
 
     public static void Restart() {
         System.out.println("\n--- Restart ---");
-        JOptionPane.showMessageDialog(studentLogin.getContentPane(), "--- Restart ---");
-//        try {
-//            Runtime.getRuntime().exec("cmd /c shutdown -r -f -t 0");
-//        } catch (IOException e) {
-//        }
+//        JOptionPane.showMessageDialog(studentLogin.getContentPane(), "--- Restart ---");
+        try {
+            Runtime.getRuntime().exec("cmd /c shutdown -r -f -t 0");
+        } catch (IOException e) {
+        }
     }
 
     public static void Shutdown() {
         System.out.println("\n--- Shutdown ---");
-        JOptionPane.showMessageDialog(studentLogin.getContentPane(), "--- Shutdown ---");
-//        try {
-//            Runtime.getRuntime().exec("cmd /c shutdown -s -f -t 0");
-//        } catch (IOException e) {
-//        }
+//        JOptionPane.showMessageDialog(studentLogin.getContentPane(), "--- Shutdown ---");
+        try {
+            Runtime.getRuntime().exec("cmd /c shutdown -s -f -t 0");
+        } catch (IOException e) {
+        }
     }
 
     public static void setIPv4AndMac() {
         try {
             Process px = Runtime.getRuntime().exec("cmd /c ipconfig /all");
-            java.io.BufferedReader inx = new java.io.BufferedReader(new java.io.InputStreamReader(px.getInputStream()));
+            BufferedReader inx = new BufferedReader(new InputStreamReader(px.getInputStream()));
             String message = new String();
             String line = null;
             while ((line = inx.readLine()) != null) {
                 message += line;
             }
-            String[] result1 = message.split("Connection-specific DNS Suffix  . : cs");
+            String[] result1 = message.split("Ethernet adapter Ethernet:");
             String[] result2 = result1[1].split("Physical Address. . . . . . . . . : ");
             String[] result3 = result2[1].split(" ");
             studentModel.setMacaddress(result3[0].replace("(Preferred)", "")); //Physical Address

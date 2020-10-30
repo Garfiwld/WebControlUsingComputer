@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class SqlConnect {
 
-    private final String jdbcURL = "jdbc:mysql://localhost:3370/wcuc?useSSL=false";
+    private final String jdbcURL = "jdbc:mysql://localhost:3306/wcuc?useSSL=false";
     private final String jdbcUsername = "root";
     private final String jdbcPassword = "";
 
@@ -16,10 +16,8 @@ public class SqlConnect {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return con;
