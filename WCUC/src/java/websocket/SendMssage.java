@@ -22,15 +22,15 @@ public class SendMssage {
 
     public boolean SendInternetContol(String msg, String room) {
         try {
-            Socket send = new Socket("192.168.1.102", 26104);
+            Socket send = new Socket("192.168.14.5", 26104);
             PrintWriter put = new PrintWriter(send.getOutputStream());
             put.println(msg);
             put.println(room);
             put.flush();
-            System.out.println("\n[PUT] " + msg + " : " + room + " : 192.168.1.112 : 26104");
+            System.out.println("\n[PUT] " + msg + " : " + room + " : 192.168.14.5 : 26104");
             return true;
         } catch (IOException ex) {
-            System.out.println("\n[PUT ERROR] SendInternetContol Offline" + " : 192.168.1.112 : 26104");
+            System.out.println("\n[PUT ERROR] SendInternetContol Offline" + " : 192.168.14.5 : 26104");
             return false;
         }
     }
