@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%@include file="/includes/head.jsp" %>
+        <%@include file="includes/head.jsp" %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <style>
             body {
@@ -104,7 +104,7 @@
                 </div>
             </div>
         </div>
-        <%@include file="/includes/body.jsp" %>
+        <%@include file="includes/body.jsp" %>
         <script>
             // --- ปรับขนาด ICON บยเว็บ ---
             var imgsize = document.getElementById("imgsize");

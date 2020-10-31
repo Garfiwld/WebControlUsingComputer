@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%@include file="/includes/head.jsp" %>
+        <%@include file="includes/head.jsp" %>
         <link rel="stylesheet" type="text/css" href="addons/jQDataTables/datatables.css"/>
         <title>Room Info</title>
         <style>
@@ -15,7 +15,7 @@
         </style>
     </head>
     <body class="fixed-sn">
-        <%@include file="/includes/navbar.jsp" %>
+        <%@include file="includes/navbar.jsp" %>
 
         <main>
             <div class="container-fluid mt-3">
@@ -32,7 +32,7 @@
                 </div>
             </div>
         </main>
-        <%@include file="/includes/body.jsp" %>
+        <%@include file="includes/body.jsp" %>
         <script type="text/javascript" src="addons/jQDataTables/datatables.js"></script>
         <script src="addons/jQDataTables/dataTables.altEditor.free.js" ></script>
         <script type="text/javascript">

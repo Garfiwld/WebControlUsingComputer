@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%@include file="/includes/head.jsp" %>
+        <%@include file="includes/head.jsp" %>
         <title>Room Control</title>
         <style>
             iframe {
@@ -14,7 +14,7 @@
         </style>
     </head>
     <body class="fixed-sn">
-        <%@include file="/includes/navbar.jsp" %>
+        <%@include file="includes/navbar.jsp" %>
         <main>
             <div class="container-fluid mt-3">
                 <div class="card">
@@ -73,7 +73,7 @@
                 </div>
             </div>
         </main>
-        <%@include file="/includes/body.jsp" %>
+        <%@include file="includes/body.jsp" %>
         <script>
             function allSeat(action) {
                 var action = document.getElementById(action);

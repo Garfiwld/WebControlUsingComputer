@@ -1,9 +1,9 @@
+<%@page contentType="application/json" pageEncoding="UTF-8"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="Server.SqlConnect"%>
-<%@page contentType="application/json" pageEncoding="UTF-8"%>
 <%@page import="com.google.gson.Gson"%>
 <%@page import="org.apache.commons.csv.CSVRecord"%>
 <%@page import="org.apache.commons.csv.CSVFormat"%>

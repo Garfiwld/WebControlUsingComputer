@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%@include file="/includes/head.jsp" %>
+        <%@include file="includes/head.jsp" %>
         <style>
             body {
                 white-space: nowrap;
@@ -95,7 +95,7 @@
                 </div>
             </div>
         </div>
-        <%@include file="/includes/body.jsp" %>
+        <%@include file="includes/body.jsp" %>
         <script>
 
             // --- อัพเดทสถานะ cStatus และแสดงผลบนเว็บ ---

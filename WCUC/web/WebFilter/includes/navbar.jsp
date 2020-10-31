@@ -32,8 +32,7 @@
                         ${sessionScope.tfirstname} ${sessionScope.tlastname} <i class="fas fa-user"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary" aria-labelledby="navbarDropdownMenuLink-5">
-                        <a class="dropdown-item waves-effect waves-light" href="#"><i class="fas fa-key"></i> Edit Password</a>
-                        <a class="dropdown-item waves-effect waves-light"  href="logout.jsp"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        <a class="dropdown-item waves-effect waves-light"  href="../logout.jsp"><i class="fas fa-sign-out-alt"></i> Logout</a>
                     </div>
                 </li>
             </ul>

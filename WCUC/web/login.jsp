@@ -58,13 +58,13 @@
                                 <div class="card-body">
                                     <!-- Header -->
                                     <div class="form-header purple-gradient">
-                                        <h3 class="font-weight-500 my-2 py-1"><i class="fas fa-user"></i> Log in:</h3>
+                                        <h3 class="font-weight-500 my-2 py-1"><i class="fas fa-sign-in-alt"></i> Login</h3>
                                     </div>
                                     <form action="login.jsp" method="POST">
                                         <!-- Body -->
                                         <div class="md-form">
                                             <i class="fas fa-user prefix white-text"></i>
-                                            <input type="text" name="teacherid" id="orangeForm-name" class="form-control">
+                                            <input type="text" name="teacherid" id="orangeForm-name" class="form-control" required>
                                             <label for="orangeForm-name">Your name</label>
                                         </div>
 
@@ -73,9 +73,23 @@
                                             <input type="password" name="tpassword" id="orangeForm-pass" class="form-control">
                                             <label for="orangeForm-pass">Your password</label>
                                         </div>
-
                                         <div class="text-center">
-                                            <button type="submit" class="btn purple-gradient btn-lg mb-4">Sign up</button>
+                                            <a style="color: white;" onclick="shownewpass()">New Password</a>
+                                        </div>
+                                        <div id="newpassworddiv" style="display: none;">
+                                            <div class="md-form form-sm">
+                                                <i class="fas fa-key prefix white-text"></i>
+                                                <input type="password" id="newpassword" name="newpassword" class="form-control form-control-sm" onchange="validatePassword()">
+                                                <label for="newpassword">New Password</label>
+                                            </div>
+                                            <div class="md-form form-sm">
+                                                <i class="fas fa-key prefix white-text"></i>
+                                                <input type="password" id="confirm_password" class="form-control form-control-sm" onkeyup="validatePassword()">
+                                                <label for="confirm_password">Confirm New Password</label>
+                                            </div>
+                                        </div>
+                                        <div class="text-center">
+                                            <button type="submit" class="btn purple-gradient btn-lg mb-4">Submit</button>
                                         </div>
                                     </form>
 
@@ -117,24 +131,45 @@
         <!-- Custom scripts -->
         <script>
 
-            new WOW().init();
+                                                    new WOW().init();
 
+                                                    function shownewpass() {
+
+                                                        var stdinfo = document.getElementById("newpassworddiv");
+                                                        stdinfo.style.display = "block";
+                                                    }
+
+
+                                                    function validatePassword() {
+                                                        var newpassword = document.getElementById("newpassword")
+                                                        var confirm_password = document.getElementById("confirm_password");
+                                                        if (newpassword.value != confirm_password.value) {
+                                                            confirm_password.setCustomValidity("Passwords Don't Match");
+                                                        } else {
+                                                            confirm_password.setCustomValidity('');
+                                                        }
+                                                    }
         </script>
     </body>
 </html>
 
 <%
-    if (session.getAttribute("trole") == null) {
+    if (session.getAttribute("teacherid") == null) {
+        session.setAttribute("errorMessage", null);
         if (request.getParameter("teacherid") != null) {
             String teacherid = request.getParameter("teacherid");
             String tpassword = request.getParameter("tpassword");
+            String newpassword = request.getParameter("newpassword");
             teacherid = teacherid.toUpperCase();
 
             if (validate(teacherid, tpassword)) {
                 session.setAttribute("tfirstname", gettFirstname());
                 session.setAttribute("tlastname", gettLastname());
                 session.setAttribute("trole", gettRole());
-                response.sendRedirect("room.jsp");
+                response.sendRedirect("WebFilter/room.jsp");
+                if (newpassword != "") {
+                    newpassword(teacherid, newpassword);
+                }
             } else {
                 session.setAttribute("errorMessage", "Invalid Username or Password");
                 response.sendRedirect("login.jsp");
@@ -149,6 +184,18 @@
     SqlConnect sqlcon = new SqlConnect();
 
     private final String SELECT_TEACHER = "SELECT * FROM teacher WHERE TeacherID = ? and tPassword = ? ";
+    private final String UPDATE_PASSWORD_TEACHER = "UPDATE teacher SET tPassword=? WHERE TeacherID=?";
+
+    public void newpassword(String teacherid, String newpassword) {
+        try (Connection connection = sqlcon.getConnect();
+                PreparedStatement ps = connection.prepareStatement(UPDATE_PASSWORD_TEACHER)) {
+            ps.setString(1, newpassword);
+            ps.setString(2, teacherid);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            sqlcon.printSQLException(e);
+        }
+    }
 
     public boolean validate(String teacherid, String tpassword) {
         boolean status = false;
