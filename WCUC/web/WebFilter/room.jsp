@@ -1,4 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    if (session.getAttribute("trole") != null) {
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -57,8 +60,7 @@
                 </div>
                 <div class="row">
 
-                    <%
-                        if ("Teacher".equals(session.getAttribute("trole"))) {
+                    <%                        if ("Teacher".equals(session.getAttribute("trole"))) {
                     %>
                     <iframe src="seat.jsp"/>"></iframe>
                     <%
@@ -106,3 +108,8 @@
         </script>
     </body>
 </html>
+<%
+    } else {
+        response.sendRedirect("../login.jsp");
+    }
+%>

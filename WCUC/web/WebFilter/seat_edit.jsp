@@ -1,5 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
+    if (session.getAttribute("trole") != null && session.getAttribute("trole").equals("Admin")) {
+%>
+<%
     // --- ตั้งค่าขนาดของห้อง ---
     int roomX = 13, roomY = 13;
 %>
@@ -192,3 +195,8 @@
         </script>
     </body>
 </html>
+<%
+    } else {
+        response.sendRedirect("../login.jsp");
+    }
+%>

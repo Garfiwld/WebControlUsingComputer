@@ -1,4 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    if (!session.getAttribute("trole").equals(null)) {
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -112,3 +115,7 @@
         </script>
     </body>
 </html>
+<%    } else {
+        response.sendRedirect("../login.jsp");
+    }
+%>

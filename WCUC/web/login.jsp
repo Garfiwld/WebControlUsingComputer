@@ -154,7 +154,7 @@
 </html>
 
 <%
-    if (session.getAttribute("teacherid") == null) {
+    if (session.getAttribute("trole") == null) {
         session.setAttribute("errorMessage", null);
         if (request.getParameter("teacherid") != null) {
             String teacherid = request.getParameter("teacherid");
@@ -176,7 +176,7 @@
             }
         }
     } else {
-        response.sendRedirect("room.jsp");
+        response.sendRedirect("WebFilter/room.jsp");
     }
 %>
 

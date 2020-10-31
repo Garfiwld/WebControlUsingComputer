@@ -1,4 +1,7 @@
 <%@page contentType="application/json" pageEncoding="UTF-8"%>
+<%
+    if (session.getAttribute("trole") != null && session.getAttribute("trole").equals("Admin")) {
+%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
@@ -14,7 +17,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%
-
     SqlConnect sqlConnect = new SqlConnect();
     Gson gson = new Gson();
     ArrayList<TeacherModel> listTeacher = new ArrayList<>();
@@ -180,5 +182,10 @@
             this.tRole = tRole;
         }
 
+    }
+%>
+<%
+    } else {
+        response.sendRedirect("../login.jsp");
     }
 %>

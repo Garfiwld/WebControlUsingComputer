@@ -1,4 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    if (session.getAttribute("trole") != null && session.getAttribute("trole").equals("Admin")) {
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -188,3 +191,7 @@
         </script>
     </body>
 </html>
+<%    } else {
+        response.sendRedirect("../login.jsp");
+    }
+%>
