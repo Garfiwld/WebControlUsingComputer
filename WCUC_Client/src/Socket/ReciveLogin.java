@@ -60,9 +60,11 @@ public class ReciveLogin {
                                 main.studentLogin.setVisible(false);
                             }
                             studentModel.setStatus("Login");
+                            Reciver.interrupt();
                             break;
                         case "LoginFailed":
                             JOptionPane.showMessageDialog(main.studentLogin.getContentPane(), "Username or Password Invalid.");
+                            Reciver.interrupt();
                             break;
                     }
                 }

@@ -55,9 +55,21 @@
                     </div>
 
                 </div>
-
                 <div class="row">
-                    <iframe src="seat_618_1.jsp"/>"></iframe>
+
+                    <%
+                        if ("Teacher".equals(session.getAttribute("trole"))) {
+                    %>
+                    <iframe src="seat.jsp"/>"></iframe>
+                    <%
+                    } else if ("Admin".equals(session.getAttribute("trole"))) {
+                    %>
+                    <iframe src="seat_edit.jsp"/>"></iframe>
+                    <%
+                        } else {
+                        }
+                    %>
+
                 </div>
             </div>
         </main>

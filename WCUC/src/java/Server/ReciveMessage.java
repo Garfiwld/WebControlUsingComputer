@@ -36,12 +36,14 @@ public class ReciveMessage {
                             String status = read.readLine();
                             updateMatchMac(ipv4, macadress, status);
                             System.out.println("\n[GET] HeartBeat : " + ipv4 + " : " + macadress + " : " + status);
+                            ReciveMessage.interrupt();
                             break;
                         case "MatchMac":
                             ipv4 = read.readLine();
                             macadress = read.readLine();
                             updateMatchMac(ipv4, macadress, "Online");
                             System.out.println("\n[GET] MatchMac : " + ipv4 + " : " + macadress);
+                            ReciveMessage.interrupt();
                             break;
                         case "Login":
                             String studentid = read.readLine();
@@ -62,19 +64,21 @@ public class ReciveMessage {
                                 out.flush();
                             }
                             System.out.println("\n[GET] Login : " + studentid + " : " + spassword + " : " + macaddress + " : " + ipv4);
+                            ReciveMessage.interrupt();
                             break;
                         case "UpdatePassword":
                             String StudentID = read.readLine();
                             String sPassword = read.readLine();
                             updateStudentPassword(StudentID, sPassword);
                             System.out.println("\n[GET] UpdatePassword : " + StudentID + " : " + sPassword);
+                            ReciveMessage.interrupt();
                             break;
                         default:
                             System.out.println("\n[GET] " + action);
+                            ReciveMessage.interrupt();
                             break;
                     }
                 }
-
             } catch (Exception e) {
 
             }

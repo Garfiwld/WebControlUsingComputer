@@ -13,7 +13,7 @@ public class Server {
     SqlConnect sqlcon = new SqlConnect();
 
     public void Start() {
-        System.out.println("xxxxxxxxxxxxxxxxxx");
+        System.out.println("\nServer Start");
         ReciveMessage reciveMessage = new ReciveMessage();
         reciveMessage.start();
 
