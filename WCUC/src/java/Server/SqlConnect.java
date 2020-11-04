@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class SqlConnect {
 
-    private final String jdbcURL = "jdbc:mysql://localhost:3306/wcuc?useSSL=false";
+    private final String jdbcURL = "jdbc:mysql://localhost:3306/wcuc?useUnicode=yes&characterEncoding=UTF-8";
     private final String jdbcUsername = "root";
     private final String jdbcPassword = "";
 

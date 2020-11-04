@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="Server.SqlConnect"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.PreparedStatement"%>
@@ -65,10 +65,12 @@
                 String[] arrOfStu = strOfStu.split("\'");
                 StudentID = arrOfStu[1];
                 String name = record.get("StdName");
-                String decodeTIS620 = new String(name.getBytes("ISO-8859-1"), "TIS-620");
-                String[] arrOfsName = decodeTIS620.split(" ");
-//                        String decodedUTF8 = new String(deISO885911.getBytes("ISO-8859-11"), "UTF-8");
-//                        String[] arrOfsName = decodedUTF8.split(" ");
+                String decodeUTF8 = new String(name.getBytes("UTF-8"), "UTF-8");
+                String[] arrOfsName = decodeUTF8.split(" ");
+//                String decodeTIS620 = new String(name.getBytes("ISO-8859-1"), "TIS-620");
+//                String[] arrOfsName = decodeTIS620.split(" ");
+//                String decodedUTF8 = new String(name.getBytes("ISO-8859-1"), "UTF-8");
+//                String[] arrOfsName = decodedUTF8.split(" ");
                 sFirstname = arrOfsName[1];
                 sLastname = arrOfsName[4];
                 out.println(StudentID + " : " + sFirstname + " : " + sLastname + "<br>");

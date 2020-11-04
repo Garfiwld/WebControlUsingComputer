@@ -1,4 +1,4 @@
-<%@page contentType="application/json" pageEncoding="UTF-8"%>
+<%@page contentType="application/json; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
