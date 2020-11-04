@@ -1,7 +1,4 @@
 <%@page contentType="application/json" pageEncoding="UTF-8"%>
-<%
-    if (!session.getAttribute("trole").equals(null)) {
-%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
@@ -107,10 +104,5 @@
             this.sFirstLogin = sFirstLogin;
         }
 
-    }
-%>
-<%
-    } else {
-        response.sendRedirect("../login.jsp");
     }
 %>

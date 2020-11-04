@@ -1,8 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    if (session.getAttribute("trole") != null && session.getAttribute("trole").equals("Admin")) {
-%>
-<%
     // --- ตั้งค่าขนาดของห้อง ---
     int roomX = 13, roomY = 13;
 %>
@@ -59,7 +56,7 @@
         <div id="seat" class="text-center">
             <%                for (int y = 0; y < roomY; y++) {
                     for (int x = 0; x < roomX; x++) {
-                        out.print("<img id=" + x + "-" + y + " src=\"img/Floor.png\">");
+                        out.print("<img id=" + x + "-" + y + " src=\"../img/Floor.png\">");
                     }
                     out.print("<br>");
                 }
@@ -105,12 +102,12 @@
             setInterval(listseat, 10 * 1000);
             function listseat() {
                 $.ajax({
-                    url: "ajax_seat.jsp",
+                    url: "../ajax_seat.jsp",
                     type: "GET",
                     data: "action=ajlist",
                     success: function (response) {
                         $.each(response, function (index, value) {
-                            document.getElementById(value.SeatID).src = 'img/' + value.cStatus + '.png';
+                            document.getElementById(value.SeatID).src = '../img/' + value.cStatus + '.png';
                         });
                     }
                 });
@@ -136,7 +133,7 @@
                 // --- รับค่า MacAddress ที่ถูกใช้งานมาแสดงผล ---
                 oldMac = null;
                 $.ajax({
-                    url: "ajax_seat.jsp",
+                    url: "../ajax_seat.jsp",
                     type: "GET",
                     data: "action=ajinfo&SeatID=" + seatid,
                     success: function (response) {
@@ -148,7 +145,7 @@
                 });
                 // --- รับค่า MacAddress ที่ยังไม่ถูกใช้งานมาแสดงผล
                 $.ajax({
-                    url: "ajax_seat.jsp",
+                    url: "../ajax_seat.jsp",
                     type: "GET",
                     data: "action=ajmac",
                     success: function (response) {
@@ -174,29 +171,24 @@
                 var MacAddress = document.getElementById("MacAddress").value;
                 console.log(oldMac + ' : ' + MacAddress + ' : ' + SeatID);
                 $.ajax({
-                    url: "ajax_seat.jsp",
+                    url: "../ajax_seat.jsp",
                     type: "GET",
                     data: {action: 'ajedit', oldMac: oldMac, MacAddress: MacAddress, SeatID: SeatID}
                 });
-                document.getElementById(SeatID).src = 'img/Offline.png';
+                document.getElementById(SeatID).src = '../img/Offline.png';
                 $('#exampleModal').modal('hide');
             }
             function ajdelete() {
                 var SeatID = document.getElementById("SeatID").value;
                 $.ajax({
-                    url: "ajax_seat.jsp",
+                    url: "../ajax_seat.jsp",
                     type: "GET",
                     data: {action: 'ajdelete', SeatID: SeatID}
                 });
-                document.getElementById(SeatID).src = 'img/Floor.png';
+                document.getElementById(SeatID).src = '../img/Floor.png';
                 $('#exampleModal').modal('hide');
             }
 
         </script>
     </body>
 </html>
-<%
-    } else {
-        response.sendRedirect("../login.jsp");
-    }
-%>

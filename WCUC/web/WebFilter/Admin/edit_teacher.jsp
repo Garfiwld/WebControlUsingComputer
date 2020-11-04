@@ -1,12 +1,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%
-    if (session.getAttribute("trole") != null && session.getAttribute("trole").equals("Admin")) {
-%>
 <!DOCTYPE html>
 <html>
     <head>
         <%@include file="includes/head.jsp" %>
-        <link rel="stylesheet" type="text/css" href="addons/jQDataTables/datatables.css"/>
+        <link rel="stylesheet" type="text/css" href="../addons/jQDataTables/datatables.css"/>
         <title>Edit Teacher</title>
         <style>
             table.dataTable tbody>tr.selected, table.dataTable tbody>tr>.selected {
@@ -49,8 +46,8 @@
 
 
         <%@include file="includes/body.jsp" %>
-        <script type="text/javascript" src="addons/jQDataTables/datatables.js"></script>
-        <script src="addons/jQDataTables/dataTables.altEditor.free.js" ></script>
+        <script type="text/javascript" src="../addons/jQDataTables/datatables.js"></script>
+        <script src="../addons/jQDataTables/dataTables.altEditor.free.js" ></script>
         <script type="text/javascript" CHARSET="UTF-8">
                                 $(document).ready(function () {
                                     var columnDefs = [
@@ -191,7 +188,3 @@
         </script>
     </body>
 </html>
-<%    } else {
-        response.sendRedirect("../login.jsp");
-    }
-%>

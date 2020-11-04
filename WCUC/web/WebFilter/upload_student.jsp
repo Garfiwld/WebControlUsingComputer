@@ -1,7 +1,4 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%
-    if (!session.getAttribute("trole").equals(null)) {
-%>
 <%@page import="Server.SqlConnect"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.PreparedStatement"%>
@@ -98,9 +95,4 @@
         f.delete();
     }
     response.sendRedirect("edit_student.jsp");
-%>
-<%
-    } else {
-        response.sendRedirect("../login.jsp");
-    }
 %>

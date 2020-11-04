@@ -160,12 +160,12 @@
             String teacherid = request.getParameter("teacherid");
             String tpassword = request.getParameter("tpassword");
             String newpassword = request.getParameter("newpassword");
-            teacherid = teacherid.toUpperCase();
-
             if (validate(teacherid, tpassword)) {
                 session.setAttribute("tfirstname", gettFirstname());
                 session.setAttribute("tlastname", gettLastname());
                 session.setAttribute("trole", gettRole());
+                session.setAttribute("LoginStatus", "Pass");
+                session.setAttribute("LoginRole", "Pass" + gettRole());
                 response.sendRedirect("WebFilter/room.jsp");
                 if (newpassword != "") {
                     newpassword(teacherid, newpassword);

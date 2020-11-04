@@ -1,8 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    if (!session.getAttribute("trole").equals(null)) {
-%>
-<%
     int roomX = 13;
     int roomY = 13;
 %>
@@ -204,8 +201,3 @@
         </script>
     </body>
 </html>
-<%
-    } else {
-        response.sendRedirect("../login.jsp");
-    }
-%>

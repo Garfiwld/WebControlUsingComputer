@@ -1,7 +1,4 @@
 <%@page contentType="application/json" pageEncoding="UTF-8"%>
-<%
-    if (session.getAttribute("trole") != null) {
-%>
 <%@page import="Server.SqlConnect"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
@@ -207,10 +204,5 @@
             this.sLastname = sLastname;
         }
 
-    }
-%>
-<%
-    } else {
-        response.sendRedirect("../login.jsp");
     }
 %>

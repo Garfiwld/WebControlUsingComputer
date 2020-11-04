@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 
 public class main {
 
-    public static final String host = "192.168.1.111";
+    public static final String host = "192.168.14.120";
     public static final int port = 25101;
 
     public static StudentModel studentModel = new StudentModel();

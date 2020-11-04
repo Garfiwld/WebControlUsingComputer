@@ -1,26 +1,32 @@
+package Server;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Server;
-
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author OBeseCat
+ * @author Poom
  */
-public class WebFilter implements Filter {
+@WebFilter(filterName = "NewFilter", urlPatterns = {"/WebFilter/*"}, dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD, DispatcherType.ERROR, DispatcherType.INCLUDE})
+public class FilterLogin implements Filter {
 
     private static final boolean debug = true;
 
@@ -29,13 +35,13 @@ public class WebFilter implements Filter {
     // configured.
     private FilterConfig filterConfig = null;
 
-    public WebFilter() {
+    public FilterLogin() {
     }
 
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("WebFilter:DoBeforeProcessing");
+            log("NewFilter:DoBeforeProcessing");
         }
 
         // Write code here to process the request and/or response before
@@ -63,7 +69,7 @@ public class WebFilter implements Filter {
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("WebFilter:DoAfterProcessing");
+            log("NewFilter:DoAfterProcessing");
         }
 
         // Write code here to process the request and/or response after
@@ -98,8 +104,18 @@ public class WebFilter implements Filter {
             FilterChain chain)
             throws IOException, ServletException {
 
+        HttpServletRequest httpReq = (HttpServletRequest) request;
+        HttpServletResponse httpRes = (HttpServletResponse) response;
+        try {
+            HttpSession session = httpReq.getSession();
+            if (!(session.getAttribute("LoginStatus").toString().equals("Pass"))) {
+                httpRes.sendRedirect("../login.jsp");
+            }
+        } catch (Exception e) {
+            httpRes.sendRedirect("../login.jsp");
+        }
         if (debug) {
-            log("WebFilter:doFilter()");
+            log("NewFilter:doFilter()");
         }
 
         doBeforeProcessing(request, response);
@@ -107,6 +123,7 @@ public class WebFilter implements Filter {
         Throwable problem = null;
         try {
             chain.doFilter(request, response);
+
         } catch (Throwable t) {
             // If an exception is thrown somewhere down the filter chain,
             // we still want to execute our after processing, and then
@@ -159,7 +176,7 @@ public class WebFilter implements Filter {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
             if (debug) {
-                log("WebFilter:Initializing filter");
+                log("NewFilter:Initializing filter");
             }
         }
     }
@@ -170,9 +187,9 @@ public class WebFilter implements Filter {
     @Override
     public String toString() {
         if (filterConfig == null) {
-            return ("WebFilter()");
+            return ("NewFilter()");
         }
-        StringBuffer sb = new StringBuffer("WebFilter(");
+        StringBuffer sb = new StringBuffer("NewFilter(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());
