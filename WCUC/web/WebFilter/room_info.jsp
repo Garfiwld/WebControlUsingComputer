@@ -102,7 +102,7 @@
                                 seconds = seconds < 10 ? '0' + seconds : seconds;
                                 var strDate = date.getMonth() + 1 + "-" + date.getDate() + "-" + date.getFullYear();
                                 var strTime = hours + '-' + minutes + '-' + seconds;
-                                return  "ROOM_618_1_" + strDate + "_" + strTime;
+                                return  "ROOM_621_" + strDate + "_" + strTime;
                             }
                         }]
                 }

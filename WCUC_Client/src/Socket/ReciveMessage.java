@@ -47,6 +47,9 @@ public class ReciveMessage {
                             lockScreen.setVisible(false);
                             ReciveMsg.interrupt();
                             break;
+                        default:
+                            ReciveMsg.interrupt();
+                            break;
                     }
                 }
             } catch (IOException ex) {
