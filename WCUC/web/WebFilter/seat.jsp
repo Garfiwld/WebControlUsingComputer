@@ -136,7 +136,7 @@
                 });
             }
             // --- ทำการเรียกใช้ฟังก์ชั่น listseat ทุก 10 วินาที
-            setInterval(listseat, 10 * 1000);
+            setInterval(listseat, 3 * 1000);
             // --- ajax รับข้อมูลของ SeatID ที่เลือกมาแสดง
             function setinfo(event) {
                 var seatid = event.target.attributes['id'].value;

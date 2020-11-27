@@ -10,12 +10,10 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Timer;
 import java.util.TimerTask;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 
 public class main {
 
-    public static final String host = "192.168.14.9";
+    public static final String host = "192.168.1.183";
     public static final int port = 25101;
 
     public static StudentModel studentModel = new StudentModel();
@@ -65,40 +63,42 @@ public class main {
         t.schedule(new TimerTask() {
             @Override
             public void run() {
-                int numtries = 1;
-                while (true) {
-                    setIPv4AndMac();
-                    try (Socket socketLogin = new Socket(host, port)) {
-                        PrintWriter put = new PrintWriter(socketLogin.getOutputStream());
-                        put.println("HeartBeat");
-                        put.println(studentModel.getIpv4());
-                        put.println(studentModel.getMacaddress());
-                        put.println(studentModel.getStatus());
-                        put.flush();
-                        System.out.println("\n[PUT] HeartBeat : " + studentModel.getIpv4() + " : " + studentModel.getMacaddress());
-                        break;
-                    } catch (Exception e) {
-                        if (numtries++ >= 3) {
-                            Shutdown();
-                        }
-                        JOptionPane msg = new JOptionPane("Please check internet connection!\nif you fixed click OK.", JOptionPane.WARNING_MESSAGE);
-                        final JDialog dlg = msg.createDialog("Internet connection error.");
-                        dlg.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-                        dlg.setAlwaysOnTop(true);
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    Thread.sleep(30 * 1000);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                                dlg.setVisible(false);
-                            }
-                        }).start();
-                        dlg.setVisible(true);
-                    }
+//                int numtries = 1;
+//                while (true) {
+                setIPv4AndMac();
+                try (Socket socketLogin = new Socket(host, port)) {
+                    PrintWriter put = new PrintWriter(socketLogin.getOutputStream());
+                    put.println("HeartBeat");
+                    put.println(studentModel.getIpv4());
+                    put.println(studentModel.getMacaddress());
+                    put.println(studentModel.getStatus());
+                    put.println(studentModel.getStudentid());
+                    put.flush();
+                    System.out.println("\n[PUT] HeartBeat : " + studentModel.getIpv4() + " : " + studentModel.getMacaddress());
+//                        break;
+                } catch (Exception e) {
+                    MatchMac();
+//                        if (numtries++ >= 3) {
+//                            Shutdown();
+//                        }
+//                        JOptionPane msg = new JOptionPane("Please check internet connection!\nif you fixed click OK.", JOptionPane.WARNING_MESSAGE);
+//                        final JDialog dlg = msg.createDialog("Internet connection error.");
+//                        dlg.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+//                        dlg.setAlwaysOnTop(true);
+//                        new Thread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                try {
+//                                    Thread.sleep(30 * 1000);
+//                                } catch (InterruptedException e) {
+//                                    e.printStackTrace();
+//                                }
+//                                dlg.setVisible(false);
+//                            }
+//                        }).start();
+//                        dlg.setVisible(true);
                 }
+//                }
             }
         }, 0, 5 * 1000);
     }

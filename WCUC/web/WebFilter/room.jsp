@@ -93,7 +93,7 @@
                 $.ajax({
                     url: "ajax_sendmsg.jsp",
                     type: "GET",
-                    data: "&casesend=" + action.name + "&room=621",
+                    data: "&casesend=" + action.name,
                     success: function (response) {
                         response ? toastr.success(action.innerHTML + ' Success.') : toastr.error(action.innerHTML + ' Fail.');
                     }
