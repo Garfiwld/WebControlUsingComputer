@@ -1,7 +1,9 @@
-package Socket;
+package Client;
 
+import Client.LockScreen;
+import Client.StudentLogin;
 import Client.main;
-import Model.StudentModel;
+import Client.StudentModel;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,26 +15,45 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class ReciveLogin {
+public class ReciveMessage {
 
+    LockScreen lockScreen = new LockScreen();
+    StudentLogin studentLogin = new StudentLogin();
     StudentModel studentModel = new StudentModel();
 
     public void start() {
-        Reciver.start();
+
+        ReciveMsg.start();
+
     }
-    Thread Reciver = new Thread(new Runnable() {
+    Thread ReciveMsg = new Thread(new Runnable() {
 
         @Override
         public void run() {
-
             try {
-                ServerSocket serversocketStudent = new ServerSocket(26101);
+                ServerSocket serversocketStudent = new ServerSocket(26103);
                 while (true) {
-                    Socket socketAccept = serversocketStudent.accept();
-                    BufferedReader read = new BufferedReader(new InputStreamReader(socketAccept.getInputStream()));
-                    String action = read.readLine();
-                    System.out.println("\n[GET] : " + action);
-                    switch (action) {
+                    Socket readAccept = serversocketStudent.accept();
+                    BufferedReader read = new BufferedReader(new InputStreamReader(readAccept.getInputStream()));
+                    String msg = read.readLine();
+                    System.out.println("\n[GET] " + msg);
+                    switch (msg) {
+                        case "Shutdown":
+                            main.Shutdown();
+                            ReciveMsg.interrupt();
+                            break;
+                        case "Restart":
+                            main.Restart();
+                            ReciveMsg.interrupt();
+                            break;
+                        case "LockScreen":
+                            lockScreen.setVisible(true);
+                            ReciveMsg.interrupt();
+                            break;
+                        case "UnlockScreen":
+                            lockScreen.setVisible(false);
+                            ReciveMsg.interrupt();
+                            break;
                         case "LoginSuccess":
 //                            JOptionPane.showMessageDialog(main.studentLogin.getContentPane(), "Login Success.");
                             String sfirstlogin = read.readLine();
@@ -60,15 +81,18 @@ public class ReciveLogin {
                                 main.studentLogin.setVisible(false);
                             }
                             studentModel.setStatus("Login");
-                            Reciver.interrupt();
+                            ReciveMsg.interrupt();
                             break;
                         case "LoginFailed":
                             JOptionPane.showMessageDialog(main.studentLogin.getContentPane(), "Username or Password Invalid.");
-                            Reciver.interrupt();
+                            ReciveMsg.interrupt();
+                            break;
+                        default:
+                            ReciveMsg.interrupt();
                             break;
                     }
                 }
-            } catch (IOException e) {
+            } catch (IOException ex) {
             }
         }
     });

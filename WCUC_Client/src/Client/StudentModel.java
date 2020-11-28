@@ -1,4 +1,4 @@
-package Model;
+package Client;
 
 public class StudentModel {
 

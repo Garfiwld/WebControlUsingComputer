@@ -1,3 +1,4 @@
+<%@page import="Server.Server"%>
 <%@page contentType="application/json" pageEncoding="UTF-8"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
@@ -25,6 +26,9 @@
             out.println(sendMssage.Send(ipv4, action));
             break;
         case "all":
+            if (action.equals("LockScreen") || action.equals("UnlockScreen")) {
+                Server.screenStatus = action;
+            }
             try (Connection connection = sqlConnect.getConnect();
                     PreparedStatement ps = connection.prepareStatement(SELECT_ALL_COMPUTER);) {
                 ResultSet rs = ps.executeQuery();

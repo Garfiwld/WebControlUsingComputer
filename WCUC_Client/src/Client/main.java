@@ -1,8 +1,5 @@
 package Client;
 
-import Model.StudentModel;
-import Socket.ReciveLogin;
-import Socket.ReciveMessage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -31,9 +28,8 @@ public class main {
         HeartBeat();
 
         // --- เปิดรับการตรวจสอบ Login ---
-        ReciveLogin reciveLogin = new ReciveLogin();
-        reciveLogin.start();
-
+//        ReciveLogin reciveLogin = new ReciveLogin();
+//        reciveLogin.start();
         // --- เปิดรับข้อความ ---
         ReciveMessage reciveMessage = new ReciveMessage();
         reciveMessage.start();
@@ -77,7 +73,6 @@ public class main {
                     System.out.println("\n[PUT] HeartBeat : " + studentModel.getIpv4() + " : " + studentModel.getMacaddress());
 //                        break;
                 } catch (Exception e) {
-                    MatchMac();
 //                        if (numtries++ >= 3) {
 //                            Shutdown();
 //                        }

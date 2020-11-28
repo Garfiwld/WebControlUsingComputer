@@ -11,6 +11,7 @@ public class Server {
 
     SendMessage sendMessage = new SendMessage();
     SqlConnect sqlcon = new SqlConnect();
+    public static String screenStatus = "UnlockScreen";
 
     public void Start() {
         System.out.println("\nServer Start");
@@ -35,7 +36,7 @@ public class Server {
                 while (rs.next()) {
                     String macaddress = rs.getString("MacAddress");
                     String ipv4 = rs.getString("IPv4");
-                    if (!sendMessage.Send(ipv4, "HeartBeat")) {
+                    if (!sendMessage.Send(ipv4, screenStatus)) {
                         updateOffine(macaddress);
                     }
                 }

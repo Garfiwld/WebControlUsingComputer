@@ -32,33 +32,37 @@ public class ReciveMessage {
                     switch (action) {
                         case "HeartBeat":
                             String ipv4 = read.readLine();
-                            String macadress = read.readLine();
+                            String macaddress = read.readLine();
                             String status = read.readLine();
-                            updateMatchMac(ipv4, macadress, status);
-                            System.out.println("\n[GET] HeartBeat : " + ipv4 + " : " + macadress + " : " + status);
+                            String studentid = read.readLine();
+                            updateMatchMac(ipv4, macaddress, status);
+                            if (status.equals("Login")) {
+                                updateStudentLogin(studentid, macaddress);
+                            }
+                            System.out.println("\n[GET] HeartBeat : " + ipv4 + " : " + macaddress + " : " + status + " : " + studentid);
                             ReciveMessage.interrupt();
                             break;
                         case "MatchMac":
                             ipv4 = read.readLine();
-                            macadress = read.readLine();
-                            updateMatchMac(ipv4, macadress, "Online");
-                            System.out.println("\n[GET] MatchMac : " + ipv4 + " : " + macadress);
+                            macaddress = read.readLine();
+                            updateMatchMac(ipv4, macaddress, "Online");
+                            System.out.println("\n[GET] MatchMac : " + ipv4 + " : " + macaddress);
                             ReciveMessage.interrupt();
                             break;
                         case "Login":
-                            String studentid = read.readLine();
+                            studentid = read.readLine();
                             String spassword = read.readLine();
-                            String macaddress = read.readLine();
+                            macaddress = read.readLine();
                             ipv4 = read.readLine();
                             List<String> result = studentLogin(studentid, spassword);
-                            Socket soket = new Socket(ipv4, 26101);
+                            Socket soket = new Socket(ipv4, 26103);
                             PrintWriter out = new PrintWriter(soket.getOutputStream());
                             if (!result.isEmpty()) {
                                 out.println("LoginSuccess");
                                 String sfirstlogin = result.get(4);
                                 out.println(sfirstlogin);
                                 out.flush();
-                                studentOnline(studentid, macaddress);
+                                updateStudentLogin(studentid, macaddress);
                             } else {
                                 out.println("LoginFailed");
                                 out.flush();
@@ -87,7 +91,7 @@ public class ReciveMessage {
 
     SqlConnect sqlcon = new SqlConnect();
     private static final String SELECT_STUDENT_LOGIN = "SELECT * FROM student  WHERE student.StudentID=? and student.sPassword=?";
-    private static final String UPDATE_STUDENT_ONLINE = "UPDATE computer SET cStatus='Online',StudentID=? WHERE MacAddress = ?";
+    private static final String UPDATE_STUDENT_LOGIN = "UPDATE computer SET cStatus='Login',StudentID=? WHERE MacAddress = ?";
     private static final String UPDATE_MATCHMAC = "INSERT INTO computer (MacAddress, IPv4, cStatus) VALUES(?, ?, ?) ON DUPLICATE KEY UPDATE IPv4 = ?, cStatus=?";
     private static final String UPDATE_SPASSWORD = "Update student set sPassword = ?, sFirstLogin = ? Where StudentID = ?";
 
@@ -118,9 +122,9 @@ public class ReciveMessage {
         }
     }
 
-    public void studentOnline(String studentid, String macaddress) {
+    public void updateStudentLogin(String studentid, String macaddress) {
         Connection connection = sqlcon.getConnect();
-        try (PreparedStatement ps = connection.prepareStatement(UPDATE_STUDENT_ONLINE);) {
+        try (PreparedStatement ps = connection.prepareStatement(UPDATE_STUDENT_LOGIN);) {
             ps.setString(1, studentid);
             ps.setString(2, macaddress);
 //            System.out.println("--- Update status student Online. ---- \n" + ps + "\n");

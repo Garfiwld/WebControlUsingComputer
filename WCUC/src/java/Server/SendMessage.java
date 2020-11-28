@@ -7,9 +7,8 @@ import java.net.Socket;
 public class SendMessage {
 
     public boolean Send(String ipv4, String msg) {
-        try {
-            Socket send = new Socket(ipv4, 26103);
-            PrintWriter put = new PrintWriter(send.getOutputStream());
+        try (Socket send = new Socket(ipv4, 26103);
+                PrintWriter put = new PrintWriter(send.getOutputStream());) {
             put.println(msg);
             put.flush();
             System.out.println("\n[PUT] " + msg + " : " + ipv4 + " : 26103");
