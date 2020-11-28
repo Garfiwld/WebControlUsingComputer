@@ -95,8 +95,8 @@
                     <div id="seatcontrol">
                         <div class="modal-footer">
                             <div class="align-baseline">
-                                <a id="shutdownbtn" name="Shutdown" role="button" class="btn btn-danger" onclick="singleSeat('shutdownbtn')"><i class="fas fa-power-off"> Shutdown</i></a>
-                                <a id="restartbtn" name="Restart" role="button" class="btn btn-warning" onclick="singleSeat('restartbtn')"><i class="fas fa-sync"> Restart</i></a>
+                                <a id="shutdownbtn" name="Shutdown" role="button" class="btn btn-danger" onclick="singleSeat('shutdownbtn')"><i class="fas fa-power-off"></i> Shutdown</a>
+                                <a id="restartbtn" name="Restart" role="button" class="btn btn-warning" onclick="singleSeat('restartbtn')"><i class="fas fa-sync"></i> Restart</a>
                                 <!--                                <a id="lockbtn" name="LockScreen" role="button" class="btn btn-dark" onclick="singleSeat('lockbtn')"><i class="fas fa-user-lock"></i></a>
                                                                 <a id="unlockbtn" name="UnlockScreen" role="button" class="btn btn-dark-green" onclick="singleSeat('unlockbtn')"><i class="fas fa-user-unlock"></i></a>-->
                             </div>

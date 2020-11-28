@@ -10,7 +10,7 @@ import java.util.TimerTask;
 
 public class main {
 
-    public static final String host = "192.168.1.183";
+    public static final String host = "192.168.14.9";
     public static final int port = 25101;
 
     public static StudentModel studentModel = new StudentModel();
