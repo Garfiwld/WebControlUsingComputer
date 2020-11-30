@@ -1,3 +1,4 @@
+<%@page import="Server.Server"%>
 <%@page contentType="application/json" pageEncoding="UTF-8"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
@@ -16,7 +17,7 @@
 
     String SELECT_ALL_COMPUTER = "SELECT IPv4 FROM computer WHERE IPv4 IS NOT NULL";
 
-    String ipv4, action, casesend, room = "618_1";
+    String ipv4, action, casesend, room = "618_2";
     ipv4 = request.getParameter("IPv4");
     action = request.getParameter("Action");
     casesend = request.getParameter("casesend");
@@ -25,6 +26,9 @@
             out.println(sendMssage.Send(ipv4, action));
             break;
         case "all":
+            if (action.equals("LockScreen") || action.equals("UnlockScreen")) {
+                Server.screenStatus = action;
+            }
             try (Connection connection = sqlConnect.getConnect();
                     PreparedStatement ps = connection.prepareStatement(SELECT_ALL_COMPUTER);) {
                 ResultSet rs = ps.executeQuery();

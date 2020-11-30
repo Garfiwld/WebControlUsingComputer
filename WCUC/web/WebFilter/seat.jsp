@@ -37,6 +37,10 @@
                 -webkit-transform: scale(0.9);
                 transform: scale(0.9);
             }
+            .modal-footer {
+                display: flex;
+                justify-content: space-between;
+            }
         </style>
     </head>
     <body onload="listseat()">
@@ -90,12 +94,13 @@
                     </div>
                     <div id="seatcontrol">
                         <div class="modal-footer">
-                            <div class="mx-auto">
-                                <a id="shutdownbtn" name="Shutdown" role="button" class="btn btn-danger" onclick="singleSeat('shutdownbtn')"><i class="fas fa-power-off"></i></a>
-                                <a id="restartbtn" name="Restart" role="button" class="btn btn-warning" onclick="singleSeat('restartbtn')"><i class="fas fa-sync"></i></a>
-                                <a id="lockbtn" name="LockScreen" role="button" class="btn btn-dark" onclick="singleSeat('lockbtn')"><i class="fas fa-user-lock"></i></a>
-                                <a id="unlockbtn" name="UnlockScreen" role="button" class="btn btn-dark-green" onclick="singleSeat('unlockbtn')"><i class="fas fa-user-unlock"></i></a>
+                            <div class="align-baseline">
+                                <a id="shutdownbtn" name="Shutdown" role="button" class="btn btn-danger" onclick="singleSeat('shutdownbtn')"><i class="fas fa-power-off"></i> Shutdown</a>
+                                <a id="restartbtn" name="Restart" role="button" class="btn btn-warning" onclick="singleSeat('restartbtn')"><i class="fas fa-sync"></i> Restart</a>
+                                <!--                                <a id="lockbtn" name="LockScreen" role="button" class="btn btn-dark" onclick="singleSeat('lockbtn')"><i class="fas fa-user-lock"></i></a>
+                                                                <a id="unlockbtn" name="UnlockScreen" role="button" class="btn btn-dark-green" onclick="singleSeat('unlockbtn')"><i class="fas fa-user-unlock"></i></a>-->
                             </div>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i></button>
                         </div>
                     </div>
                 </div>
@@ -136,7 +141,7 @@
                 });
             }
             // --- ทำการเรียกใช้ฟังก์ชั่น listseat ทุก 10 วินาที
-            setInterval(listseat, 10 * 1000);
+            setInterval(listseat, 3 * 1000);
             // --- ajax รับข้อมูลของ SeatID ที่เลือกมาแสดง
             function setinfo(event) {
                 var seatid = event.target.attributes['id'].value;
