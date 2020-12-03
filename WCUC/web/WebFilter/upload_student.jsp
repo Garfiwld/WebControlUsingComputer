@@ -65,10 +65,10 @@
                 String[] arrOfStu = strOfStu.split("\'");
                 StudentID = arrOfStu[1];
                 String name = record.get("StdName");
-                String decodeUTF8 = new String(name.getBytes("UTF-8"), "UTF-8");
-                String[] arrOfsName = decodeUTF8.split(" ");
-//                String decodeTIS620 = new String(name.getBytes("ISO-8859-1"), "TIS-620");
-//                String[] arrOfsName = decodeTIS620.split(" ");
+//                String decodeUTF8 = new String(name.getBytes("UTF-8"), "UTF-8");
+//                String[] arrOfsName = decodeUTF8.split(" ");
+                String decodeTIS620 = new String(name.getBytes("ISO-8859-1"), "TIS-620");
+                String[] arrOfsName = decodeTIS620.split(" ");
 //                String decodedUTF8 = new String(name.getBytes("ISO-8859-1"), "UTF-8");
 //                String[] arrOfsName = decodedUTF8.split(" ");
                 sFirstname = arrOfsName[1];

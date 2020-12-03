@@ -130,6 +130,8 @@ public class StudentLogin extends javax.swing.JFrame {
             put.println(studentModel.getIpv4());
             put.flush();
             System.out.println("\n[PUT] Login : " + studentModel.getStudentid() + " : " + studentModel.getSpassword() + " : " + studentModel.getMacaddress() + " : " + studentModel.getIpv4());
+            socketLogin.close();
+            put.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(getContentPane(), "Failed connect server.");
         }

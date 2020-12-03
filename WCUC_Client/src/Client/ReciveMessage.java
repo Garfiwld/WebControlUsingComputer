@@ -1,9 +1,5 @@
 package Client;
 
-import Client.LockScreen;
-import Client.StudentLogin;
-import Client.main;
-import Client.StudentModel;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -26,7 +22,7 @@ public class ReciveMessage {
         ReciveMsg.start();
 
     }
-    Thread ReciveMsg = new Thread(new Runnable() {
+    Thread ReciveMsg = new Thread() {
 
         @Override
         public void run() {
@@ -40,19 +36,15 @@ public class ReciveMessage {
                     switch (msg) {
                         case "Shutdown":
                             main.Shutdown();
-                            ReciveMsg.interrupt();
                             break;
                         case "Restart":
                             main.Restart();
-                            ReciveMsg.interrupt();
                             break;
                         case "LockScreen":
                             lockScreen.setVisible(true);
-                            ReciveMsg.interrupt();
                             break;
                         case "UnlockScreen":
                             lockScreen.setVisible(false);
-                            ReciveMsg.interrupt();
                             break;
                         case "LoginSuccess":
 //                            JOptionPane.showMessageDialog(main.studentLogin.getContentPane(), "Login Success.");
@@ -72,7 +64,9 @@ public class ReciveMessage {
                                             put.println(newPassword);
                                             put.flush();
                                             System.out.println("\n[PUT] UpdatePassword : " + studentModel.getStudentid() + " : " + newPassword);
+                                            put.close();
                                         }
+                                        socketLogin.close();
                                         main.studentLogin.setVisible(false);
                                     } catch (IOException e) {
                                     }
@@ -81,19 +75,18 @@ public class ReciveMessage {
                                 main.studentLogin.setVisible(false);
                             }
                             studentModel.setStatus("Login");
-                            ReciveMsg.interrupt();
                             break;
                         case "LoginFailed":
                             JOptionPane.showMessageDialog(main.studentLogin.getContentPane(), "Username or Password Invalid.");
-                            ReciveMsg.interrupt();
                             break;
                         default:
-                            ReciveMsg.interrupt();
                             break;
                     }
+                    read.close();
+                    readAccept.close();
                 }
             } catch (IOException ex) {
             }
         }
-    });
+    };
 }

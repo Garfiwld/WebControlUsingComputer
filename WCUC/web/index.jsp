@@ -1,6 +1,10 @@
 <%@page import="Server.Server"%>
 <%
-    Server server = new Server();
-    server.Start();
+
+    if (!Server.started) {
+        Server server = new Server();
+        server.Start();
+        Server.started = true;
+    }
     response.sendRedirect("login.jsp");
 %>

@@ -10,7 +10,7 @@ import java.util.TimerTask;
 
 public class main {
 
-    public static final String host = "192.168.14.9";
+    public static final String host = "192.168.14.6";
     public static final int port = 25101;
 
     public static StudentModel studentModel = new StudentModel();
@@ -47,6 +47,8 @@ public class main {
             put.println(studentModel.getMacaddress());
             put.flush();
             System.out.println("\n[PUT] MatchMac : " + studentModel.getIpv4() + " : " + studentModel.getMacaddress());
+            socketLogin.close();
+            put.close();
         } catch (Exception ex) {
             System.out.println("Can't connect server.");
 //            JOptionPane.showMessageDialog(studentLogin.getContentPane(), "Can't connect server.");
@@ -72,6 +74,8 @@ public class main {
                     put.flush();
                     System.out.println("\n[PUT] HeartBeat : " + studentModel.getIpv4() + " : " + studentModel.getMacaddress());
 //                        break;
+                    socketLogin.close();
+                    put.close();
                 } catch (Exception e) {
 //                        if (numtries++ >= 3) {
 //                            Shutdown();
@@ -135,6 +139,7 @@ public class main {
             studentLogin.jL_Mac.setText("MacAdress : " + studentModel.getMacaddress());
             studentLogin.jL_IP.setText("IPv4Adress : " + studentModel.getIpv4());
             System.out.println("\nsetIPv4AndMac : " + studentModel.getMacaddress() + " : " + studentModel.getIpv4());
+            inx.close();
         } catch (Exception e) {
         }
     }

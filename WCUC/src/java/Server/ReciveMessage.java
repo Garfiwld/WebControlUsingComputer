@@ -20,7 +20,7 @@ public class ReciveMessage {
         ReciveMessage.start();
 
     }
-    Thread ReciveMessage = new Thread(new Runnable() {
+    Thread ReciveMessage = new Thread() {
         @Override
         public void run() {
             try {
@@ -40,14 +40,12 @@ public class ReciveMessage {
                                 updateStudentLogin(studentid, macaddress);
                             }
                             System.out.println("\n[GET] HeartBeat : " + ipv4 + " : " + macaddress + " : " + status + " : " + studentid);
-                            ReciveMessage.interrupt();
                             break;
                         case "MatchMac":
                             ipv4 = read.readLine();
                             macaddress = read.readLine();
                             updateMatchMac(ipv4, macaddress, "Online");
                             System.out.println("\n[GET] MatchMac : " + ipv4 + " : " + macaddress);
-                            ReciveMessage.interrupt();
                             break;
                         case "Login":
                             studentid = read.readLine();
@@ -56,38 +54,39 @@ public class ReciveMessage {
                             ipv4 = read.readLine();
                             List<String> result = studentLogin(studentid, spassword);
                             Socket soket = new Socket(ipv4, 26103);
-                            PrintWriter out = new PrintWriter(soket.getOutputStream());
+                            PrintWriter put = new PrintWriter(soket.getOutputStream());
                             if (!result.isEmpty()) {
-                                out.println("LoginSuccess");
+                                put.println("LoginSuccess");
                                 String sfirstlogin = result.get(4);
-                                out.println(sfirstlogin);
-                                out.flush();
+                                put.println(sfirstlogin);
+                                put.flush();
                                 updateStudentLogin(studentid, macaddress);
                             } else {
-                                out.println("LoginFailed");
-                                out.flush();
+                                put.println("LoginFailed");
+                                put.flush();
                             }
                             System.out.println("\n[GET] Login : " + studentid + " : " + spassword + " : " + macaddress + " : " + ipv4);
-                            ReciveMessage.interrupt();
+                            soket.close();
+                            put.close();
                             break;
                         case "UpdatePassword":
                             String StudentID = read.readLine();
                             String sPassword = read.readLine();
                             updateStudentPassword(StudentID, sPassword);
                             System.out.println("\n[GET] UpdatePassword : " + StudentID + " : " + sPassword);
-                            ReciveMessage.interrupt();
                             break;
                         default:
                             System.out.println("\n[GET] " + action);
-                            ReciveMessage.interrupt();
                             break;
                     }
+                    read.close();
+                    readAccept.close();
                 }
             } catch (Exception e) {
 
             }
         }
-    });
+    };
 
     SqlConnect sqlcon = new SqlConnect();
     private static final String SELECT_STUDENT_LOGIN = "SELECT * FROM student  WHERE student.StudentID=? and student.sPassword=?";

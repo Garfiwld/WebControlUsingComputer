@@ -22,7 +22,7 @@
                     <div class="card-body">
                         <!--Header -->
                         <div class="form-header purple-gradient accent-1">
-                            <h3>ROOM 618/2</h3>
+                            <h3>ROOM 621</h3>
                         </div>
                         <div class="row">
                             <div class="col-md-4">

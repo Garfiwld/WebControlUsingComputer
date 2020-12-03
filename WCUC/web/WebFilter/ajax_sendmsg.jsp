@@ -1,23 +1,18 @@
-<%@page import="Server.Server"%>
 <%@page contentType="application/json" pageEncoding="UTF-8"%>
+<%@page import="Server.Server"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="Server.SendMessage"%>
 <%@page import="Server.SqlConnect"%>
-<%@page import="java.util.Arrays"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.io.IOException"%>
-<%@page import="java.io.PrintWriter"%>
-<%@page import="java.net.Socket"%>
 <%
     SqlConnect sqlConnect = new SqlConnect();
     SendMessage sendMssage = new SendMessage();
 
     String SELECT_ALL_COMPUTER = "SELECT IPv4 FROM computer WHERE IPv4 IS NOT NULL";
 
-    String ipv4, action, casesend, room = "618_2";
+    String ipv4, action, casesend, room = "621";
     ipv4 = request.getParameter("IPv4");
     action = request.getParameter("Action");
     casesend = request.getParameter("casesend");

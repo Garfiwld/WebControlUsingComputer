@@ -11,6 +11,7 @@ public class Server {
 
     SendMessage sendMessage = new SendMessage();
     SqlConnect sqlcon = new SqlConnect();
+    public static boolean started = false;
     public static String screenStatus = "UnlockScreen";
 
     public void Start() {
@@ -24,7 +25,7 @@ public class Server {
             public void run() {
                 HeartBeat();
             }
-        }, 0, 5 * 1000);
+        }, 0, 30 * 1000);
     }
     private static final String SELECT_COMPUTER_ONLINE = "SELECT MacAddress, IPv4 FROM computer WHERE IPv4 IS NOT NULL";
     private static final String UPDATE_OFFLINE = "UPDATE computer SET IPv4 = NULL, cStatus = 'Offline', StudentID = NULL WHERE MacAddress = ?";
@@ -36,9 +37,14 @@ public class Server {
                 while (rs.next()) {
                     String macaddress = rs.getString("MacAddress");
                     String ipv4 = rs.getString("IPv4");
-                    if (!sendMessage.Send(ipv4, screenStatus)) {
-                        updateOffine(macaddress);
-                    }
+                    new Thread() {
+                        public void run() {
+                            if (!sendMessage.Send(ipv4, screenStatus)) {
+                                updateOffine(macaddress);
+                            }
+                        }
+                    }.start();
+                    System.out.println("[HeartBeat] : " + macaddress + " : " + ipv4);
                 }
                 rs.close();
             }
