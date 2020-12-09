@@ -16,7 +16,7 @@ public class ReciveMessage {
 
     }
 
-    Thread ReciveMessage = new Thread(new Runnable() {
+    Thread ReciveMessage = new Thread() {
         @Override
         public void run() {
             System.out.println("ReciveMessage Start");
@@ -36,9 +36,11 @@ public class ReciveMessage {
                             internetControl.InternetOff(room);
                             break;
                     }
+                    read.close();
+                    readAccept.close();
                 }
             } catch (IOException ex) {
             }
         }
-    });
+    };
 }

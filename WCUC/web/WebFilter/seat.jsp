@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    int roomX = 13;
-    int roomY = 13;
+    // --- ตั้งค่าขนาดของห้อง ---
+    int roomX = 13, roomY = 14;
 %>
 <!DOCTYPE html>
 <html>
@@ -44,11 +44,10 @@
         </style>
     </head>
     <body onload="listseat()">
-        <div class="text-center" style="height: 55px;">
+        <div class="text-center">
             <div>
-                <h3 style=" margin-bottom: -15px; ">--- WHITEBOARD ---</h3>
                 <input type="range" id="imgsize" name="imgsize"
-                       min="25" max="75" value="50" step="5" style="height:40px">
+                       min="25" max="75" value="50" step="5">
             </div>
         </div>
         <div id="seat" class="text-center">
@@ -60,7 +59,9 @@
                 }
             %>
         </div>
-
+        <div class="text-center">
+            <h3>--- WHITEBOARD ---</h3>
+        </div>
         <!-- Modal -->
         <div
             class="modal"
@@ -132,9 +133,11 @@
                             } else if (value.cStatus === 'Online') {
                                 atSeatID.src = 'img/Online.png';
                                 atSeatID.addEventListener('click', setinfo, false);
-                            } else {
+                            } else if (value.cStatus === 'Offline') {
                                 atSeatID.src = 'img/Offline.png';
                                 atSeatID.addEventListener('click', setinfo, false);
+                            } else {
+                                atSeatID.src = 'img/Teacher.png';
                             }
                         });
                     }
