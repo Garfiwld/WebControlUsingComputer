@@ -43,13 +43,11 @@
         </style>
     </head>
     <body onload="listseat()">
-        <div class="text-center">
+        <div id="seat" class="text-center">
             <div>
                 <input type="range" id="imgsize" name="imgsize"
                        min="25" max="75" value="50" step="5">
             </div>
-        </div>
-        <div id="seat" class="text-center">
             <%                for (int y = 0; y < roomY; y++) {
                     for (int x = 0; x < roomX; x++) {
                         out.print("<img id=" + x + "-" + y + " src=\"../img/Floor.png\">");
@@ -57,8 +55,6 @@
                     out.print("<br>");
                 }
             %>
-        </div>
-        <div class="text-center">
             <h3>--- WHITEBOARD ---</h3>
         </div>
         <!-- Modal -->
